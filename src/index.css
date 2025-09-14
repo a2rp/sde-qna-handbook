@@ -37,3 +37,8 @@ h6 {
     /* color: #fff; */
     font-family: "Antonio", sans-serif;
 }
+
+ul,
+ol {
+    margin-left: 15px;
+}

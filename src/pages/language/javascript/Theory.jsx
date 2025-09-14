@@ -537,7 +537,7 @@ const city = user?.profile?.address?.city ?? "(unknown)";`}</Code>
 
                 <p>
                     <strong>Gotchas:</strong> <code>typeof null === "object"</code> (legacy quirk);
-                    don't use <code>||</code> for defaults if <code>0</code> or <code>""</code> are valid—use <code>??</code>.
+                    don't use <code>||</code> for defaults if <code>0</code> or <code>""</code> are valid-use <code>??</code>.
                     Prefer reserving <code>null</code> to mean “intentionally empty” in your own APIs.
                 </p>
             </>
@@ -554,7 +554,7 @@ const city = user?.profile?.address?.city ?? "(unknown)";`}</Code>
                 <p>
                     <strong>Definition:</strong> <em>Scope</em> is the region of code where an identifier
                     (variable/function/class) is accessible. JavaScript uses <strong>lexical (static) scope</strong>:
-                    visibility is determined by where code is written, not how it’s called.
+                    visibility is determined by where code is written, not how it's called.
                 </p>
 
                 <ul>
@@ -587,7 +587,7 @@ console.log(x);      // "outer"`}</Code>
 
                 <p>
                     <strong>Gotchas:</strong> In old non-module scripts, assigning to an undeclared name
-                    creates a global (sloppy mode). ES modules are strict by default—avoid <code>var</code>, prefer <code>let/const</code>.
+                    creates a global (sloppy mode). ES modules are strict by default-avoid <code>var</code>, prefer <code>let/const</code>.
                 </p>
             </>
         )
@@ -632,8 +632,8 @@ class Person {}`}</Code>
                 </p>
 
                 <p>
-                    <strong>Gotchas:</strong> Don’t rely on hoisting for readability; prefer declaring before use.
-                    Remember: <code>function</code> <em>declarations</em> hoist, but <code>const f = () =&gt; { }</code> does <em>not</em> (it’s a <code>const</code> binding, in TDZ).
+                    <strong>Gotchas:</strong> Don't rely on hoisting for readability; prefer declaring before use.
+                    Remember: <code>function</code> <em>declarations</em> hoist, but <code>const f = () =&gt; { }</code> does <em>not</em> (it's a <code>const</code> binding, in TDZ).
                 </p>
             </>
         )
@@ -763,12 +763,339 @@ for (var k = 0; k < 3; k++) {
                 </p>
             </>
         )
+    },
+
+    {
+        id: "js-what-is-this",
+        question: "What is `this` in JavaScript?",
+        text:
+            "`this` is set at call-time by how a function is invoked: default (undefined in strict), implicit (receiver object), explicit (call/apply/bind), constructor (new). Arrow functions don't bind `this`; they capture the surrounding one.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>this</code> is a context value determined by the
+                    <em> call-site</em>. In modules/strict mode, plain calls set <code>this</code> to
+                    <code> undefined</code>. Arrow functions don't have their own <code>this</code>; they
+                    lexically capture the surrounding <code>this</code>.
+                </p>
+
+                <Code>{`"use strict";
+// 1) Default (plain call) → undefined
+function f(){ return this; }
+f(); // undefined`}</Code>
+
+                <Code>{`// 2) Implicit (receiver before dot)
+const obj = { x: 10, m(){ return this.x; } };
+obj.m(); // 10
+
+// losing the receiver:
+const m = obj.m;
+m(); // undefined (strict)`}</Code>
+
+                <Code>{`// 3) Explicit (call/apply/bind)
+function greet(g){ return g + " " + this.name; }
+const ctx = { name: "Ada" };
+greet.call(ctx, "Hi");      // "Hi Ada"
+const hi = greet.bind(ctx, "Hello");
+hi();                       // "Hello Ada"`}</Code>
+
+                <Code>{`// 4) Constructor (new) → new instance
+function Person(n){ this.name = n; }
+const p = new Person("Lin"); // this = p`}</Code>
+
+                <Code>{`// 5) Arrow → lexical 'this'
+const obj2 = {
+  x: 42,
+  run(){
+    setTimeout(() => console.log(this.x), 0); // 42
+  }
+};
+obj2.run();`}</Code>
+
+                <p>
+                    <strong>Gotchas:</strong> Extracted methods lose <code>this</code> unless bound;
+                    top-level <code>this</code> is <code>undefined</code> in modules; DOM listeners with arrows
+                    don't get the element as <code>this</code> (use function if you need it).
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-call-apply-bind",
+        question: "What are `call`, `apply`, and `bind`?",
+        text:
+            "`call` and `apply` invoke a function immediately with an explicit `this` (`call(...args)`, `apply([...args])`). `bind` returns a new function with `this` (and optional args) pre-bound.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>call</code> and <code>apply</code> run a function <em>now</em> with an explicit
+                    <code> this</code>. <code>call</code> takes args individually; <code>apply</code> takes them as an array.
+                    <code>bind</code> returns a new function where <code>this</code> (and optionally some arguments) are fixed.
+                </p>
+
+                <Code>{`function greet(g, p){ return g + " " + this.name + p; }
+const ctx = { name: "Ada" };
+
+// call(args as list)
+greet.call(ctx, "Hello", "!"); // "Hello Ada!"
+
+// apply(args as array)
+greet.apply(ctx, ["Hi", "!!"]); // "Hi Ada!!"
+
+// bind (does not invoke)
+const hiAda = greet.bind(ctx, "Hi");
+hiAda("?"); // "Hi Ada?"`}</Code>
+
+                <p>
+                    <strong>Partial application with bind:</strong> You can pre-fill leading arguments.
+                </p>
+                <Code>{`const add = (a,b,c) => a + b + c;
+const add5 = add.bind(null, 5);
+add5(2, 3); // 10`}</Code>
+
+                <p>
+                    <strong>`new` beats `bind` for <code>this</code>:</strong> If a bound function is used with <code>new</code>,
+                    the new instance becomes <code>this</code> (bound arguments remain).
+                </p>
+                <Code>{`function Person(name){ this.name = name; }
+const Bound = Person.bind({ fake:true }, "Ignored");
+new Bound("AlsoIgnored") instanceof Person; // true`}</Code>
+
+                <p>
+                    <strong>Common uses:</strong> method borrowing (<code>Array.prototype.slice.call</code> on array-like),
+                    event handlers in classes (<code>this.method = this.method.bind(this)</code>), partials.
+                </p>
+
+                <p>
+                    <strong>Gotchas:</strong> Don't overuse <code>bind</code> inside render loops (React); prefer arrows for
+                    handlers needing lexical <code>this</code>. <code>apply</code> requires an array-when you already have an
+                    array, modern engines allow <code>fn(...arr)</code> instead of <code>apply</code>.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-arrow-functions",
+        question: "What are arrow functions? How are they different from regular functions?",
+        text:
+            "Arrows are concise function syntax with lexical this (no own this/arguments/super/new.target). Not constructors, no prototype. Great for callbacks; avoid when you need a dynamic receiver.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> Arrow functions (<code>=&gt; </code>) are a shorter way to write
+                    functions that <em>don't</em> have their own <code>this</code>, <code>arguments</code>,
+                    <code>super</code>, or <code>new.target</code>. They <em>lexically capture</em> those from the surrounding scope.
+                </p>
+
+                <Code>{`// Concise syntax
+const add = (a, b) => a + b;          // implicit return (expression body)
+const double = n => { return n * 2 }; // block body requires 'return'`}</Code>
+
+                <p><strong>Lexical <code>this</code>:</strong> Arrows keep the outer <code>this</code> - handy in callbacks.</p>
+                <Code>{`const obj = {
+  x: 42,
+  normal() { setTimeout(function(){ console.log(this?.x) }, 0); }, // undefined
+  arrow()  { setTimeout(() => console.log(this.x), 0); }           // 42
+};
+obj.normal(); obj.arrow();`}</Code>
+
+                <p><strong>No constructor / no prototype:</strong> You can't use <code>new</code> with an arrow; they don't have <code>prototype</code>.</p>
+                <Code>{`const F = () => {};
+typeof F.prototype;      // "undefined"
+try { new F(); } catch (e) { /* TypeError */ }`}</Code>
+
+                <p><strong>No own <code>arguments</code>:</strong> Use rest parameters instead.</p>
+                <Code>{`const bad = () => arguments[0];     // arguments is from outer scope (usually not what you want)
+const good = (...args) => args[0];`}</Code>
+
+                <p><strong>Common pitfalls:</strong></p>
+                <ul>
+                    <li>Arrow as an object <em>method</em> fixes <code>this</code> lexically - not suitable when you need a dynamic receiver (e.g., mixins).</li>
+                    <li>Returning an object literal with implicit return needs parentheses.</li>
+                    <li>Cannot use <code>yield</code> (not generators).</li>
+                </ul>
+
+                <Code>{`// Implicitly returning an object:
+const makeUser = (name) => ({ name }); // parentheses wrap the object
+
+// As a method (dynamic 'this' expected) - avoid arrows:
+const user = {
+  name: "Ada",
+  say: () => console.log(this?.name) // likely undefined in modules
+};`}</Code>
+
+                <p><strong>When to use:</strong> Short callbacks, array methods, closures capturing outer <code>this</code>.
+                    <strong>Avoid:</strong> When you need your own <code>this</code>/<code>arguments</code> or a constructible function.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-var-vs-let-vs-const",
+        question: "var vs let vs const - what's the difference?",
+        text:
+            "var = function-scoped, hoisted to undefined, redeclarable; let/const = block-scoped with TDZ; const prevents rebinding (not mutation). Top-level var in non-module scripts creates a global property; let/const do not.",
+        answer: (
+            <>
+                <p><strong>Scope & hoisting:</strong></p>
+                <ul>
+                    <li><code>var</code> → <em>function-scoped</em>, hoisted and initialized to <code>undefined</code>.</li>
+                    <li><code>let/const</code> → <em>block-scoped</em>, hoisted but uninitialized (in the <strong>TDZ</strong> until their line).</li>
+                </ul>
+
+                <Code>{`console.log(a); // undefined (var hoisted)
+var a = 1;
+
+try { console.log(b); } catch {} // ReferenceError (TDZ)
+let b = 2;
+
+try { console.log(c); } catch {} // ReferenceError (TDZ)
+const c = 3;`}</Code>
+
+                <p><strong>Reassignment & redeclaration:</strong></p>
+                <ul>
+                    <li><code>var</code> can be <em>reassigned</em> and <em>redeclared</em> in the same scope.</li>
+                    <li><code>let</code> can be <em>reassigned</em> but <em>not redeclared</em> in the same scope.</li>
+                    <li><code>const</code> can be <em>neither redeclared nor reassigned</em> (but the <em>object value</em> can mutate).</li>
+                </ul>
+
+                <Code>{`var x = 1; var x = 2;  // OK
+let y = 1; /* let y = 2; */ // SyntaxError (same scope)
+const z = { n: 1 };
+z.n = 9;  // OK (mutating object)
+/* z = {} */ // TypeError (rebinding)`}</Code>
+
+                <p><strong>Top-level behavior:</strong> In non-module scripts, top-level <code>var</code> adds a property on <code>globalThis</code>; <code>let/const</code> create lexical bindings only.</p>
+                <Code>{`// In a browser non-module script:
+var gv = 1;
+let gl = 2;
+globalThis.gv; // 1
+globalThis.gl; // undefined`}</Code>
+
+                <p><strong>Loops & closures:</strong> <code>let</code> creates a fresh binding each iteration (great for closures). <code>var</code> reuses one binding.</p>
+                <Code>{`for (var i = 0; i < 3; i++) setTimeout(()=>console.log("var", i), 0);
+// var 3, var 3, var 3
+
+for (let j = 0; j < 3; j++) setTimeout(()=>console.log("let", j), 0);
+// let 0, let 1, let 2`}</Code>
+
+                <p><strong>Recommendation:</strong> Prefer <code>const</code> by default, use <code>let</code> when reassignment is needed, avoid <code>var</code> in modern code.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-default-parameters",
+        question: "What are default parameters?",
+        text:
+            "A default parameter value is used only when the passed argument is undefined (not null/false/0). Defaults evaluate left→right, and each call re-evaluates the default expression.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <em>default parameter</em> provides a fallback value
+                    when the corresponding argument is <code>undefined</code>. Passing <code>null</code>,
+                    <code>false</code>, <code>0</code>, or <code>""</code> <em>does not</em> trigger the default.
+                </p>
+
+                <Code>{`function greet(name = "Guest") { return "Hi " + name; }
+greet();           // "Hi Guest"      (undefined -> default)
+greet(undefined);  // "Hi Guest"
+greet(null);       // "Hi null"       (null does NOT trigger default)
+greet("");         // "Hi "           (empty string kept)`}</Code>
+
+                <p>
+                    <strong>Left→right & TDZ:</strong> Parameters are created left to right.
+                    Referencing a <em>later</em> parameter inside an earlier default causes a TDZ error.
+                </p>
+
+                <Code>{`function bad(a = b, b = 2) {}
+try { bad(); } catch (e) { console.log(e instanceof ReferenceError); } // true
+
+function ok(a = 1, b = a + 1) { return [a, b]; }
+ok(); // [1, 2]`}</Code>
+
+                <p>
+                    <strong>Re-evaluated per call:</strong> Default expressions run at each invocation,
+                    so avoid heavy work there.
+                </p>
+
+                <Code>{`let n = 0;
+function nextId(id = ++n) { return id; }
+nextId(); // 1
+nextId(); // 2
+nextId(99); // 99 (explicit arg bypasses default)`}</Code>
+
+                <p>
+                    <strong>Gotchas:</strong> Defaults apply only to <code>undefined</code>;
+                    avoid referencing later params; heavy defaults can hurt performance;
+                    <code>function.length</code> counts parameters <em>before</em> the first with a default.
+                </p>
+
+                <Code>{`function f(a, b = 1, c) {}
+f.length; // 1`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-rest-parameter",
+        question: "What is the rest parameter (`...args`) in functions?",
+        text:
+            "Rest parameter collects remaining arguments into a real array. Must be last, only one allowed. Prefer over `arguments` (which is array-like).",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> The <em>rest parameter</em> <code>...args</code> gathers all
+                    remaining arguments into a <strong>real array</strong>. It must appear <em>last</em> in the
+                    parameter list, and there can be only one rest parameter.
+                </p>
+
+                <Code>{`// Collect all remaining arguments as an array:
+function sum(label, ...nums) {
+  return label + ": " + nums.reduce((a, b) => a + b, 0);
+}
+sum("total", 1, 2, 3); // "total: 6"
+sum("none");           // "none: 0" (nums = [])`}</Code>
+
+                <p>
+                    <strong>Real array (vs <code>arguments</code>):</strong> Rest gives you a normal array with
+                    methods like <code>map</code>/<code>filter</code>. In strict mode,
+                    <code>arguments</code> is array-like and not synced with parameter reassignments.
+                </p>
+
+                <Code>{`"use strict";
+function demo(x, ...rest) {
+  console.log(Array.isArray(rest)); // true
+  x = 42;
+  console.log(arguments[0]);        // original value (not 42)
+}
+demo(10, 20, 30);`}</Code>
+
+                <p>
+                    <strong>Position & count:</strong> Rest must be last; function <code>length</code> doesn't count it.
+                </p>
+
+                <Code>{`function f(a, b, ...rest) {}
+f.length; // 2 (rest not counted)`}</Code>
+
+                <p>
+                    <strong>Common uses:</strong> variable-arity functions (sum, max), collecting “options” after fixed params,
+                    forwarding arguments to another function.
+                </p>
+
+                <Code>{`const logAll = (...args) => console.log(...args);
+const callWith = (fn, ...args) => fn(...args);
+callWith(Math.max, 3, 7, 2); // 7`}</Code>
+
+                <p>
+                    <strong>Gotchas:</strong> Only one rest parameter and it must be last; don't confuse function rest with
+                    <em>object/array rest in destructuring</em> - those are patterns, not parameters (covered separately).
+                </p>
+            </>
+        )
     }
-
-
-
-
-
 
 
 
