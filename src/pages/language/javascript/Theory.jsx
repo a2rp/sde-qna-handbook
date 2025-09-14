@@ -147,8 +147,8 @@ console.log("Hello from the engine!");
                     It's the environment where JS runs and where non-language features come from.
                 </p>
                 <ul>
-                    <li><strong>Browser:</strong> DOM, <code>fetch</code>, <code>localStorage</code>, <code>requestAnimationFrame</code>, Workers…</li>
-                    <li><strong>Node.js:</strong> <code>fs</code>, <code>net</code>, <code>http</code>, <code>process</code>, <code>Buffer</code>, timers…</li>
+                    <li><strong>Browser:</strong> DOM, <code>fetch</code>, <code>localStorage</code>, <code>requestAnimationFrame</code>, Workers...</li>
+                    <li><strong>Node.js:</strong> <code>fs</code>, <code>net</code>, <code>http</code>, <code>process</code>, <code>Buffer</code>, timers...</li>
                     <li><strong>Deno/Bun:</strong> similar idea, different standard libs and tooling.</li>
                 </ul>
                 <Code>{`// ECMAScript (language) works everywhere:
@@ -192,12 +192,12 @@ console.log("sync");
 
                 <p>
                     <strong>Why it matters:</strong> Explains timing/order bugs, UI freezes (long sync blocks),
-                    and why <em>Promises often run “before” timeouts</em>.
+                    and why <em>Promises often run "before" timeouts</em>.
                 </p>
 
                 <p>
                     <strong>Gotchas:</strong> A tight microtask loop (e.g., recursively scheduling microtasks)
-                    can starve macrotasks/rendering; <code>setTimeout(fn, 0)</code> never runs “immediately”
+                    can starve macrotasks/rendering; <code>setTimeout(fn, 0)</code> never runs "immediately"
                     (minimum clamping, scheduled after current microtasks).
                 </p>
             </>
@@ -218,7 +218,7 @@ console.log("sync");
                 </p>
                 <p>
                     <strong>Traits:</strong> Primitives are <em>immutable</em> and are copied <em>by value</em>.
-                    When you access a “method” on a primitive (e.g., <code>"hi".toUpperCase()</code>), engines use a temporary wrapper object behind the scenes.
+                    When you access a "method" on a primitive (e.g., <code>"hi".toUpperCase()</code>), engines use a temporary wrapper object behind the scenes.
                 </p>
                 <Code>{`typeof 42           // "number"
 typeof 42n          // "bigint"
@@ -278,7 +278,7 @@ user["first-name"]; // "Grace"
 user[key];          // "Grace"`}</Code>
 
                 <p>
-                    <strong>Own vs inherited:</strong> “Own” properties live on the object; inherited
+                    <strong>Own vs inherited:</strong> "Own" properties live on the object; inherited
                     ones come from the prototype chain. Check with <code>Object.hasOwn(obj, k)</code> (own)
                     vs <code>k in obj</code> (own or inherited).
                 </p>
@@ -401,7 +401,7 @@ Boolean(function(){});// true`}</Code>
 
                 <p>
                     <strong>Why it matters:</strong> Logical operators short-circuit based on truthiness.
-                    Use <code>??</code> when you only want to treat <code>null</code>/<code>undefined</code> as “missing”.
+                    Use <code>??</code> when you only want to treat <code>null</code>/<code>undefined</code> as "missing".
                 </p>
 
                 <Code>{`// OR (||) returns first truthy; can skip valid falsy like 0 or ""
@@ -489,9 +489,9 @@ false == "0" // true`}</Code>
         answer: (
             <>
                 <p>
-                    <strong>Definitions:</strong> <code>undefined</code> means “missing / not set / not provided”.
+                    <strong>Definitions:</strong> <code>undefined</code> means "missing / not set / not provided".
                     It's the default for uninitialized variables, missing object properties, and functions with no return.
-                    <code>null</code> is an <em>intentional</em> “no value” you assign to signal emptiness.
+                    <code>null</code> is an <em>intentional</em> "no value" you assign to signal emptiness.
                 </p>
 
                 <Code>{`let a;            // a is undefined
@@ -514,7 +514,7 @@ null === undefined  // false`}</Code>
                 </p>
                 <ul>
                     <li>
-                        Use <code>x == null</code> to match “either <code>null</code> or <code>undefined</code>”.
+                        Use <code>x == null</code> to match "either <code>null</code> or <code>undefined</code>".
                     </li>
                     <li>
                         Use <code>??</code> (nullish coalescing) to default only when value is <code>null</code>/<code>undefined</code> (not for <code>0</code>, <code>""</code>, <code>false</code>).
@@ -538,7 +538,7 @@ const city = user?.profile?.address?.city ?? "(unknown)";`}</Code>
                 <p>
                     <strong>Gotchas:</strong> <code>typeof null === "object"</code> (legacy quirk);
                     don't use <code>||</code> for defaults if <code>0</code> or <code>""</code> are valid-use <code>??</code>.
-                    Prefer reserving <code>null</code> to mean “intentionally empty” in your own APIs.
+                    Prefer reserving <code>null</code> to mean "intentionally empty" in your own APIs.
                 </p>
             </>
         )
@@ -686,7 +686,7 @@ ok(); // [1, 2]`}</Code>
 
                 <p>
                     <strong>Why it exists:</strong> TDZ prevents access to bindings before their
-                    intended initialization, avoiding confusing “hoisted but undefined” reads.
+                    intended initialization, avoiding confusing "hoisted but undefined" reads.
                 </p>
 
                 <p>
@@ -1081,7 +1081,7 @@ demo(10, 20, 30);`}</Code>
 f.length; // 2 (rest not counted)`}</Code>
 
                 <p>
-                    <strong>Common uses:</strong> variable-arity functions (sum, max), collecting “options” after fixed params,
+                    <strong>Common uses:</strong> variable-arity functions (sum, max), collecting "options" after fixed params,
                     forwarding arguments to another function.
                 </p>
 
@@ -1095,7 +1095,696 @@ callWith(Math.max, 3, 7, 2); // 7`}</Code>
                 </p>
             </>
         )
+    },
+
+    {
+        id: "js-spread-syntax",
+        question: "What is the spread syntax (`...`) in JavaScript?",
+        text:
+            "Spread expands an iterable (like an array or string) into individual elements, or expands an object's own enumerable properties into a new object. It's used in calls, array literals, and object literals; it makes shallow copies.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <em>Spread</em> (<code>...</code>) <em>expands</em> values.
+                    In <strong>calls</strong> and <strong>array literals</strong>, it requires an <em>iterable</em> (Array, String, Set, etc.).
+                    In <strong>object literals</strong>, it copies an object's <em>own enumerable</em> string & symbol properties.
+                </p>
+
+                <Code>{`// 1) Calls - expand iterable into arguments
+function sum(a, b, c){ return a + b + c; }
+const nums = [1, 2, 3];
+sum(...nums); // 6
+
+// 2) Arrays - copy / concatenate
+const a = [1, 2];
+const b = [3, 4];
+const c = [...a, ...b]; // [1,2,3,4] (shallow copy)
+const copy = [...a];    // [1,2] (shallow)`}</Code>
+
+                <Code>{`// 3) Objects - copy / merge (last write wins)
+const base = { x: 1, shared: "a" };
+const extra = { y: 2, shared: "b" };
+const merged = { ...base, ...extra }; // { x:1, shared:"b", y:2 }
+const clone  = { ...base };           // shallow copy
+
+// Property descriptors are not preserved (values are copied)
+const withGetter = {
+  get v(){ return Math.random() }
+};
+const copyGetter = { ...withGetter };
+typeof Object.getOwnPropertyDescriptor(copyGetter, "v").get; // "undefined"`}</Code>
+
+                <p>
+                    <strong>Key points:</strong>
+                </p>
+                <ul>
+                    <li><strong>Shallow copy:</strong> nested objects/arrays are shared references.</li>
+                    <li><strong>Order matters:</strong> later spreads/props overwrite earlier ones.</li>
+                    <li><strong>Arrays need iterables:</strong> spreading a non-iterable in an array/call throws.</li>
+                    <li><strong>Objects:</strong> spreads copy own <em>enumerable</em> properties (string & symbol).</li>
+                </ul>
+
+                <Code>{`// Shallow copy example
+const orig = { deep: { n: 1 } };
+const copy2 = { ...orig };
+copy2.deep.n = 9;
+orig.deep.n; // 9 (same inner object)`}</Code>
+
+                <p>
+                    <strong>Don't confuse with rest:</strong> Spread <em>expands</em> values at usage sites,
+                    while <em>rest</em> <code>...args</code> <em>collects</em> values in parameter/destructuring positions.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-array-destructuring",
+        question: "What is array destructuring?",
+        text:
+            "Array destructuring unpacks values from arrays/iterables into variables by position. Supports skipping, defaults, rest, nesting, and even quick swaps.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <em>Array destructuring</em> assigns elements of an array (or any iterable)
+                    to variables by position using a pattern on the left-hand side.
+                </p>
+
+                <Code>{`// Basic
+const [a, b] = [1, 2];           // a=1, b=2
+
+// Skip items with empty slots
+const [, , third] = [10, 20, 30]; // third=30
+
+// Defaults apply only when the source is 'undefined'
+const [x = 1, y = 2] = [];        // x=1, y=2
+const [m = 1] = [null];           // m=null (default NOT used)
+
+// Rest element (collect remaining items) - must be last
+const [head, ...tail] = [1, 2, 3, 4]; // head=1, tail=[2,3,4]
+
+// Nested patterns
+const [p, [q, r]] = [1, [2, 3]];  // p=1, q=2, r=3
+
+// Works with any iterable (e.g., Set, string)
+const [first] = new Set([7, 8, 9]); // first=7
+const [c1, c2] = "hi";              // c1="h", c2="i"
+
+// Swap variables without a temp
+let a1 = 5, a2 = 9;
+[a1, a2] = [a2, a1];               // a1=9, a2=5`}</Code>
+
+                <p>
+                    <strong>Gotchas:</strong> Rest element must be last; extra source items are ignored; defaults only kick in for
+                    <code>undefined</code> (not <code>null</code>/<code>0</code>/<code>""</code>); the right-hand side must be iterable.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-object-destructuring",
+        question: "What is object destructuring?",
+        text:
+            "Object destructuring binds variables from object properties by name. Supports renaming, defaults, nested patterns, and rest properties; use = {} as a whole-arg default to avoid TypeError on null/undefined.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <em>Object destructuring</em> extracts properties by <em>name</em> into variables.
+                    You can rename variables, set per-property defaults (used only when the value is <code>undefined</code>), nest patterns, and collect the rest.
+                </p>
+
+                <Code>{`// Basic by-name binding
+const user = { name: "Ada", role: "admin" };
+const { name, role } = user;   // name="Ada", role="admin"
+
+// Rename local variables
+const { name: fullName } = user; // fullName="Ada"
+
+// Defaults only when the property value is undefined (not null/0/"")
+const cfg = { retries: undefined, delay: null };
+const { retries = 3, delay = 1000 } = cfg;
+// retries=3 (undefined -> default), delay=null (default NOT used)
+
+// Rename + default together
+const { port: p = 8080 } = {}; // p=8080
+
+// Rest properties (own enumerable props not picked above)
+const obj = { a:1, b:2, c:3 };
+const { a, ...rest } = obj; // a=1, rest={ b:2, c:3 }
+
+// Nested patterns
+const payload = { meta:{ id: 7 }, data:{ x: 10 } };
+const { meta: { id }, data: { x } } = payload; // id=7, x=10
+
+// Destructure into existing variables: wrap in parentheses
+let x1, y1;
+({ x: x1 = 0, y: y1 = 0 } = { x: 5 }); // x1=5, y1=0
+
+// Safe function parameter with whole-arg default
+function connect({ host = "localhost", port = 5432 } = {}) {
+  return host + ":" + port;
+}
+connect(); // "localhost:5432"
+`}</Code>
+
+                <p>
+                    <strong>Key points:</strong>
+                </p>
+                <ul>
+                    <li>Order doesn't matter (it's by <em>property name</em>).</li>
+                    <li>Per-property default applies only when the value is <code>undefined</code>.</li>
+                    <li><code>...rest</code> collects <em>own enumerable</em> props not already picked.</li>
+                    <li>Destructuring from <code>null</code>/<code>undefined</code> throws - use a whole-argument default like <code>= &#123;&#125;</code>.</li>
+                    <li>Inherited properties can be read (normal property access); but <code>...rest</code> doesn't include inherited ones.</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-optional-chaining",
+        question: "What is optional chaining (`?.`)?",
+        text:
+            "Optional chaining safely accesses a property/call/index and returns undefined if the base is null or undefined. Forms: obj?.prop, obj?.[expr], obj?.method?.(args).",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <em>Optional chaining</em> <code>?.</code> lets you read properties,
+                    call methods, or index into objects that might be <code>null</code>/<code>undefined</code>.
+                    If the left side is <code>null</code> or <code>undefined</code>, the whole expression evaluates to
+                    <code>undefined</code> without throwing.
+                </p>
+
+                <Code>{`const user = { profile: { contact: { email: "a@b.com" } } };
+
+user?.profile?.contact?.email     // "a@b.com"
+user?.settings?.theme             // undefined (safe)
+
+// Bracket form
+const key = "email";
+user?.profile?.contact?.[key];    // "a@b.com"
+
+// Optional call (method may be missing)
+user.service?.getToken?.();       // runs if both exist, otherwise undefined`}</Code>
+
+                <p><strong>Why:</strong> Avoids verbose checks and prevents <code>TypeError: Cannot read properties of undefined</code>.</p>
+
+                <p><strong>Pair with nullish coalescing:</strong> Provide a default only when result is <code>null</code>/<code>undefined</code>.</p>
+                <Code>{`const city = user?.profile?.address?.city ?? "(unknown)";`}</Code>
+
+                <p><strong>Forms:</strong> <code>obj?.prop</code> • <code>obj?.[expr]</code> • <code>obj.method?.(args)</code></p>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li>It's <em>read-only short-circuit</em>; you can't assign through it (<code>obj?.prop = 1</code> is invalid).</li>
+                    <li>Only stops on <code>null</code>/<code>undefined</code> - not on other falsy values (<code>0</code>, <code>""</code>, <code>false</code>).</li>
+                    <li>Don't overuse; frequent optional chains can hide bugs where data should always exist.</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-nullish-coalescing",
+        question: "What is nullish coalescing (`??`)?",
+        text:
+            "`??` returns the right side only when the left side is null or undefined (not for 0, \"\", or false). Use it for safe defaults; combine with optional chaining; don't mix with &&/|| without parentheses.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> The <em>nullish coalescing</em> operator <code>??</code> returns its
+                    left operand if it's <code>not</code> <code>null</code> or <code>undefined</code>; otherwise it returns the right operand.
+                    Unlike <code>||</code>, it <em>does not</em> treat <code>0</code>, <code>""</code>, or <code>false</code> as "missing".
+                </p>
+
+                <Code>{`// Defaults only for null/undefined
+const port = userPort ?? 3000;  // userPort = 0 -> keeps 0, not 3000
+const name = inputName ?? "(anonymous)"; // null/undefined -> "(anonymous)"
+
+// Compare with OR (||): OR treats many values as missing (bad for 0/"")
+const portOr = userPort || 3000; // 0 -> 3000 (surprising)
+`}</Code>
+
+                <p><strong>Combine with optional chaining:</strong></p>
+                <Code>{`const city = user?.profile?.address?.city ?? "(unknown)";
+const email = config?.contact?.email ?? "(not set)";`}</Code>
+
+                <p><strong>Short-circuit behavior:</strong> If the left side is not null/undefined, the right side is not evaluated.</p>
+                <Code>{`let calls = 0;
+function inc(){ calls++; return "X"; }
+const v = "ok" ?? inc(); // "ok" ; inc() not called (calls stays 0)`}</Code>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li><code>??</code> only checks for <code>null</code>/<code>undefined</code> - it preserves valid falsy values (<code>0</code>, <code>""</code>, <code>false</code>).</li>
+                    <li>Don't mix <code>??</code> with <code>&&</code> or <code>||</code> in the same expression <em>without parentheses</em> (SyntaxError). Use grouping:</li>
+                </ul>
+
+                <Code>{`// ❌ SyntaxError:
+// a ?? b || c
+
+// ✅ Group explicitly:
+(a ?? b) || c
+a ?? (b || c)`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-logical-assignment",
+        question: "What are logical assignment operators (||=, &&=, ??=)?",
+        text:
+            "They combine short-circuiting with assignment: x ||= v assigns when x is falsy; x &&= v assigns when x is truthy; x ??= v assigns when x is null/undefined.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> Logical assignment operators merge a logical check with an assignment:
+                </p>
+                <ul>
+                    <li><code>x ||= v</code> → assign <code>v</code> <em>only if</em> <code>x</code> is <strong>falsy</strong>.</li>
+                    <li><code>x &&= v</code> → assign <code>v</code> <em>only if</em> <code>x</code> is <strong>truthy</strong>.</li>
+                    <li><code>x ??= v</code> → assign <code>v</code> <em>only if</em> <code>x</code> is <strong>null or undefined</strong>.</li>
+                </ul>
+
+                <Code>{`let a = 0;
+a ||= 10;   // 0 is falsy -> a = 10
+
+let b = "user";
+b &&= b.toUpperCase(); // "USER" (b was truthy)
+
+let c;       // undefined
+c ??= 5;     // undefined -> c = 5
+let d = 0;
+d ??= 9;     // 0 is not null/undefined -> stays 0`}</Code>
+
+                <p><strong>Typical uses:</strong></p>
+                <Code>{`// Defaults
+settings.timeout ??= 3000;  // only when null/undefined
+
+// Fill only when truly missing (keeps 0 / "" / false)
+user.age ??= 0;
+user.nickname ||= "guest";  // BUT: "" is falsy -> becomes "guest"
+
+// Guarded update
+isLoggedIn &&= hasValidSession();`}</Code>
+
+                <p><strong>Choosing the right one:</strong></p>
+                <ul>
+                    <li>Use <code>??=</code> for safe defaults that should <em>not</em> overwrite valid falsy values like <code>0</code> or <code>""</code>.</li>
+                    <li>Use <code>||=</code> when any falsy should trigger the default (e.g., empty string should become a placeholder).</li>
+                    <li>Use <code>&&=</code> to keep or replace a value only when it's already truthy.</li>
+                </ul>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li><strong>No optional chaining on the left-hand side:</strong> you cannot write <code>obj?.prop ??= v</code> (invalid left-hand side). Check the object first or use a guard.</li>
+                    <li><code>||=</code> treats <code>0</code>, <code>""</code>, and <code>false</code> as missing; prefer <code>??=</code> if you want to preserve them.</li>
+                </ul>
+
+                <Code>{`// Guard before assigning nested props
+if (obj && obj.config != null) {
+  obj.config.port ??= 8080;
+}`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-in-operator",
+        question: "What does the `in` operator do?",
+        text:
+            "`k in obj` checks whether a property key exists on an object or anywhere on its prototype chain. For own-only checks, use Object.hasOwn(obj, k).",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> The <code>in</code> operator returns <code>true</code> if the
+                    property key (string or symbol) exists on the object <em>or its prototype chain</em>.
+                </p>
+
+                <Code>{`const base = { a: 1 };
+const obj = Object.create(base);
+obj.b = 2;
+
+"a" in obj;                  // true  (inherited from base)
+"b" in obj;                  // true  (own)
+"c" in obj;                  // false`}</Code>
+
+                <p>
+                    <strong>Own-only check:</strong> Use <code>Object.hasOwn(obj, key)</code> (ES2022).
+                    Older style: <code>Object.prototype.hasOwnProperty.call(obj, key)</code>.
+                </p>
+
+                <Code>{`Object.hasOwn(obj, "b"); // true
+Object.hasOwn(obj, "a"); // false (since it's inherited)
+
+// Older, safe form:
+Object.prototype.hasOwnProperty.call(obj, "b"); // true`}</Code>
+
+                <p>
+                    <strong>Arrays:</strong> With arrays, <code>in</code> checks for the <em>index</em> key, not the value.
+                    It also reports <em>holes</em> as missing.
+                </p>
+
+                <Code>{`const arr = [10, 20];
+0 in arr;        // true  (index exists)
+2 in arr;        // false (no element at index 2)
+20 in arr;       // false (checks keys, not values)`}</Code>
+
+                <p>
+                    <strong>Symbols:</strong> Works with symbol keys too.
+                </p>
+
+                <Code>{`const S = Symbol("secret");
+const o = { [S]: 123 };
+S in o; // true`}</Code>
+
+                <p>
+                    <strong>Gotchas:</strong> <code>in</code> includes inherited properties; prefer
+                    <code>Object.hasOwn</code> when you specifically want "own-only". On arrays, don't use <code>in</code> to test membership by value-use <code>includes</code>.
+                </p>
+
+                <Code>{`[1,2,3].includes(2); // true (by value)`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-instanceof-operator",
+        question: "What does the `instanceof` operator do?",
+        text:
+            "`v instanceof Ctor` checks whether Ctor.prototype is in v's prototype chain. Fails across realms (iframes) and with primitives. Prefer Array.isArray for arrays; you can customize via Symbol.hasInstance.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>v instanceof Ctor</code> returns <code>true</code> if
+                    <code> Ctor.prototype</code> appears anywhere in <code>v</code>'s prototype chain.
+                </p>
+
+                <Code>{`function Person() {}
+const p = new Person();
+p instanceof Person;            // true
+Object.getPrototypeOf(p) === Person.prototype; // true`}</Code>
+
+                <p><strong>Primitives:</strong> Work only with <em>objects</em>. Primitives aren't instances (unless boxed).</p>
+                <Code>{`42 instanceof Number;     // false (primitive)
+new Number(42) instanceof Number; // true (boxed object)`}</Code>
+
+                <p><strong>Arrays & built-ins:</strong> Use dedicated checks; <code>instanceof</code> can fail across realms (e.g., iframes).</p>
+                <Code>{`Array.isArray([]);        // ✅ reliable
+([]) instanceof Array;        // ❌ can be false across realms
+
+Object.prototype.toString.call(/re/) === "[object RegExp]"; // generic tag`}</Code>
+
+                <p><strong>Cross-realm gotcha:</strong> Each realm (iframe/worker) has its own constructors; an array from another realm fails <code>instanceof Array</code> in this realm.</p>
+
+                <p><strong>Customizing:</strong> Classes/functions can override the check using <code>Symbol.hasInstance</code>.</p>
+                <Code>{`class Marked {
+  static [Symbol.hasInstance](obj) { return obj && obj.mark === true; }
+}
+({ mark:true }) instanceof Marked; // true`}</Code>
+
+                <p><strong>Takeaways:</strong> Use <code>instanceof</code> when you control the constructor and realm.
+                    For arrays use <code>Array.isArray</code>; for broad type tags use <code>Object.prototype.toString.call(v)</code>.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-prototype-and-chain",
+        question: "What is a prototype and the prototype chain?",
+        text:
+            "Every object has an internal [[Prototype]] link to another object (or null). Property lookups walk this chain. Create with Object.create, read via Object.getPrototypeOf, avoid writing __proto__.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <em>prototype</em> is another object that a given object
+                    delegates to for missing properties. The linked objects form the <strong>prototype chain</strong>.
+                    Lookup goes: <code>obj → obj.[[Prototype]] → ... → null</code>.
+                </p>
+
+                <Code>{`// Property lookup walks the chain
+const base = { greet(){ return "hi"; } };
+const obj  = Object.create(base); // set [[Prototype]] to base
+obj.name = "Ada";
+
+obj.greet();            // "hi" (found on prototype)
+Object.getPrototypeOf(obj) === base; // true`}</Code>
+
+                <p>
+                    <strong>Create / read / set:</strong> Prefer <code>Object.create</code> to create with a prototype,
+                    <code>Object.getPrototypeOf</code> to read it, and <code>Object.setPrototypeOf</code> to change (slow; avoid in hot paths).
+                </p>
+
+                <Code>{`const dict = Object.create(null); // no prototype (pure map)
+Object.getPrototypeOf(obj);      // -> base
+Object.setPrototypeOf(obj, null); // now no delegation (use sparingly)`}</Code>
+
+                <p>
+                    <strong>Functions & classes:</strong> A function used as a constructor has a
+                    <code>.prototype</code> object. Instances created with <code>new</code> link to it.
+                    <code>class</code> syntax configures the same prototype chain.
+                </p>
+
+                <Code>{`function Person(name){ this.name = name; }
+Person.prototype.say = function(){ return "I am " + this.name; };
+
+const p = new Person("Lin");
+Object.getPrototypeOf(p) === Person.prototype; // true
+p.say(); // "I am Lin"
+
+// Classes (sugar over prototypes)
+class A { talk(){ return "yo"; } }
+new A().talk(); // "yo"`}</Code>
+
+                <p>
+                    <strong>Own vs inherited:</strong> Check own properties with <code>Object.hasOwn(obj, k)</code>;
+                    <code>k in obj</code> includes inherited ones.
+                </p>
+
+                <Code>{`const o = Object.create({ a: 1 });
+o.b = 2;
+Object.hasOwn(o, "a"); // false
+"a" in o;              // true (inherited)`}</Code>
+
+                <p>
+                    <strong>Gotchas:</strong> Writing <code>obj.x = ...</code> creates/overrides an <em>own</em> prop (doesn't modify the prototype).
+                    Avoid using <code>__proto__</code> (legacy accessor); changing prototypes at runtime is slow.
+                    Methods on built-in prototypes (e.g., <code>Array.prototype.map</code>) are shared by all instances.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-property-descriptors",
+        question: "What is a property descriptor?",
+        text:
+            "A property descriptor defines a property's attributes: data (value, writable) or accessor (get, set), plus enumerable and configurable. Read with getOwnPropertyDescriptor; create/change with defineProperty.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> Every own property has a <em>descriptor</em> with attributes.
+                    Two kinds exist:
+                </p>
+                <ul>
+                    <li><strong>Data descriptor:</strong> <code>value</code>, <code>writable</code>, <code>enumerable</code>, <code>configurable</code></li>
+                    <li><strong>Accessor descriptor:</strong> <code>get</code>, <code>set</code>, <code>enumerable</code>, <code>configurable</code></li>
+                </ul>
+                <p>
+                    A descriptor is either data <em>or</em> accessor (you can't mix <code>value/writable</code> with <code>get/set</code>).
+                </p>
+
+                <Code>{`const obj = { x: 1 };
+Object.getOwnPropertyDescriptor(obj, "x");
+// { value: 1, writable: true, enumerable: true, configurable: true } (defaults for literals)
+
+// Define a non-writable, non-enumerable id
+Object.defineProperty(obj, "id", {
+  value: 100,
+  writable: false,
+  enumerable: false,
+  configurable: true
+});
+
+Object.getOwnPropertyDescriptor(obj, "id");
+// { value: 100, writable: false, enumerable: false, configurable: true }`}</Code>
+
+                <p><strong>Accessor properties:</strong> use <code>get</code>/<code>set</code> instead of <code>value</code>/<code>writable</code>.</p>
+                <Code>{`const user = {};
+let _name = "Ada";
+Object.defineProperty(user, "name", {
+  get(){ return _name; },
+  set(v){ _name = String(v).trim(); },
+  enumerable: true,
+  configurable: true
+});
+user.name;      // "Ada"
+user.name = "  Lin  ";
+user.name;      // "Lin"`}</Code>
+
+                <p><strong>Key attributes:</strong></p>
+                <ul>
+                    <li><code>enumerable</code>: shows up in <code>for...in</code> / <code>Object.keys()</code>.</li>
+                    <li><code>writable</code> (data only): controls assignment to <code>value</code>.</li>
+                    <li><code>configurable</code>: allows <code>delete</code> and further descriptor changes.</li>
+                </ul>
+
+                <Code>{`const o = {};
+Object.defineProperty(o, "locked", {
+  value: 1, writable: false, enumerable: true, configurable: false
+});
+
+// Non-writable: assignment fails silently in sloppy mode; throws in strict mode
+"use strict";
+try { o.locked = 2; } catch (e) { /* TypeError */ }
+
+// Non-configurable: cannot delete or change enumerable/writable back to true
+delete o.locked;   // false
+Object.defineProperty(o, "locked", { writable: true }); // TypeError`}</Code>
+
+                <p><strong>Defaults matter:</strong> If you omit flags in <code>defineProperty</code>, they are <em>false</em> by default. When creating via literals, all three flags default to <em>true</em>.</p>
+
+                <Code>{`// All flags true for literal 'a'
+const a = { k: 1 };
+Object.getOwnPropertyDescriptor(a, "k").enumerable;   // true
+
+// defineProperty defaults: enumerable=false, writable=false, configurable=false unless set
+const b = {};
+Object.defineProperty(b, "k", { value: 1 });
+Object.getOwnPropertyDescriptor(b, "k");
+// { value:1, writable:false, enumerable:false, configurable:false }`}</Code>
+
+                <p><strong>When to use:</strong> hide metadata (non-enumerable), make constants (non-writable), define computed properties (get/set), or lock API surface (non-configurable).</p>
+
+                <p><strong>Gotchas:</strong> Once <code>configurable:false</code>, you can't flip it back; you may only change <code>writable:true → false</code> (one-way). Mixing <code>value</code> with <code>get</code>/<code>set</code> throws.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-freeze-seal-preventExtensions",
+        question: "What's the difference between Object.freeze, Object.seal, and Object.preventExtensions?",
+        text:
+            "preventExtensions: no new props. seal: no new props + cannot delete/configure existing (but writable values may change). freeze: seal + make all data properties non-writable (fully read-only, shallow).",
+        answer: (
+            <>
+                <p>
+                    <strong>Summary:</strong>
+                    <ul>
+                        <li><code>Object.preventExtensions(obj)</code>: disallow <em>adding</em> properties. Existing ones behave as-is.</li>
+                        <li><code>Object.seal(obj)</code>: preventExtensions <em>and</em> make all existing props <code>configurable:false</code> (can't delete or reconfigure). <em>Values may still change</em> if writable.</li>
+                        <li><code>Object.freeze(obj)</code>: seal <em>and</em> set all <em>data</em> props to <code>writable:false</code>. Object becomes <em>read-only</em> (but only <strong>shallowly</strong>).</li>
+                    </ul>
+                </p>
+
+                <Code>{`const o = { a: 1, nested: { x: 1 } };
+
+// 1) preventExtensions - can't add, can modify existing (if writable)
+Object.preventExtensions(o);
+o.b = 2;             // ignored (or throws in strict mode)
+o.a = 9;             // OK (still writable)
+delete o.a;          // OK (because still configurable)
+Object.isExtensible(o); // false
+
+// 2) seal - can't add/delete/reconfigure; can modify values if writable
+const s = { x: 1 };
+Object.seal(s);
+s.y = 2;           // no (or throws in strict)
+delete s.x;        // no
+s.x = 5;           // OK (writable by default)
+Object.isSealed(s); // true
+
+// 3) freeze - read-only (data props become writable:false)
+const f = { k: 1, nested: { y: 1 } };
+Object.freeze(f);
+f.k = 9;           // no
+delete f.k;        // no
+// BUT: shallow freeze - inner objects are still mutable unless also frozen:
+f.nested.y = 99;   // OK
+Object.isFrozen(f);      // true
+Object.isFrozen(f.nested); // false`}</Code>
+
+                <p><strong>Accessors:</strong> Freezing doesn't change the behavior of existing getters/setters themselves; it only makes the property <code>configurable:false</code> and (for data props) <code>writable:false</code>. A setter will still run if the accessor remains.</p>
+
+                <p><strong>Strict mode behavior:</strong> Adding/deleting/assigning when disallowed <em>throws</em> in strict mode; otherwise it fails silently.</p>
+
+                <Code>{`"use strict";
+const a = {};
+Object.freeze(a);
+try { a.newProp = 1; } catch (e) { /* TypeError */ }`}</Code>
+
+                <p><strong>Deep freeze:</strong> To make the whole graph immutable, recursively freeze nested objects.</p>
+
+                <Code>{`function deepFreeze(obj) {
+  if (obj && typeof obj === "object" && !Object.isFrozen(obj)) {
+    Object.freeze(obj);
+    for (const key of Reflect.ownKeys(obj)) {
+      deepFreeze(obj[key]);
     }
+  }
+  return obj;
+}`}</Code>
+
+                <p><strong>Notes:</strong> <code>const</code> stops <em>rebinding</em> the variable, not mutating the object. Use <code>freeze</code> for object immutability; <code>seal</code> to lock shape but keep writable values; <code>preventExtensions</code> to disallow growth only.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-what-is-symbol",
+        question: "What is a Symbol in JavaScript?",
+        text:
+            "Symbol is a unique, immutable primitive often used as a non-colliding object property key. Even symbols with the same description are different. Symbol.for provides a global registry.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>Symbol</code> is a primitive for creating
+                    <em>unique</em> identifiers. Useful as object keys that won't clash with other keys.
+                    Symbols are immutable and not auto-converted to strings.
+                </p>
+
+                <Code>{`// Create symbols (descriptions are just labels for debugging)
+const s1 = Symbol("id");
+const s2 = Symbol("id");
+s1 === s2; // false (unique)
+
+const obj = {};
+obj[s1] = 123;         // use brackets for symbol keys
+// obj.s1 would be a string key "s1" - not the symbol`}</Code>
+
+                <p><strong>Global registry:</strong> <code>Symbol.for(key)</code> returns the same symbol for a given key across the app (and realms sharing the registry).</p>
+                <Code>{`const a = Symbol.for("channel");
+const b = Symbol.for("channel");
+a === b; // true
+Symbol.keyFor(a); // "channel"`}</Code>
+
+                <p><strong>Enumeration & JSON:</strong> Symbol-keyed properties are skipped by
+                    <code>Object.keys</code>, <code>for...in</code>, and <code>JSON.stringify</code>.
+                    Retrieve them via <code>Object.getOwnPropertySymbols</code> or <code>Reflect.ownKeys</code>.
+                </p>
+                <Code>{`const S = Symbol("hidden");
+const o = { x: 1, [S]: 2 };
+Object.keys(o);                 // ["x"]
+Object.getOwnPropertySymbols(o);// [Symbol(hidden)]
+Reflect.ownKeys(o);             // ["x", Symbol(hidden)]
+JSON.stringify(o);              // "{"x":1}" (symbol key omitted)`}</Code>
+
+                <p><strong>Well-known symbols (glimpse):</strong> Protocol hooks like
+                    <code>Symbol.iterator</code>, <code>Symbol.toPrimitive</code>,
+                    <code>Symbol.toStringTag</code>, <code>Symbol.hasInstance</code> let objects integrate with language features.
+                    (Covered in separate questions.)
+                </p>
+
+                <p><strong>Gotchas:</strong> <code>new Symbol()</code> is a TypeError (not a constructor);
+                    string concatenation with a symbol throws (<code>"" + Symbol()</code>) - use <code>String(sym)</code> if needed.
+                </p>
+            </>
+        )
+    }
+
+
 
 
 
@@ -1147,7 +1836,7 @@ export default function Theory() {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={onSearchKeyDown}
-                        placeholder="Search questions…  (press /, Esc to clear)"
+                        placeholder="Search questions...  (press /, Esc to clear)"
                         aria-label="Search questions"
                         aria-keyshortcuts="/ Escape"
                     />
@@ -1167,9 +1856,13 @@ export default function Theory() {
                 </Styled.SearchBox>
             </Styled.TopBar>
 
+            <p>Last updated: Sep 14, 2025</p>
+
+
+
             <Styled.Count>
                 {filtered.length} result{filtered.length !== 1 ? "s" : ""}
-                {query ? ` for “${query}”` : ""}
+                {query ? ` for "${query}"` : ""}
             </Styled.Count>
 
             {/* QnA list */}
