@@ -1,20 +1,33 @@
-# a2rp: JavaScript Notes
+# SDE QnA Handbook
 
-Concise **JavaScript core notes** - _Definition → Short Example → Must-Know_.
+**Theory QnA** + **Programs QnA** for SDE roles - focused on **JavaScript, React, and Node** (phase-1).  
+Built from everything I've studied and shipped; each QnA is a mini-note with clear examples and gotchas.
 
-**Live:** https://a2rp.github.io/notes-javascript/  
-**Repo:** https://github.com/a2rp/notes-javascript
+---
 
-## Features
+## Live
 
--   Clean notes, lazy-loaded topics
--   React 18 + Vite + styled-components + React Router
+-   **Site:** https://a2rp.github.io/sde-qna-handbook/
+-   **About:** https://a2rp.github.io/sde-qna-handbook/about
 
-## Quick Start
+---
+
+## Clone & Run
 
 ```bash
-git clone https://github.com/a2rp/notes-javascript
-cd notes-javascript
-npm i
+# clone
+git clone https://github.com/a2rp/sde-qna-handbook.git
+cd sde-qna-handbook
+
+# install deps
+npm install
+
+# start dev server
 npm run dev
+
+# build for production
+npm run build
+
+# preview the built app
+npm run preview
 ```
