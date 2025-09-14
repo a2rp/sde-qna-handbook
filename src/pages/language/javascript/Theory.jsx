@@ -4929,11 +4929,91 @@ typeof UNSET; // "undefined"`}</Code>
                     Use parentheses when needed due to operator precedence.</p>
             </>
         )
+    },
+
+    {
+        id: "js-short-circuit-evaluation",
+        question: "What is short-circuit evaluation (&& and ||) in JavaScript?",
+        text:
+            "Logical OR (||) returns the first truthy value; AND (&&) returns the first falsy value. Evaluation stops as soon as the result is known (short-circuits). Use for defaults and guards; prefer ?? when 0/''/false are valid.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>a || b</code> yields <code>a</code> if it's truthy, otherwise <code>b</code>. <code>a && b</code> yields <code>a</code> if it's falsy, otherwise <code>b</code>. The right side isn't evaluated if the left already decides the result.
+                </p>
+
+                <Code>{`// Defaults (be careful with falsy values)
+const input = "";
+const name1 = input || "Guest";   // "Guest" ("" is falsy)
+const name2 = input ?? "Guest";   // "" (kept) — use ?? to keep valid falsy
+
+// Guards
+isLoggedIn && showDashboard();    // calls only when isLoggedIn is truthy
+false && expensive();             // right side not evaluated
+
+// Picking the first usable value
+const port = env.PORT || cfg.port || 3000;`}</Code>
+
+                <p><strong>Evaluation order:</strong> Left side runs first; right side runs only if needed.</p>
+                <Code>{`function a(){ console.log("a"); return 0; }
+function b(){ console.log("b"); return 2; }
+a() && b();  // logs "a" only (0 is falsy, stops)
+a() || b();  // logs "a" then "b" (0 falsy -> evaluates right)`}</Code>
+
+                <p><strong>Combine carefully with nullish coalescing:</strong> Don't mix <code>??</code> with <code>&&</code>/<code>||</code> without parentheses.</p>
+                <Code>{`// (a ?? b) || c
+const title = (user.name ?? "Guest") || "(anonymous)";`}</Code>
+
+                <p><strong>Tip:</strong> For optional calls, old guard: <code>obj && obj.fn && obj.fn()</code>; modern: <code>obj?.fn?.()</code>.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-debounce",
+        question: "Implement a debounce function",
+        text:
+            "Debounce delays calling a function until a pause in events. Useful for search, resize, scroll handlers to avoid running too often.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> Debounce returns a wrapper that postpones <code>fn</code> execution
+                    until after <code>delay</code> ms have elapsed since the last call.
+                </p>
+
+                <Code>{`function debounce(fn, delay = 300) {
+      let t;
+      return function debounced(...args) {
+        const ctx = this;
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(ctx, args), delay);
+      };
     }
 
+    // Usage: fires once after typing stops for 300ms
+    const onSearch = debounce((q) => {
+      console.log("search:", q);
+    }, 300);
 
+    onSearch("a");
+    onSearch("ab");
+    onSearch("abc"); // only this triggers after 300ms`}</Code>
 
+                <p><strong>Notes:</strong> Keeps <code>this</code> and arguments; trailing-call only. Add a <em>cancel</em> if needed:</p>
 
+                <Code>{`function debounceWithCancel(fn, delay = 300) {
+      let t;
+      function wrapped(...args) {
+        const ctx = this;
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(ctx, args), delay);
+      }
+      wrapped.cancel = () => clearTimeout(t);
+      return wrapped;
+    }`}</Code>
+            </>
+        )
+    },
 
 
 
