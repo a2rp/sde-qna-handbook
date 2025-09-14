@@ -1782,7 +1782,836 @@ JSON.stringify(o);              // "{"x":1}" (symbol key omitted)`}</Code>
                 </p>
             </>
         )
+    },
+
+    {
+        id: "js-iterables-and-iterators",
+        question: "What are iterables and iterators in JavaScript?",
+        text:
+            "An iterable has [Symbol.iterator]() that returns an iterator. An iterator has next() → { value, done }. for...of, spread, and array-from use this protocol.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> An <em>iterable</em> is any object with a
+                    <code>[Symbol.iterator]()</code> method that returns an <em>iterator</em>.
+                    An iterator is an object with <code>next()</code> that returns
+                    <code>&#123; value, done &#125;</code>. <code>for...of</code>, spread (<code>...</code>),
+                    destructuring, and <code>Array.from</code> consume iterables.
+                </p>
+
+                <Code>{`// Built-in iterables: Array, String, Map, Set, TypedArrays, arguments, NodeList (most)
+// for...of uses the iterator under the hood
+for (const ch of "hi") console.log(ch); // h, i
+
+// Spread & destructuring consume iterables
+const set = new Set([1,2,3]);
+const arr = [...set];        // [1,2,3]
+const [a, b] = new Map([["x",1],["y",2]]); // a=["x",1], b=["y",2]`}</Code>
+
+                <p><strong>Custom iterable (manual iterator):</strong></p>
+                <Code>{`const countdown = {
+  from: 3,
+  [Symbol.iterator]() {
+    let n = this.from;
+    return {
+      next() {
+        return n >= 0 ? { value: n--, done: false } : { done: true };
+      }
+    };
+  }
+};
+
+[...countdown]; // [3, 2, 1, 0]
+for (const n of countdown) console.log(n);`}</Code>
+
+                <p><strong>Custom iterable (generator shortcut):</strong></p>
+                <Code>{`const range = {
+  *[Symbol.iterator]() { // generator makes an iterator easily
+    for (let i = 1; i <= 3; i++) yield i;
+  }
+};
+Array.from(range); // [1,2,3]`}</Code>
+
+                <p><strong>for...of vs for...in:</strong> <code>for...of</code> iterates <em>values from the iterator</em>;
+                    <code>for...in</code> iterates <em>enumerable property keys</em> (including inherited) of plain objects.
+                    Plain objects are <em>not</em> iterable by default.</p>
+
+                <Code>{`const obj = { a:1, b:2 };
+for (const k in obj) console.log(k); // "a", "b"
+// for (const v of obj) ... // TypeError: obj is not iterable
+Object.values(obj); // [1,2]  (use this for values)`}</Code>
+
+                <p><strong>Map/Set iteration:</strong> <code>for...of new Map([[k,v]])</code> yields <code>[key, value]</code> pairs;
+                    <code>for...of new Set([v])</code> yields values.</p>
+
+                <p><strong>Gotchas:</strong> Don't confuse array-like (has length, numeric keys) with iterable (needs <code>[Symbol.iterator]</code>).
+                    For async data streams see <em>async iterables</em> (<code>[Symbol.asyncIterator]</code>) and <code>for await...of</code> (covered separately).</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-generators",
+        question: "What are generators (`function*`) and `yield`?",
+        text:
+            "Generators are functions that can pause/resume via yield. Calling a generator returns an iterator that's also iterable. You can send values in with next(v), delegate with yield*, and end early with return()/throw().",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <code>generator</code> is a function declared with
+                    <code> function*</code> that can <em>pause</em> at <code>yield</code> and <em>resume</em> later.
+                    Invoking it returns a <em>generator object</em> (an iterator <em>and</em> iterable) with
+                    <code>next()</code>, <code>return()</code>, and <code>throw()</code>.
+                </p>
+
+                <Code>{`// Basic generator: infinite ID sequence
+function* idGen(start = 1) {
+  let id = start;
+  while (true) yield id++;
+}
+const g = idGen(100);
+g.next(); // { value: 100, done: false }
+g.next(); // { value: 101, done: false }`}</Code>
+
+                <p><strong>Sending values into a generator:</strong> the value passed to <code>next(v)</code> becomes the result of the last <code>yield</code> expression.</p>
+                <Code>{`function* dialog() {
+  const name = yield "What's your name?";
+  return "Hi " + name;
+}
+const d = dialog();
+d.next();           // { value: "What's your name?", done: false }
+d.next("Ada");      // { value: "Hi Ada", done: true }`}</Code>
+
+                <p><strong>Iterating & delegation:</strong> Generators are iterable; use <code>for...of</code>, spread, or <code>yield*</code> to delegate to another iterable/generator.</p>
+                <Code>{`function* letters() { yield* "abc"; } // delegate to string (iterable)
+[...letters()]; // ["a","b","c"]
+
+function* combo() {
+  yield 1;
+  yield* [2,3];      // delegate to array
+  yield* letters();  // delegate to generator/iterable
+}
+[...combo()]; // [1,2,3,"a","b","c"]`}</Code>
+
+                <p><strong>Early finish & errors:</strong> <code>return(v)</code> ends the generator (runs <code>finally</code> blocks). <code>throw(err)</code> throws inside the generator at the current pause point.</p>
+                <Code>{`function* g1() {
+  try {
+    yield 1;
+    yield 2;
+  } finally {
+    console.log("cleanup");
+  }
+}
+const it = g1();
+it.next();         // {value:1, done:false}
+it.return(99);     // logs "cleanup", returns {value:99, done:true}
+it.next();         // {value:undefined, done:true}`}</Code>
+
+                <p><strong>Key points:</strong></p>
+                <ul>
+                    <li>Calling a generator <em>does not run it</em> immediately; it returns an iterator. Execution starts on <code>next()</code>.</li>
+                    <li>The generator object is both <em>iterator</em> and <em>iterable</em>: <code>it[Symbol.iterator]() === it</code>.</li>
+                    <li>Use generators to create lazy sequences, control flows, or implement custom iterables concisely.</li>
+                </ul>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li>Arrow functions can't be generators; use <code>function*</code> or <code>{`class A { * method() { } }`}</code>.</li>
+                    <li><code>yield</code> is only valid inside generator bodies.</li>
+                    <li>This topic is <em>sync generators</em>; <em>async generators</em> (<code>async function*</code> + <code>for await...of</code>) are separate.</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-async-iterables-and-for-await-of",
+        question: "What are async iterables and `for await...of`?",
+        text:
+            "An async iterable has [Symbol.asyncIterator]() returning an async iterator whose next() returns a Promise of {value, done}. Consume with for await...of or Array.fromAsync; create via async function*.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> An <em>async iterable</em> exposes{" "}
+                    <code>[Symbol.asyncIterator]()</code> which returns an <em>async iterator</em>.
+                    Its <code>next()</code> method returns a <strong>Promise</strong> resolving to{" "}
+                    <code>&#123; value, done &#125;</code>. Consume it with{" "}
+                    <code>for await...of</code> or <code>Array.fromAsync</code>.
+                </p>
+
+                <Code>{`// Manual async iterable: yields 1,2,3 with delays
+const delayed = {
+  async *[Symbol.asyncIterator]() {
+    for (const v of [1,2,3]) {
+      await new Promise(r => setTimeout(r, 200));
+      yield v;
     }
+  }
+};
+
+(async () => {
+  for await (const n of delayed) {
+    console.log(n); // 1, then 2, then 3 (with delays)
+  }
+})();`}</Code>
+
+                <p><strong>Async generator shortcut:</strong> <code>async function*</code> creates async iterables easily.</p>
+                <Code>{`async function* fetchPages(pages) {
+  for (const url of pages) {
+    const res = await fetch(url);        // awaits between yields
+    yield await res.text();
+  }
+}
+
+// Collect all chunks:
+const texts = await Array.fromAsync(fetchPages(["/a","/b"]));`}</Code>
+
+                <p><strong>for...of vs for <em>await</em>...of:</strong>
+                    <code>for...of</code> consumes <em>sync</em> iterables (<code>[Symbol.iterator]</code>);
+                    <code>for await...of</code> consumes <em>async</em> iterables and also awaits values if they are Promises.</p>
+
+                <Code>{`// Array of promises: for-await awaits each element
+const arr = [Promise.resolve(1), 2, Promise.resolve(3)];
+for await (const v of arr) console.log(v); // 1, 2, 3`}</Code>
+
+                <p><strong>Key points:</strong></p>
+                <ul>
+                    <li>Use inside an <code>async</code> function (or at module top level with TLA).</li>
+                    <li>No async spread: <code>[...asyncIterable]</code> is invalid—use <code>Array.fromAsync</code> or a loop.</li>
+                    <li>Plain objects aren't async iterable unless you add <code>[Symbol.asyncIterator]</code>.</li>
+                </ul>
+
+                <p><strong>Gotchas:</strong> Don't mix <code>for...of</code> with async iterables (TypeError).
+                    Be mindful of backpressure—awaiting each item processes them sequentially.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-what-is-promise",
+        question: "What is a Promise in JavaScript?",
+        text:
+            "A Promise is an object representing the eventual result of an async operation. It's pending → fulfilled or rejected once, and then immutable. Use .then/.catch/.finally; handlers run as microtasks.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <em>Promise</em> wraps an asynchronous result.
+                    It starts <strong>pending</strong> and settles exactly once to <strong>fulfilled</strong> (value)
+                    or <strong>rejected</strong> (reason). Handlers attached via <code>.then</code>, <code>.catch</code>, and <code>.finally</code> run in the microtask queue.
+                </p>
+
+                <Code>{`// Basic creation and consumption
+const p = new Promise((resolve, reject) => {
+  setTimeout(() => resolve(42), 100);   // succeed later
+  // reject(new Error("oops"));          // or fail
+});
+
+p.then(value => value * 2)              // returns a NEW promise
+ .then(x => console.log(x))             // 84
+ .catch(err => console.error("error:", err))
+ .finally(() => console.log("done"));`}</Code>
+
+                <p>
+                    <strong>Chaining & errors:</strong> Returning a value in <code>.then</code> passes it down.
+                    Throwing (or returning a rejected promise) jumps to the nearest <code>.catch</code>.
+                    <code>.finally</code> runs after settle and passes through the original outcome.
+                </p>
+
+                <Code>{`Promise.resolve("A")
+  .then(v => v + "B")             // "AB"
+  .then(() => { throw new Error("X"); })
+  .catch(e => "recover")          // handles the error -> "recover"
+  .finally(() => console.log("cleanup"));`}</Code>
+
+                <p>
+                    <strong>Microtask timing:</strong> Promise callbacks run before timers of the same tick.
+                </p>
+                <Code>{`setTimeout(() => console.log("timeout"), 0);
+Promise.resolve().then(() => console.log("microtask"));
+// order: microtask -> timeout`}</Code>
+
+                <p>
+                    <strong>Gotchas:</strong> The executor runs <em>synchronously</em> at construction time;
+                    a promise settles only once; missing a <code>.catch</code> can cause an
+                    <code>unhandledrejection</code> event in browsers/Node. Prefer using <code>async/await</code> for readability (separate topics cover that and combinators).
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-promise-combinators",
+        question: "What are Promise combinators (all, allSettled, race, any)?",
+        text:
+            "all waits for all to fulfill (fails fast on first reject). allSettled waits for all (never throws). race settles with the first settled promise. any fulfills on the first fulfillment (AggregateError if all reject).",
+        answer: (
+            <>
+                <p>
+                    <strong>Overview:</strong> Combinators coordinate multiple promises:
+                </p>
+                <ul>
+                    <li><code>Promise.all(iterable)</code> → fulfills with <em>array of values</em> when <em>all</em> fulfill; <strong>rejects fast</strong> on the first rejection.</li>
+                    <li><code>Promise.allSettled(iterable)</code> → always fulfills with <em>array of result objects</em> (<code>{'{ status, value | reason }'}</code>).</li>
+                    <li><code>Promise.race(iterable)</code> → settles with the <em>first settled</em> promise (fulfill or reject).</li>
+                    <li><code>Promise.any(iterable)</code> → fulfills with the <em>first fulfillment</em>; rejects with <strong>AggregateError</strong> if all reject.</li>
+                </ul>
+
+                <Code>{`// 1) Promise.all — parallel & fail-fast
+const a = fetch("/a").then(r => r.text());
+const b = fetch("/b").then(r => r.text());
+const [ta, tb] = await Promise.all([a, b]); // throws if a or b rejects`}</Code>
+
+                <Code>{`// 2) Promise.allSettled — never throws; inspect per-item status
+const results = await Promise.allSettled([
+  fetch("/ok"),
+  fetch("/missing")
+]);
+/*
+results = [
+  { status: "fulfilled", value: Response(...) },
+  { status: "rejected",  reason: ... }
+]
+*/`}</Code>
+
+                <Code>{`// 3) Promise.race — first to settle wins (success or failure)
+await Promise.race([
+  fetch("/slow"),
+  new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 1000))
+]);`}</Code>
+
+                <Code>{`// 4) Promise.any — first fulfillment wins; all reject -> AggregateError
+try {
+  const v = await Promise.any([
+    Promise.reject("x"),
+    Promise.resolve("ok"),
+    Promise.resolve("later")
+  ]);
+  // v === "ok"
+} catch (e) {
+  // e is AggregateError if all reject
+}`}</Code>
+
+                <p><strong>Patterns:</strong></p>
+                <ul>
+                    <li><em>Parallel mapping:</em> <code>await Promise.all(arr.map(doAsync))</code> (start all first, then await).</li>
+                    <li><em>Timeout wrapper:</em> <code>await Promise.race([task, timeoutPromise])</code>.</li>
+                    <li><em>Best-effort batch:</em> use <code>allSettled</code> to collect successes + errors.</li>
+                </ul>
+
+                <p><strong>Gotchas:</strong> <code>all</code> rejects fast (others may still be running); <code>any</code> needs a polyfill in very old environments; always handle rejections to avoid <code>unhandledrejection</code>.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-async-await",
+        question: "What is async/await and how does it relate to Promises?",
+        text:
+            "async functions return Promises; await pauses within them until a Promise settles. Use try/catch/finally; prefer Promise.all for parallel work; avoid forEach with async.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>async</code> marks a function that <em>always returns a Promise</em>.
+                    Inside it, <code>await</code> pauses the function until the awaited Promise <em>fulfills or rejects</em>,
+                    resuming with the value or throwing the reason.
+                </p>
+
+                <Code>{`async function getText(url) {
+  const res = await fetch(url);           // await a Promise
+  if (!res.ok) throw new Error(res.status); // turn HTTP errors into rejections
+  return res.text();                      // returned value -> resolved Promise
+}
+
+getText("/a").then(console.log).catch(console.error);`}</Code>
+
+                <p><strong>Error handling:</strong> Use <code>try/catch/finally</code>. A thrown error rejects the returned Promise.</p>
+                <Code>{`async function load() {
+  try {
+    const data = await getText("/data");
+    return JSON.parse(data);
+  } catch (e) {
+    // handle/log/convert
+    return { error: String(e) };
+  } finally {
+    console.log("cleanup");
+  }
+}`}</Code>
+
+                <p><strong>Sequential vs parallel:</strong> Awaiting one-by-one is sequential; start tasks first and <code>await Promise.all</code> for parallelism.</p>
+                <Code>{`// ❌ Sequential (slow)
+const a = await getText("/a");
+const b = await getText("/b");
+
+// ✅ Parallel (start both, then await)
+const [a2, b2] = await Promise.all([getText("/a"), getText("/b")]);`}</Code>
+
+                <p><strong>Loop patterns:</strong> <code>for...of</code> works with <code>await</code>. Avoid <code>forEach</code> (it ignores async).</p>
+                <Code>{`// ✅ sequential per item
+for (const url of urls) {
+  const t = await getText(url);
+  console.log(t);
+}
+
+// ✅ parallel per item
+const texts = await Promise.all(urls.map(getText));
+
+// ❌ forEach doesn't await
+urls.forEach(async u => { await getText(u) }); // fires and forgets`}</Code>
+
+                <p><strong>Top-level <code>await</code>:</strong> In ES modules you can use <em>top-level await</em> (TLA). It pauses module evaluation until resolved.</p>
+                <Code>{`// module.mjs
+const config = await (await fetch("/config.json")).json();`}</Code>
+
+                <p><strong>Cancellation:</strong> Promises aren't cancelable by default; use <code>AbortController</code> with APIs that support it (e.g., <code>fetch</code>).</p>
+                <Code>{`const c = new AbortController();
+const p = fetch("/slow", { signal: c.signal });
+// later
+c.abort(); // rejects fetch with AbortError`}</Code>
+
+                <p><strong>Gotchas:</strong> forgetting <code>await</code> returns a pending Promise; mixing <code>??</code>/<code>||</code> with awaited values can hide errors; don't block the event loop with heavy sync work—offload to Workers.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-strict-mode",
+        question: "What is strict mode ('use strict')?",
+        text:
+            "Strict mode opts into safer semantics: no implicit globals, this is undefined in plain calls, duplicate params forbidden, some silent errors become throw, 'with' disallowed.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <em>Strict mode</em> is an opt-in subset of JS with
+                    tighter rules that catch mistakes. Enable it with <code>"use strict"</code> at the
+                    top of a file/function. ES modules are <em>strict by default</em>.
+                </p>
+
+                <Code>{`"use strict";        // file-level strict
+function f(){ "use strict"; } // or function-level`}</Code>
+
+                <p><strong>Key effects:</strong></p>
+                <ul>
+                    <li><strong>No implicit globals:</strong> assigning to an undeclared name throws.</li>
+                    <li><strong>this in plain calls:</strong> <code>this === undefined</code> (not <code>globalThis</code>).</li>
+                    <li><strong>No duplicate parameter names</strong>; <strong>octal literals</strong> like <code>012</code> banned (use <code>0o12</code>).</li>
+                    <li>Some silent failures become <strong>errors</strong> (e.g., writing to read-only props).</li>
+                    <li><strong>with</strong> statement disallowed; <code>eval</code>/<code>arguments</code> are more restricted.</li>
+                </ul>
+
+                <Code>{`"use strict";
+
+// 1) No implicit globals
+function g(){
+  x = 10; // ReferenceError (x not declared)
+}
+
+// 2) this on plain call
+function who(){ return this; }
+who(); // undefined
+
+// 3) Duplicate params -> SyntaxError
+// function bad(a, a) {} // ❌
+
+// 4) Octal literal old style -> SyntaxError
+// const n = 012; // ❌
+const ok = 0o12;  // 10 ✅
+
+// 5) Writing to read-only -> TypeError (instead of silent no-op)
+const o = {};
+Object.defineProperty(o, "id", { value:1, writable:false });
+try { o.id = 2; } catch(e){ /* TypeError */ }
+
+// 6) with is banned
+// with (o) { /* ❌ */ }`}</Code>
+
+                <p>
+                    <strong>Notes:</strong> In strict (and modules), <code>arguments</code> is not linked to
+                    parameter variables; <code>callee</code>/<code>caller</code> on functions are restricted.
+                </p>
+
+                <p>
+                    <strong>Why use it:</strong> catches bugs early, prevents accidental globals,
+                    enables better optimizations. Since ES modules are strict by default, most modern code already benefits.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-number-type",
+        question: "What is the Number type in JavaScript?",
+        text:
+            "Number is IEEE-754 double-precision floating point. Safe integer range is ±(2^53−1). Special values: NaN, Infinity, -Infinity, and -0. Use Number.isNaN/Number.isFinite.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> JavaScript <code>Number</code> is a 64-bit IEEE-754
+                    floating-point type (double). Integers are represented exactly only up to
+                    <strong> ±(2^53 − 1)</strong>.
+                </p>
+
+                <Code>{`Number.MAX_SAFE_INTEGER; // 9007199254740991  (2^53 - 1)
+Number.MIN_SAFE_INTEGER; // -9007199254740991
+Number.EPSILON; // ~2.220446049250313e-16 (smallest diff between 1 and next)`}</Code>
+
+                <p><strong>Special values:</strong> <code>NaN</code>, <code>Infinity</code>, <code>-Infinity</code>, and signed zero <code>-0</code>.</p>
+                <Code>{`0 === -0;             // true
+Object.is(0, -0);      // false (distinguishes sign of zero)
+Number.isNaN(NaN);     // true
+Number.isFinite(42);   // true
+isNaN("foo");          // true (coerces!) — avoid; prefer Number.isNaN`}</Code>
+
+                <p><strong>Floating point pitfalls:</strong> fractions like 0.1 are approximations.</p>
+                <Code>{`0.1 + 0.2 === 0.3;          // false
+Math.abs(0.1 + 0.2 - 0.3) < Number.EPSILON; // true (tolerant compare)`}</Code>
+
+                <p><strong>Parsing & conversion:</strong></p>
+                <Code>{`Number("42");        // 42
+parseInt("42px", 10); // 42   (stops at non-digit)
+parseFloat("3.14ms"); // 3.14
+Number("  ");         // 0
+Number("");           // 0
+Number("0x10");       // 16
+Number("1_000");      // NaN (underscores only in literals, not strings)
+
+// Safer checks
+Number.isInteger(3.0);        // true
+Number.isSafeInteger(2**53);  // false`}</Code>
+
+                <p><strong>Common Math helpers:</strong> <code>Math.floor</code>, <code>ceil</code>, <code>round</code>, <code>trunc</code>, <code>abs</code>, <code>max/min</code>, <code>pow</code>, <code>random</code>.</p>
+
+                <p><strong>When you need big integers:</strong> use <code>BigInt</code> (separate topic) for integers beyond the safe range or exact integer math.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-bigint-type",
+        question: "What is BigInt in JavaScript?",
+        text:
+            "BigInt is an arbitrary-size integer primitive. Write with an n suffix (123n) or BigInt('123'). You can't mix BigInt and Number in arithmetic; division truncates toward zero.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>BigInt</code> is a primitive for integers of arbitrary size.
+                    Use it when you need integers beyond <code>Number.MAX_SAFE_INTEGER</code> or exact integer math.
+                </p>
+
+                <Code>{`// Creating BigInts
+const a = 123n;                 // literal (n suffix)
+const b = BigInt("9007199254740993"); // from string
+const c = BigInt(42);           // from number (safe only if integer within range)
+
+// Basic arithmetic (integers only)
+1n + 2n;        // 3n
+5n * 10n;       // 50n
+5n / 2n;        // 2n  (truncates toward 0)
+-5n / 2n;       // -2n`}</Code>
+
+                <p><strong>Mixing with Number:</strong> Not allowed in operators (throws). Convert explicitly.</p>
+                <Code>{`1n + 2;             // TypeError (can't mix)
+Number(1n) + 2;      // 3
+BigInt(2) * 3n;      // 6n`}</Code>
+
+                <p><strong>Comparisons & truthiness:</strong> Relational compare works across types; strict equality does not.</p>
+                <Code>{`1n < 2;           // true
+1n === 1;          // false (different types)
+1n == 1;           // true  (loose equality, avoid in general)`}</Code>
+
+                <p><strong>Utilities & limits:</strong></p>
+                <ul>
+                    <li>No <code>Math.*</code> support; use your own integer helpers.</li>
+                    <li>Bitwise ops (<code>&</code>, <code>|</code>, <code>^</code>, <code>~</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;</code>) work on BigInt.</li>
+                    <li>Convert/base formatting with <code>toString(radix)</code>.</li>
+                    <li>Clamp to N bits with <code>BigInt.asUintN</code> / <code>BigInt.asIntN</code>.</li>
+                    <li>Typed arrays: <code>BigInt64Array</code>, <code>BigUint64Array</code>.</li>
+                </ul>
+
+                <Code>{`(255n).toString(16);          // "ff"
+BigInt.asUintN(8, 300n);       // 44n  (300 mod 2^8)
+BigInt.asIntN(8, 0xffn);       // -1n`}</Code>
+
+                <p><strong>Interoperability:</strong> JSON doesn't support BigInt natively.</p>
+                <Code>{`JSON.stringify({ n: 1n }); // TypeError
+// Workaround: stringify as string
+const payload = { n: 1n.toString() };`}</Code>
+
+                <p><strong>Gotchas:</strong> No decimals (only integers); division truncates; avoid mixing with Number without explicit conversion; performance differs by engine—measure for large-int workloads.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-string-type",
+        question: "What is the String type in JavaScript?",
+        text:
+            "String is an immutable primitive sequence of UTF-16 code units. length counts code units (not characters). Use codePointAt/fromCodePoint for full Unicode; strings are compared lexicographically.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>String</code> is an <em>immutable</em> primitive of
+                    UTF-16 <em>code units</em>. Indexing uses zero-based positions into code units.
+                    Reassign to change; methods return new strings.
+                </p>
+
+                <Code>{`const s = "hello";
+s[0];           // "h"
+s.length;       // 5
+// s[0] = "H";  // ❌ no effect (immutable)
+const t = s.toUpperCase(); // "HELLO" (original unchanged)`}</Code>
+
+                <p><strong>Unicode & length:</strong> Some characters use <em>two</em> code units (surrogate pair),
+                    so <code>length</code> may not equal the number of visible characters.</p>
+                <Code>{`const g = "👋";           // U+1F44B
+g.length;                 // 2 (two code units)
+g.codePointAt(0).toString(16); // "1f44b"
+String.fromCodePoint(0x1f44b); // "👋"`}</Code>
+
+                <p><strong>Safe iteration:</strong> <code>for...of</code> iterates by Unicode code points (handles surrogate pairs correctly).</p>
+                <Code>{`for (const ch of "A👋B") console.log(ch); // "A", "👋", "B"`}</Code>
+
+                <p><strong>Common operations:</strong></p>
+                <Code>{`"  hi  ".trim();           // "hi"
+"hello".includes("ell"); // true
+"hello".startsWith("he"); // true
+"hello".endsWith("lo");   // true
+"ab,cd".split(",");       // ["ab","cd"]
+"ab".repeat(3);           // "ababab"
+"pad".padStart(5, "0");   // "00pad"
+"Hello".replace("l", "L");         // "HeLlo" (first only)
+"Hello".replaceAll("l", "L");      // "HeLLo"`}</Code>
+
+                <p><strong>Case & locale:</strong> Basic <code>toLowerCase/toUpperCase</code> don't handle all locales.
+                    Use <code>Intl.Collator</code> for locale-aware comparisons/sorts.</p>
+                <Code>{`new Intl.Collator("en").compare("a", "B"); // -1 (a < B by locale rules)`}</Code>
+
+                <p><strong>Normalization:</strong> Visually identical strings can differ by combining marks.
+                    Normalize before comparison.</p>
+                <Code>{`"é".normalize("NFC") === "e\u0301".normalize("NFC"); // true`}</Code>
+
+                <p><strong>Gotchas:</strong> <code>length</code> counts code units; slicing in the middle of a surrogate pair breaks the character;
+                    prefer <code>[...str]</code> or <code>Array.from(str)</code> to split by code points when needed.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-template-literals",
+        question: "What are template literals and tagged templates?",
+        text:
+            "Template literals use backticks for multi-line strings and ${expr} interpolation. Tagged templates preprocess parts; String.raw gives backslash escapes verbatim.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <em>Template literals</em> use backticks (<code>`...`</code>) and support
+                    multi-line text plus expression interpolation with <code>${"{expr}"}</code>. A
+                    <em>tagged template</em> calls a function with the literal parts and evaluated expressions to customize output.
+                </p>
+
+                <Code>{`// Basic interpolation & multi-line
+const name = "Ada";
+const n = 3;
+const s = \`Hello \${name}!\\nYou have \${n} messages.\`;
+/*
+Hello Ada!
+You have 3 messages.
+*/
+
+// Expressions inside \${...}
+\`2 + 2 = \${2 + 2}\`; // "2 + 2 = 4"`}</Code>
+
+                <p><strong>Tagged templates:</strong> A tag function receives an array of string chunks and the interpolated values.</p>
+                <Code>{`function tag(strings, ...values) {
+  // strings: ["Hello ", "! Price: $", ""]
+  // values:  ["Ada", 9.99]
+  return strings[0] + values[0].toUpperCase() + strings[1] + values[1].toFixed(2) + strings[2];
+}
+const out = tag\`Hello \${"Ada"}! Price: $\${9.99}\`; 
+// "Hello ADA! Price: $9.99"`}</Code>
+
+                <p><strong>String.raw:</strong> Returns backslashes <em>unprocessed</em> (useful for regexes/paths).</p>
+                <Code>{`String.raw\`C:\\\\Users\\\\me\\n\`; // "C:\\\\Users\\\\me\\n" (contains backslash+n, not newline)`}</Code>
+
+                <p><strong>Common patterns:</strong></p>
+                <ul>
+                    <li><em>HTML templating (safe):</em> build strings, but escape untrusted data to prevent XSS.</li>
+                    <li><em>SQL templating:</em> use a tag that parameterizes values (avoid raw concatenation to prevent injection).</li>
+                    <li><em>i18n formatting:</em> tags can reorder/format placeholders.</li>
+                </ul>
+
+                <Code>{`// Example: naive escape (demo only)
+const esc = (s) => String(s).replace(/[&<>"']/g, m => ({
+  "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+}[m]));
+const html = (strings, ...vals) =>
+  strings.map((chunk, i) => chunk + (i < vals.length ? esc(vals[i]) : "")).join("");
+
+const user = "<script>alert(1)</script>";
+html\`<p>Hello \${user}</p>\`; // "<p>Hello &lt;script&gt;alert(1)&lt;/script&gt;</p>"`}</Code>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li>Indentation inside backticks is preserved (mind leading spaces in multi-line literals).</li>
+                    <li>Tagged templates do <em>not</em> use parentheses: <code>tag\`...\`</code> (not <code>tag(\`...\`)</code>).</li>
+                    <li>Escapes like <code>\n</code> are processed normally—use <code>String.raw</code> for literal backslashes.</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-what-is-regexp",
+        question: "What is a regular expression (RegExp) in JavaScript?",
+        text:
+            "RegExp is a pattern used to match/scan/replace text. Use /pattern/flags or new RegExp(). Common methods: test, exec, String.match/matchAll/replace/replaceAll/search/split.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <em>RegExp</em> is a pattern for matching text.
+                    Create with literal syntax <code>/pattern/flags</code> or <code>new RegExp("pattern", "flags")</code>.
+                </p>
+
+                <Code>{`/ab+c/.test("xxabbbcxx");  // true
+const re = /ab+(c)?/i;          // i = ignore case
+re.exec("ABBC");                 // ["ABBc", "c", index:0, input:"ABBC", ...]`}</Code>
+
+                <p><strong>Using with strings:</strong></p>
+                <Code>{`"a1 b22 c333".match(/\\d+/g);     // ["1","22","333"]
+"Hello".search(/l+/);             // 2
+"12-34-56".split(/-/);            // ["12","34","56"]
+"color".replace(/or/, "our");     // "colour"
+"lollol".replaceAll(/lo/g, "LO"); // "LOLLOL"`}</Code>
+
+                <p><strong>Capturing groups:</strong> unnamed <code>(...)</code>, named <code>{`(?<name>...)`}</code>; backrefs via <code>\\1</code> or <code>\\k&lt;name&gt;</code>.</p>
+                <Code>{`const m = /(?<word>\\w+)\\s+\\1/.exec("hey hey");
+m.groups.word; // "hey"
+
+"2025-09-14".replace(/(?<y>\\d{4})-(?<m>\\d{2})-(?<d>\\d{2})/,
+                     "$<d>/$<m>/$<y>"); // "14/09/2025"`}</Code>
+
+                <p><strong>Lookarounds:</strong> <code>(?=...)</code> positive lookahead, <code>(?!...)</code> negative; <code>(?&lt;=...)</code>/<code>(?&lt;!...)</code> lookbehind.</p>
+                <Code>{`"abc123".match(/\\d+(?=\\b)/);     // ["123"]
+"price: $9".match(/(?<=\\$)\\d+/); // ["9"]`}</Code>
+
+                <p><strong>Flags (quick tour):</strong> <code>g</code> global, <code>i</code> ignoreCase, <code>m</code> multiline (^/$ across lines),
+                    <code>s</code> dotAll (<code>.</code> matches newline), <code>u</code> Unicode, <code>y</code> sticky (match at <code>lastIndex</code>), <code>d</code> indices.</p>
+                <Code>{`// Global vs sticky & lastIndex
+const r1 = /\\w+/g;
+r1.lastIndex = 3;
+r1.exec("abc def"); // matches from 3 onwards ("def")
+const r2 = /\\w+/y;
+r2.lastIndex = 3;
+r2.exec("abc def"); // null unless pattern starts exactly at index 3`}</Code>
+
+                <p><strong>Indices flag (d):</strong> get start/end indices of captures.</p>
+                <Code>{`const r = /(\\w+)-(\\w+)/d;
+const m2 = r.exec("foo-bar");
+m2.indices; // e.g., [[0,7],[0,3],[4,7]]`}</Code>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li><code>/g</code> and <code>/y</code> are <em>stateful</em> (they mutate <code>lastIndex</code>); don’t reuse across unrelated inputs.</li>
+                    <li><code>String.match(re)</code> behaves differently with and without <code>g</code>; for all matches + groups, prefer <code>matchAll</code>.</li>
+                    <li>Use <code>u</code> for correct Unicode handling (e.g., <code>.</code> vs surrogate pairs).</li>
+                    <li><code>m</code>: <code>^</code>/<code>$</code> align to line starts/ends; <code>s</code>: <code>.</code> matches <code>\\n</code>.</li>
+                </ul>
+
+                <Code>{`// Match all with groups
+const iter = "a1 b22".matchAll(/(\\w)(\\d+)/g);
+[...iter].map(m => m.slice(1)); // [["a","1"], ["b","22"]]`}</Code>
+            </>
+        )
+    },
+
+
+    {
+        id: "js-what-is-array",
+        question: "What is an Array in JavaScript?",
+        text:
+            "Array is an ordered, zero-indexed, growable object specialized for indexed data. length is 1 + highest index; supports holes; common methods include push/pop, map/filter/reduce, sort with comparator.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> An <em>Array</em> is an ordered, zero-indexed, dynamically
+                    sized object optimized for indexed elements. The <code>length</code> is one more than the
+                    highest numeric index (not the count of defined elements).
+                </p>
+
+                <Code>{`// Create
+const a = [1, 2, 3];
+const b = new Array(3);   // [ <3 empty items> ] (a HOLEY array)
+const c = Array.of(1, 2); // [1, 2]
+
+// Length & holes
+const arr = [];
+arr[3] = "x";
+arr.length;      // 4
+arr;             // [ <3 empty items>, "x" ]`}</Code>
+
+                <p><strong>Adding/removing:</strong></p>
+                <Code>{`const xs = [1,2];
+xs.push(3);      // [1,2,3]      (add at end)
+xs.pop();        // [1,2]        (remove end)
+xs.unshift(0);   // [0,1,2]      (add at start)
+xs.shift();      // [1,2]        (remove start)
+xs.splice(1, 0, 99); // [1,99,2] (insert/delete at index)`}</Code>
+
+                <p><strong>Iteration & transform:</strong></p>
+                <Code>{`[1,2,3].forEach(x => console.log(x));
+[1,2,3].map(x => x * 2);           // [2,4,6]
+[1,2,3].filter(x => x % 2);        // [1,3]
+[1,2,3].reduce((a,b) => a + b, 0); // 6
+[1,2,3].some(x => x > 2);          // true
+[1,2,3].every(x => x > 0);         // true`}</Code>
+
+                <p><strong>Search & copy:</strong></p>
+                <Code>{`["a","b","c"].includes("b"); // true
+["a","b","c"].indexOf("b");    // 1
+["x","y","z"].slice(1);        // ["y","z"] (non-mutating)
+["x","y","z"].concat(["w"]);   // ["x","y","z","w"]`}</Code>
+
+                <p><strong>Sort:</strong> Default is <em>lexicographic</em> on strings; use a comparator for numbers.</p>
+                <Code>{`[10,2,5].sort();              // [10,2,5] -> ["10","2","5"] => ["10","2","5"] => [10,2,5]
+[10,2,5].sort((a,b) => a - b); // [2,5,10]`}</Code>
+
+                <p><strong>Array-like ↔ Array:</strong></p>
+                <Code>{`function f(){
+  // arguments is array-like (has length, numeric keys) but not an Array
+  return Array.from(arguments);     // make a real array
+}
+const nodes = document.querySelectorAll("div"); // NodeList (iterable)
+const arrNodes = [...nodes]; // via spread (uses the iterator)`}</Code>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li><strong>Holes vs <code>undefined</code>:</strong> <code>delete a[i]</code> makes a hole; prefer <code>splice</code> to remove items.</li>
+                    <li><strong>length truncates:</strong> setting <code>arr.length = 0</code> clears the array.</li>
+                    <li><strong>Performance:</strong> frequent <code>shift/unshift</code> are costlier than <code>push/pop</code> (reindexing).</li>
+                    <li>Plain objects aren't arrays; use <code>Array.isArray(v)</code> to check.</li>
+                </ul>
+
+                <Code>{`const a2 = [1,2,3];
+delete a2[1];     // [1, <1 empty item>, 3]
+a2.length;        // 3
+a2.splice(1,1);   // removes properly -> [1,3]
+
+Array.isArray([]);        // true
+Array.isArray({ length:1 }); // false`}</Code>
+            </>
+        )
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
