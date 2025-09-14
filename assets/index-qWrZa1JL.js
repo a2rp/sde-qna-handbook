@@ -1,4 +1,4 @@
-import{d as r,u as o,j as e,N as t}from"./index-DXfhbbN0.js";const n={Page:r.div`
+import{d as r,u as o,j as e,N as t}from"./index-CUPSDti_.js";const n={Page:r.div`
         padding: 24px 18px 48px;
     `,Header:r.header`
         margin-bottom: 16px;

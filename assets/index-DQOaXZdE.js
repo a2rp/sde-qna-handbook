@@ -1,4 +1,4 @@
-import{d as i,j as e}from"./index-DXfhbbN0.js";const s={Wrapper:i.div`
+import{d as i,j as e}from"./index-CUPSDti_.js";const s={Wrapper:i.div`
         padding: 24px;
 
         h1 {
