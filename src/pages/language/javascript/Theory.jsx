@@ -78,71 +78,138 @@ makeAdder(10)(3); // 13`}</Code>
     },
 
     {
-        id: "js-ecmascript-vs-javascript",
-        question: "What is ECMAScript? How is it different from JavaScript?",
+        id: "js-what-is-ecmascript",
+        question: "What is ECMAScript?",
         text:
-            "ECMAScript is the official specification (ECMA-262) that defines the JavaScript language. JavaScript is the common name for implementations of that spec in browsers/Node, plus host APIs (DOM, fs, fetch) that are outside ECMAScript.",
+            "ECMAScript (ECMA-262) is the official language specification that defines JavaScript syntax, semantics, and built-ins (e.g., Promise, Map, Array methods).",
         answer: (
             <>
                 <p>
-                    <strong>Definition:</strong> <em>ECMAScript (ES)</em> is the official language
-                    specification published as <strong>ECMA-262</strong>. It defines syntax,
-                    types, operators, objects, and built-ins (e.g., <code>Promise</code>, <code>Map</code>, <code>Array</code> methods).
-                    <strong>JavaScript</strong> is what engines (V8, SpiderMonkey, JSC) implement and what developers use in
-                    <em>runtimes</em> (Browser, Node, Deno, Bun).
+                    <strong>Definition:</strong> <em>ECMAScript (ES)</em> is the official <strong>ECMA-262</strong> spec for the JavaScript language:
+                    grammar, types, operators, standard objects, and methods.
                 </p>
-
                 <p>
-                    <strong>Difference (mental model):</strong> ES = language rules &amp; standard library.
-                    JavaScript (in a runtime) = ES <em>plus</em> host APIs:
+                    <strong>Why it matters:</strong> ES defines what works uniformly across engines (V8/SpiderMonkey/JSC). Things like DOM or Node’s <code>fs</code> are <em>not</em> ECMAScript—they’re host APIs.
+                </p>
+                <Code>{`// ECMAScript feature (portable across runtimes):
+const email = user?.profile?.email ?? "(not set)";
+
+// NOT ECMAScript (host APIs):
+// document.querySelector("h1")   // Browser DOM
+// (await import("node:fs/promises")).readFile // Node`}</Code>
+                <p>
+                    <strong>Gotcha:</strong> ES features are released yearly (ES2015+). Older environments may need transpile/polyfills.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-what-is-js-engine",
+        question: "What is a JavaScript engine?",
+        text:
+            "A JavaScript engine parses, compiles (often JIT), and executes JS code with garbage collection. Examples: V8 (Chrome/Node), SpiderMonkey (Firefox), JavaScriptCore (Safari).",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <em>JavaScript engine</em> is the program that
+                    <em> parses → compiles (JIT) → executes</em> JavaScript and manages memory via
+                    garbage collection. It implements the ECMAScript spec.
+                </p>
+                <p>
+                    <strong>Examples:</strong> V8 (Chrome, Node, Deno, Bun uses a fork), SpiderMonkey (Firefox),
+                    JavaScriptCore / Nitro (Safari).
+                </p>
+                <Code>{`// Engines run your JS (same code, different engines)
+console.log("Hello from the engine!");
+// Under the hood: parse -> optimize -> JIT -> run -> GC`}</Code>
+                <p>
+                    <strong>Why it matters:</strong> Performance and feature availability depend on the engine version.
+                    New ECMAScript features appear as engines ship support.
+                </p>
+                <p>
+                    <strong>Gotcha:</strong> An <em>engine</em> is not a <em>runtime</em>. DOM, fetch, fs, etc. come from the host runtime,
+                    not the engine itself.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-what-is-runtime",
+        question: "What is a JavaScript runtime?",
+        text:
+            "A runtime is the environment that hosts the JS engine and provides APIs (I/O, timers, modules) plus an event loop. Examples: Browser, Node.js, Deno, Bun.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <em>JavaScript runtime</em> = JS engine <em>+</em> host APIs <em>+</em> event loop.
+                    It’s the environment where JS runs and where non-language features come from.
                 </p>
                 <ul>
-                    <li><strong>Browser host APIs:</strong> DOM, <code>fetch</code>, <code>localStorage</code>, <code>requestAnimationFrame</code>, etc.</li>
-                    <li><strong>Node host APIs:</strong> <code>fs</code>, <code>net</code>, <code>process</code>, <code>Buffer</code>, etc.</li>
+                    <li><strong>Browser:</strong> DOM, <code>fetch</code>, <code>localStorage</code>, <code>requestAnimationFrame</code>, Workers…</li>
+                    <li><strong>Node.js:</strong> <code>fs</code>, <code>net</code>, <code>http</code>, <code>process</code>, <code>Buffer</code>, timers…</li>
+                    <li><strong>Deno/Bun:</strong> similar idea, different standard libs and tooling.</li>
                 </ul>
+                <Code>{`// ECMAScript (language) works everywhere:
+[1,2,3].map(x => x * 2);
 
+// Browser-only (host APIs):
+// document.querySelector("h1");
+// await fetch("/api");
+
+// Node-only (host APIs):
+// import { readFile } from "node:fs/promises";
+// const txt = await readFile("notes.txt", "utf8");`}</Code>
                 <p>
-                    <strong>Versions &amp; naming:</strong> Since 2015, the spec ships yearly (ES2015 ≈ ES6, then ES2016, ES2017 …).
-                    Proposals move through TC39 stages (0→4). <em>Stage 4</em> features land in the next ES edition.
+                    <strong>Why it matters:</strong> Tells you what’s portable (language) vs what depends on the environment (host APIs).
+                </p>
+                <p>
+                    <strong>Gotcha:</strong> Don’t assume browser APIs exist in Node (and vice-versa). Choose the right polyfills or runtime-specific code paths.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-what-is-event-loop",
+        question: "What is the event loop?",
+        text:
+            "The event loop lets single-threaded JS run non-blocking: it executes the call stack, then runs microtasks (Promises) before moving to the next macrotask (timers/I-O).",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> The <em>event loop</em> drives execution in JS runtimes.
+                    After synchronous code finishes, the runtime flushes all <strong>microtasks</strong>
+                    (e.g., Promise callbacks, <code>queueMicrotask</code>) <em>before</em> handling the next
+                    <strong>macrotask</strong> (e.g., <code>setTimeout</code>, I/O, message events).
                 </p>
 
-                <Code>{`// ECMAScript features (language-level) — portable across runtimes:
-
-// 1) Optional chaining & nullish coalescing
-const email = user.profile?.contact?.email ?? "(not set)";
-
-// 2) Non-mutating array helpers (ES2023)
-[3,1,2].toSorted();         // [1,2,3]
-[1,2,3].with(1, 99);        // [1,99,3]
-
-// 3) BigInt (arbitrary-size integers)
-const big = 9007199254740993n; // > Number.MAX_SAFE_INTEGER
-
-// 4) Modules (ESM)
-export const add = (a,b) => a + b;
-`}</Code>
-
-                <Code>{`// Host API examples — NOT part of ECMAScript:
-
-// Browser-only (DOM, fetch)
-document.querySelector("h1"); // DOM API (browser)
-await fetch("/api");          // WHATWG Fetch (browser/Node >=18)
-
-// Node-only (fs)
-import { readFile } from "node:fs/promises";
-const txt = await readFile("notes.txt", "utf8");`}</Code>
+                <Code>{`setTimeout(() => console.log("task"), 0);      // macrotask
+Promise.resolve().then(() => console.log("micro")); // microtask
+console.log("sync");
+// order: sync → micro → task`}</Code>
 
                 <p>
-                    <strong>Why it matters:</strong> Specs vs runtime separation tells you <em>what</em> is guaranteed everywhere
-                    (language), and <em>what</em> is environment-specific (host). It guides portability, polyfills, and debugging.
+                    <strong>Why it matters:</strong> Explains timing/order bugs, UI freezes (long sync blocks),
+                    and why <em>Promises often run “before” timeouts</em>.
                 </p>
 
                 <p>
-                    <strong>Gotchas:</strong> A feature can be in ES but missing on an older engine. Use transpilers/polyfills when targeting older environments; also don’t assume browser-only APIs exist in Node (and vice-versa).
+                    <strong>Gotchas:</strong> A tight microtask loop (e.g., recursively scheduling microtasks)
+                    can starve macrotasks/rendering; <code>setTimeout(fn, 0)</code> never runs “immediately”
+                    (minimum clamping, scheduled after current microtasks).
                 </p>
             </>
         )
     }
+
+
+
+
+
+
+
 
 ];
 
