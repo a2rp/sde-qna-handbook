@@ -1,4 +1,4 @@
-import{r as l,j as e,d as t}from"./index-DUBKA-0G.js";import{B as g}from"./BreadcrumbsBar-DTcWuLy9.js";const m=t.div`
+import{r as l,j as e,d as t}from"./index-Cv0uwqsX.js";import{B as g}from"./BreadcrumbsBar-CZbZuBth.js";const m=t.div`
   border: 1px solid hsl(0 0% 100% / 0.14);
   border-radius: 12px;
   background: hsl(0 0% 100% / 0.03);
@@ -1906,4 +1906,43 @@ typeof UNSET; // "undefined"`}),e.jsx("ul",{children:e.jsxs("li",{children:[e.js
 // <a href="javascript:void 0" onclick="doSomething()">Click</a>
 
 // Bookmarklet idea (demo):
-// javascript:void (function(){ alert("Hi"); }())`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Notes:"})," ",e.jsx("code",{children:"void"})," does not stop execution like ",e.jsx("code",{children:"return"}),"; it only controls the expression result. Use parentheses when needed due to operator precedence."]})]})}];function S(){const[n,i]=l.useState(""),d=l.useRef(null);l.useEffect(()=>{const r=c=>{var x,u;const h=(x=document.activeElement)==null?void 0:x.tagName;c.key==="/"&&h!=="INPUT"&&h!=="TEXTAREA"&&(c.preventDefault(),(u=d.current)==null||u.focus())};return window.addEventListener("keydown",r),()=>window.removeEventListener("keydown",r)},[]);const a=r=>{(r.key==="Escape"||r.key==="Esc")&&(n?i(""):r.currentTarget.blur(),r.preventDefault())},o=l.useMemo(()=>{const r=n.trim().toLowerCase();return r?p.filter(({question:c,text:h})=>c.toLowerCase().includes(r)||h.toLowerCase().includes(r)):p},[n]);return e.jsxs(j.Wrapper,{children:[e.jsxs(j.TopBar,{children:[e.jsx(g,{}),e.jsxs(j.SearchBox,{children:[e.jsx("input",{ref:d,value:n,onChange:r=>i(r.target.value),onKeyDown:a,placeholder:"Search questions...  (press /, Esc to clear)","aria-label":"Search questions","aria-keyshortcuts":"/ Escape"}),n&&e.jsxs(e.Fragment,{children:[e.jsx("small",{className:"hint",children:"esc"}),e.jsx("button",{className:"clear",onClick:()=>i(""),"aria-label":"Clear search",title:"Clear (Esc)",children:"✕"})]})]})]}),e.jsx("p",{children:"Last updated: Sep 14, 2025"}),e.jsxs(j.Count,{children:[o.length," result",o.length!==1?"s":"",n?` for "${n}"`:""]}),o.length===0?e.jsx("p",{style:{opacity:.7},children:"No matches. Try a different keyword."}):o.map(r=>e.jsx(w,{question:r.question,children:r.answer},r.id))]})}export{S as default};
+// javascript:void (function(){ alert("Hi"); }())`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Notes:"})," ",e.jsx("code",{children:"void"})," does not stop execution like ",e.jsx("code",{children:"return"}),"; it only controls the expression result. Use parentheses when needed due to operator precedence."]})]})},{id:"js-short-circuit-evaluation",question:"What is short-circuit evaluation (&& and ||) in JavaScript?",text:"Logical OR (||) returns the first truthy value; AND (&&) returns the first falsy value. Evaluation stops as soon as the result is known (short-circuits). Use for defaults and guards; prefer ?? when 0/''/false are valid.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," ",e.jsx("code",{children:"a || b"})," yields ",e.jsx("code",{children:"a"})," if it's truthy, otherwise ",e.jsx("code",{children:"b"}),". ",e.jsx("code",{children:"a && b"})," yields ",e.jsx("code",{children:"a"})," if it's falsy, otherwise ",e.jsx("code",{children:"b"}),". The right side isn't evaluated if the left already decides the result."]}),e.jsx(s,{children:`// Defaults (be careful with falsy values)
+const input = "";
+const name1 = input || "Guest";   // "Guest" ("" is falsy)
+const name2 = input ?? "Guest";   // "" (kept) — use ?? to keep valid falsy
+
+// Guards
+isLoggedIn && showDashboard();    // calls only when isLoggedIn is truthy
+false && expensive();             // right side not evaluated
+
+// Picking the first usable value
+const port = env.PORT || cfg.port || 3000;`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Evaluation order:"})," Left side runs first; right side runs only if needed."]}),e.jsx(s,{children:`function a(){ console.log("a"); return 0; }
+function b(){ console.log("b"); return 2; }
+a() && b();  // logs "a" only (0 is falsy, stops)
+a() || b();  // logs "a" then "b" (0 falsy -> evaluates right)`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Combine carefully with nullish coalescing:"})," Don't mix ",e.jsx("code",{children:"??"})," with ",e.jsx("code",{children:"&&"}),"/",e.jsx("code",{children:"||"})," without parentheses."]}),e.jsx(s,{children:`// (a ?? b) || c
+const title = (user.name ?? "Guest") || "(anonymous)";`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Tip:"})," For optional calls, old guard: ",e.jsx("code",{children:"obj && obj.fn && obj.fn()"}),"; modern: ",e.jsx("code",{children:"obj?.fn?.()"}),"."]})]})},{id:"js-debounce",question:"Implement a debounce function",text:"Debounce delays calling a function until a pause in events. Useful for search, resize, scroll handlers to avoid running too often.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," Debounce returns a wrapper that postpones ",e.jsx("code",{children:"fn"})," execution until after ",e.jsx("code",{children:"delay"})," ms have elapsed since the last call."]}),e.jsx(s,{children:`function debounce(fn, delay = 300) {
+      let t;
+      return function debounced(...args) {
+        const ctx = this;
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(ctx, args), delay);
+      };
+    }
+
+    // Usage: fires once after typing stops for 300ms
+    const onSearch = debounce((q) => {
+      console.log("search:", q);
+    }, 300);
+
+    onSearch("a");
+    onSearch("ab");
+    onSearch("abc"); // only this triggers after 300ms`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Notes:"})," Keeps ",e.jsx("code",{children:"this"})," and arguments; trailing-call only. Add a ",e.jsx("em",{children:"cancel"})," if needed:"]}),e.jsx(s,{children:`function debounceWithCancel(fn, delay = 300) {
+      let t;
+      function wrapped(...args) {
+        const ctx = this;
+        clearTimeout(t);
+        t = setTimeout(() => fn.apply(ctx, args), delay);
+      }
+      wrapped.cancel = () => clearTimeout(t);
+      return wrapped;
+    }`})]})}];function S(){const[n,i]=l.useState(""),d=l.useRef(null);l.useEffect(()=>{const r=c=>{var u,x;const h=(u=document.activeElement)==null?void 0:u.tagName;c.key==="/"&&h!=="INPUT"&&h!=="TEXTAREA"&&(c.preventDefault(),(x=d.current)==null||x.focus())};return window.addEventListener("keydown",r),()=>window.removeEventListener("keydown",r)},[]);const a=r=>{(r.key==="Escape"||r.key==="Esc")&&(n?i(""):r.currentTarget.blur(),r.preventDefault())},o=l.useMemo(()=>{const r=n.trim().toLowerCase();return r?p.filter(({question:c,text:h})=>c.toLowerCase().includes(r)||h.toLowerCase().includes(r)):p},[n]);return e.jsxs(j.Wrapper,{children:[e.jsxs(j.TopBar,{children:[e.jsx(g,{}),e.jsxs(j.SearchBox,{children:[e.jsx("input",{ref:d,value:n,onChange:r=>i(r.target.value),onKeyDown:a,placeholder:"Search questions...  (press /, Esc to clear)","aria-label":"Search questions","aria-keyshortcuts":"/ Escape"}),n&&e.jsxs(e.Fragment,{children:[e.jsx("small",{className:"hint",children:"esc"}),e.jsx("button",{className:"clear",onClick:()=>i(""),"aria-label":"Clear search",title:"Clear (Esc)",children:"✕"})]})]})]}),e.jsx("p",{children:"Last updated: Sep 14, 2025"}),e.jsxs(j.Count,{children:[o.length," result",o.length!==1?"s":"",n?` for "${n}"`:""]}),o.length===0?e.jsx("p",{style:{opacity:.7},children:"No matches. Try a different keyword."}):o.map(r=>e.jsx(w,{question:r.question,children:r.answer},r.id))]})}export{S as default};
