@@ -4485,7 +4485,7 @@ const math = {
         id: "js-web-workers",
         question: "What are Web Workers and when should you use them?",
         text:
-            "Web Workers run JS on a background thread separate from the main UI thread. Use them for CPU-heavy work so the page doesn’t freeze. Communicate with postMessage/onmessage; no DOM access.",
+            "Web Workers run JS on a background thread separate from the main UI thread. Use them for CPU-heavy work so the page doesn't freeze. Communicate with postMessage/onmessage; no DOM access.",
         answer: (
             <>
                 <p>
@@ -4595,16 +4595,347 @@ document.cookie = "token=; Max-Age=0; Path=/";`}</Code>
                 <p><strong>When to use what:</strong></p>
                 <ul>
                     <li><strong>localStorage</strong>: user prefs, cached UI state that should survive reloads.</li>
-                    <li><strong>sessionStorage</strong>: wizard steps, per-tab state that shouldn’t leak across tabs.</li>
+                    <li><strong>sessionStorage</strong>: wizard steps, per-tab state that shouldn't leak across tabs.</li>
                     <li><strong>Cookies</strong>: data the <em>server</em> must see (e.g., session id). Keep them tiny.</li>
                 </ul>
 
-                <p><strong>Security notes (short):</strong> Avoid putting sensitive tokens in Web Storage (vulnerable to XSS). For cookies, set <code>Secure</code> (HTTPS), <code>SameSite</code> (Lax/Strict), and prefer <code>HttpOnly</code> (set by server only; JS can’t read it).</p>
+                <p><strong>Security notes (short):</strong> Avoid putting sensitive tokens in Web Storage (vulnerable to XSS). For cookies, set <code>Secure</code> (HTTPS), <code>SameSite</code> (Lax/Strict), and prefer <code>HttpOnly</code> (set by server only; JS can't read it).</p>
 
-                <p><strong>Gotchas:</strong> All three are same-origin. Storage is synchronous (don’t spam in hot paths). Cookies are included in requests → bandwidth/perf considerations.</p>
+                <p><strong>Gotchas:</strong> All three are same-origin. Storage is synchronous (don't spam in hot paths). Cookies are included in requests → bandwidth/perf considerations.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-event-bubbling-capturing",
+        question: "What is event bubbling and capturing in the DOM?",
+        text:
+            "DOM events travel in phases: capturing (top→target), target, then bubbling (target→top). By default, listeners run in the bubbling phase; pass { capture: true } to listen during capture. Use stopPropagation()/stopImmediatePropagation() to halt travel; preventDefault() blocks the default action.",
+        answer: (
+            <>
+                <p><strong>Phases:</strong> 1) <em>Capturing</em> (window → document → ... → target), 2) <em>Target</em>, 3) <em>Bubbling</em> (target → ... → document → window).</p>
+
+                <Code>{`// Bubbling (default)
+parent.addEventListener("click", (e) => console.log("parent bubble"));
+child.addEventListener("click",  (e) => console.log("child bubble"));
+
+// Capturing
+parent.addEventListener("click", (e) => console.log("parent capture"), { capture: true });
+
+// Click on child prints:
+// parent capture -> child bubble -> parent bubble`}</Code>
+
+                <p><strong>Stopping:</strong></p>
+                <Code>{`child.addEventListener("click", (e) => {
+  e.stopPropagation();          // stops further propagation (no parent handlers in same phase)
+  // e.stopImmediatePropagation(); // also stops other handlers on the same node
+  // e.preventDefault();           // cancels default action (e.g., link navigation) if cancelable
+});`}</Code>
+
+                <p><strong>Event object tips:</strong> <code>e.target</code> = origin node; <code>e.currentTarget</code> = node whose listener is running; <code>e.eventPhase</code> = 1(capture)/2(target)/3(bubble).</p>
+
+                <p><strong>Delegation:</strong> Attach one listener high up and branch by <code>e.target</code>/<code>closest()</code> to handle many children efficiently.</p>
+
+                <Code>{`list.addEventListener("click", (e) => {
+  const btn = (e.target as Element).closest("button.delete");
+  if (!btn) return;
+  // handle delete for the clicked item
+});`}</Code>
+
+                <p><strong>Options:</strong> <code>{`{ capture: true, once: true, passive: true }`}</code> (passive hints “won't call preventDefault” — useful for scroll/touch perf).</p>
+
+                <p><strong>Gotchas:</strong> Not all events bubble (e.g., <code>focus</code>/<code>blur</code> don't; use <code>focusin</code>/<code>focusout</code>). Stopping propagation doesn't cancel defaults—use <code>preventDefault()</code> for that.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-json-stringify",
+        question: "How does JSON.stringify work? What gets serialized and what doesn't?",
+        text:
+            "JSON.stringify(value, replacer?, space?) serializes JSON-safe data. It keeps own enumerable string-keyed props of plain objects/arrays. Omits functions/undefined/symbols in objects (become null in arrays). NaN/±Infinity → null. Dates use toJSON (ISO). BigInt throws. Circular refs throw.",
+        answer: (
+            <>
+                <p><strong>Signature:</strong> <code>JSON.stringify(value, replacer?, space?)</code></p>
+
+                <Code>{`// What serializes:
+JSON.stringify({ a: 1, s: "hi", b: true, n: null }); // '{"a":1,"s":"hi","b":true,"n":null}'
+
+// Objects & arrays: only OWN, ENUMERABLE, STRING-KEYED props (no prototype props)
+const base = { p: 1 };
+const obj = Object.assign(Object.create(base), { a: 1 });
+JSON.stringify(obj); // '{"a":1}'`}</Code>
+
+                <Code>{`// Omissions / conversions:
+JSON.stringify({ u: undefined, f: () => {}, [Symbol("k")]: 1, x: 2 }); // '{"x":2}'
+JSON.stringify([1, undefined, () => {}, Symbol()]); // '[1,null,null,null]'
+JSON.stringify({ n: NaN, i: Infinity, m: -Infinity }); // '{"n":null,"i":null,"m":null}'
+try { JSON.stringify({ big: 1n }); } catch (e) { /* TypeError (BigInt not supported) */ }`}</Code>
+
+                <Code>{`// Dates: use toJSON() -> ISO string
+JSON.stringify({ d: new Date("2020-01-02T03:04:05Z") });
+// '{"d":"2020-01-02T03:04:05.000Z"}' (ISO format)`}</Code>
+
+                <Code>{`// Circular references: TypeError
+const a = {}; a.self = a;
+JSON.stringify(a); // TypeError: Converting circular structure to JSON`}</Code>
+
+                <Code>{`// Replacer: function or allowlist array
+const user = { id: 1, name: "Ada", password: "secret" };
+JSON.stringify(user, ["id", "name"]); // '{"id":1,"name":"Ada"}'
+
+JSON.stringify(user, (key, value) => key === "password" ? undefined : value);
+// '{"id":1,"name":"Ada"}'`}</Code>
+
+                <Code>{`// Pretty-print with space (number or string)
+const obj2 = { a: 1, b: { c: 2 } };
+JSON.stringify(obj2, null, 2);
+/*
+{
+  "a": 1,
+  "b": {
+    "c": 2
+  }
+}
+*/`}</Code>
+
+                <Code>{`// Custom toJSON (runs before serialization)
+const account = {
+  id: 7, balance: 100, secret: "xxx",
+  toJSON(){ return { id: this.id, balance: this.balance }; }
+};
+JSON.stringify(account); // '{"id":7,"balance":100}'`}</Code>
+
+                <p><strong>Quick rules:</strong> Own enumerable string keys only; functions/undefined/symbols are skipped in objects (→ <code>null</code> in arrays); non-finite numbers → <code>null</code>; Dates stringify to ISO; BigInt & cycles throw; use <code>replacer</code> to filter/transform and <code>space</code> to pretty-print.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-pure-function",
+        question: "What is a Pure Function?",
+        text:
+            "A pure function always returns the same output for the same inputs and has no side effects (doesn't mutate external state, perform I/O, or depend on non-deterministic data).",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> Same inputs → same output; <em>no side effects</em>.
+                    No reading/writing external mutable state, no I/O, no randomness/clock.
+                </p>
+
+                <Code>{`// Impure: reads external state and mutates it
+let total = 0;
+function addToTotal(x) {
+  total += x;         // side effect (mutates external variable)
+  return total;
+}
+
+// Pure: depends only on inputs, no mutations
+function sum(a, b) {
+  return a + b;       // same a,b => same result
+}`}</Code>
+
+                <Code>{`// More examples
+// ❌ Impure: depends on current time
+function greeting(name) {
+  return \`Hi \${name}, time: \${Date.now()}\`;
+}
+
+// ✅ Pure: deterministic
+function greet(name) {
+  return \`Hi \${name}\`;
+}
+
+// ❌ Impure: mutates the array argument
+function pushX(arr) {
+  arr.push("x");
+  return arr;
+}
+
+// ✅ Pure: returns a new array (original unchanged)
+function withX(arr) {
+  return [...arr, "x"];
+}`}</Code>
+
+                <p><strong>Benefits:</strong> Predictable, easy to test, cacheable (memoization), enables safe parallelization.</p>
+                <p><strong>Tips:</strong> Avoid using <code>Date.now()</code>, <code>Math.random()</code>, global vars, or mutating inputs inside a “pure” function. Prefer returning new data instead of mutating.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-memoization",
+        question: "What is Memoization?",
+        text:
+            "Memoization caches a function's results for given inputs so repeated calls with the same arguments return instantly from cache instead of recomputing. Works best with pure functions.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> Store the result of a function call keyed by its arguments.
+                    Next time the same inputs appear, return the cached value instead of recalculating.
+                    Best for <em>pure</em> (deterministic, no side effects) functions.
+                </p>
+
+                <Code>{`// Tiny memoize helper (primitive args or JSON-serializable)
+function memoize(fn) {
+  const cache = new Map();
+  return function (...args) {
+    const key = JSON.stringify(args); // simple keying
+    if (cache.has(key)) return cache.get(key);
+    const result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+// Example: expensive computation
+function slowFib(n) {
+  if (n <= 1) return n;
+  return slowFib(n - 1) + slowFib(n - 2);
+}
+
+const fastFib = memoize(function fib(n) {
+  if (n <= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+});
+
+fastFib(40); // much faster on repeated calls than slowFib(40)`}</Code>
+
+                <Code>{`// Safer keying for object args: use a nested Map chain
+function memoizeByRef(fn) {
+  const root = new Map();
+  return function (...args) {
+    let node = root;
+    for (const a of args) {
+      const key = (a !== Object(a)) ? \`[p]:\${a}\` : a; // primitives as tagged strings, objects by reference
+      if (!node.has(key)) node.set(key, new Map());
+      node = node.get(key);
+    }
+    if (node.has('v')) return node.get('v');
+    const res = fn.apply(this, args);
+    node.set('v', res);
+    return res;
+  };
+}`}</Code>
+
+                <p><strong>When to use:</strong> heavy CPU work, repeated with the same inputs (e.g., formatting, parsing, DP).</p>
+                <p><strong>Gotchas:</strong> memoize only pure functions; beware of mutating arguments (cache becomes stale);
+                    JSON keying ignores property order issues and drops functions/symbols; consider <code>WeakMap</code> for object keys to avoid leaks; add eviction/TTL if the cache might grow unbounded.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-setTimeout-vs-setInterval",
+        question: "What's the difference between setTimeout and setInterval?",
+        text:
+            "setTimeout(fn, delay) runs once after delay. setInterval(fn, delay) runs repeatedly every delay ms until cleared. Use clearTimeout/clearInterval to stop. Prefer a recursive timeout for more consistent spacing and to avoid overlap.",
+        answer: (
+            <>
+                <p>
+                    <strong>setTimeout:</strong> schedule a one-time call after <code>delay</code> ms.
+                    <br />
+                    <strong>setInterval:</strong> schedule repeated calls every <code>delay</code> ms.
+                </p>
+
+                <Code>{`// 1) One-shot
+const id = setTimeout(() => console.log("run once"), 500);
+clearTimeout(id); // cancels if needed`}</Code>
+
+                <Code>{`// 2) Repeating
+const iid = setInterval(() => console.log("tick"), 1000);
+clearInterval(iid); // stop later`}</Code>
+
+                <p><strong>Drift & overlap:</strong> If the callback takes longer than the interval, <code>setInterval</code> can queue up (overlap). A recursive <code>setTimeout</code> schedules the next run after the previous finishes, which is often safer.</p>
+
+                <Code>{`// Safer repeating with recursive timeout
+function startTicker(delay = 1000) {
+  let stopped = false;
+  (function tick() {
+    if (stopped) return;
+    // ...work...
+    setTimeout(tick, delay); // schedule after work completes
+  })();
+  return () => { stopped = true; }; // return a stop function
+}
+const stop = startTicker(1000);
+// stop(); // call to stop`}</Code>
+
+                <p><strong>Animation tip:</strong> For UI animation, prefer <code>requestAnimationFrame</code> (syncs with display refresh).</p>
+
+                <Code>{`function animate() {
+  // draw...
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);`}</Code>
+
+                <p><strong>Notes:</strong> <code>setTimeout(fn, 0)</code> still runs after the current task and microtasks; both timers have a minimum clamp in browsers; always keep callbacks quick (don't block the event loop).</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-void-operator",
+        question: "What is the `void` operator and when would you use it?",
+        text:
+            "`void expr` evaluates `expr` and returns `undefined`. Common uses: (1) ensure an IIFE is parsed as an expression, (2) deliberately return `undefined` (e.g., in bookmarklets / links like `javascript:void 0`), and (3) historically, a guaranteed `undefined` value via `void 0`.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> The unary <code>void</code> operator evaluates its operand and
+                    discards the result, returning <code>undefined</code>.
+                </p>
+
+                <Code>{`void (console.log("runs, but value becomes undefined"));
+// -> logs "runs", expression value is undefined`}</Code>
+
+                <p><strong>Common uses:</strong></p>
+                <ul>
+                    <li>
+                        <strong>IIFE prefix:</strong> Force a function expression without relying on leading punctuation.
+                    </li>
+                </ul>
+
+                <Code>{`// Ensures this is parsed as an expression-IIFE:
+void function () {
+  // isolated scope
+  console.log("IIFE");
+}();`}</Code>
+
+                <ul>
+                    <li>
+                        <strong>Deliberate undefined:</strong> Use <code>void 0</code> as a guaranteed <code>undefined</code> value
+                        (historic safety; today <code>undefined</code> is already immutable).
+                    </li>
+                </ul>
+
+                <Code>{`const UNSET = void 0; // always undefined
+typeof UNSET; // "undefined"`}</Code>
+
+                <ul>
+                    <li>
+                        <strong>Prevent navigation in links/bookmarklets:</strong> Evaluate code but yield <code>undefined</code> so the page
+                        doesn't navigate. (Prefer buttons + JS handlers in real apps.)
+                    </li>
+                </ul>
+
+                <Code>{`// In HTML (demo):
+// <a href="javascript:void 0" onclick="doSomething()">Click</a>
+
+// Bookmarklet idea (demo):
+// javascript:void (function(){ alert("Hi"); }())`}</Code>
+
+                <p><strong>Notes:</strong> <code>void</code> does not stop execution like <code>return</code>; it only controls the expression result.
+                    Use parentheses when needed due to operator precedence.</p>
             </>
         )
     }
+
+
+
+
+
+
 
 
 
