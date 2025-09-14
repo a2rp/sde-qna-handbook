@@ -1,4 +1,4 @@
-import{d as i,j as e}from"./index-CLuJOH5i.js";const s={Wrapper:i.div`
+import{d as i,j as e}from"./index-CxC_fzcL.js";const s={Wrapper:i.div`
         padding: 24px;
 
         h1 {

@@ -1,9 +1,9 @@
-import{r as l,j as e,d as i}from"./index-CLuJOH5i.js";import{B as f}from"./BreadcrumbsBar-Drz60kSt.js";const m=i.div`
+import{r as c,j as e,d as i}from"./index-CxC_fzcL.js";import{B as m}from"./BreadcrumbsBar-Cys2TmB5.js";const g=i.div`
   border: 1px solid hsl(0 0% 100% / 0.14);
   border-radius: 12px;
   background: hsl(0 0% 100% / 0.03);
   overflow: hidden;
-`,g=i.button`
+`,f=i.button`
   width: 100%;
   text-align: left;
   display: flex; align-items: center; justify-content: space-between;
@@ -11,14 +11,14 @@ import{r as l,j as e,d as i}from"./index-CLuJOH5i.js";import{B as f}from"./Bread
   background: transparent; color: inherit; border: 0; cursor: pointer;
   font-size: 15px; letter-spacing: 0.2px;
   &:hover { background: hsl(0 0% 100% / 0.05); }
-`,b=i.span`
+`,y=i.span`
   display: inline-block; transition: transform 180ms ease;
   transform: rotate(${r=>r.$open?180:0}deg);
-`,y=i.div`
+`,b=i.div`
   padding: ${r=>r.$open?"12px 16px 16px":"0 16px"};
   border-top: 1px solid hsl(0 0% 100% / 0.08);
   display: ${r=>r.$open?"block":"none"};
-`,s=({children:r})=>e.jsx("pre",{style:{margin:"8px 0 12px",padding:"10px 12px",borderRadius:10,border:"1px solid hsl(0 0% 100% / 0.12)",background:"hsl(0 0% 100% / 0.04)",overflowX:"auto",lineHeight:1.5,fontSize:13.5},children:r});function w({question:r,children:t,defaultOpen:d=!1}){const[a,o]=l.useState(d),n=l.useId();return e.jsxs(m,{children:[e.jsxs(g,{"aria-expanded":a,"aria-controls":`${n}-panel`,onClick:()=>o(c=>!c),children:[e.jsx("span",{children:r}),e.jsx(b,{$open:a,children:"⌄"})]}),e.jsx(y,{id:`${n}-panel`,role:"region",$open:a,children:typeof t=="string"?e.jsx("p",{children:t}):t})]})}const x={Wrapper:i.div`
+`,s=({children:r})=>e.jsx("pre",{style:{margin:"8px 0 12px",padding:"10px 12px",borderRadius:10,border:"1px solid hsl(0 0% 100% / 0.12)",background:"hsl(0 0% 100% / 0.04)",overflowX:"auto",lineHeight:1.5,fontSize:13.5},children:r});function w({question:r,children:t,defaultOpen:d=!1}){const[a,o]=c.useState(d),n=c.useId();return e.jsxs(g,{children:[e.jsxs(f,{"aria-expanded":a,"aria-controls":`${n}-panel`,onClick:()=>o(l=>!l),children:[e.jsx("span",{children:r}),e.jsx(y,{$open:a,children:"⌄"})]}),e.jsx(b,{id:`${n}-panel`,role:"region",$open:a,children:typeof t=="string"?e.jsx("p",{children:t}):t})]})}const x={Wrapper:i.div`
         padding: 16px;
         display: grid;
         gap: 12px;
@@ -612,4 +612,318 @@ const o = { x: 1, [S]: 2 };
 Object.keys(o);                 // ["x"]
 Object.getOwnPropertySymbols(o);// [Symbol(hidden)]
 Reflect.ownKeys(o);             // ["x", Symbol(hidden)]
-JSON.stringify(o);              // "{"x":1}" (symbol key omitted)`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Well-known symbols (glimpse):"})," Protocol hooks like",e.jsx("code",{children:"Symbol.iterator"}),", ",e.jsx("code",{children:"Symbol.toPrimitive"}),",",e.jsx("code",{children:"Symbol.toStringTag"}),", ",e.jsx("code",{children:"Symbol.hasInstance"})," let objects integrate with language features. (Covered in separate questions.)"]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," ",e.jsx("code",{children:"new Symbol()"})," is a TypeError (not a constructor); string concatenation with a symbol throws (",e.jsx("code",{children:'"" + Symbol()'}),") - use ",e.jsx("code",{children:"String(sym)"})," if needed."]})]})}];function O(){const[r,t]=l.useState(""),d=l.useRef(null);l.useEffect(()=>{const n=c=>{var j,u;const h=(j=document.activeElement)==null?void 0:j.tagName;c.key==="/"&&h!=="INPUT"&&h!=="TEXTAREA"&&(c.preventDefault(),(u=d.current)==null||u.focus())};return window.addEventListener("keydown",n),()=>window.removeEventListener("keydown",n)},[]);const a=n=>{(n.key==="Escape"||n.key==="Esc")&&(r?t(""):n.currentTarget.blur(),n.preventDefault())},o=l.useMemo(()=>{const n=r.trim().toLowerCase();return n?p.filter(({question:c,text:h})=>c.toLowerCase().includes(n)||h.toLowerCase().includes(n)):p},[r]);return e.jsxs(x.Wrapper,{children:[e.jsxs(x.TopBar,{children:[e.jsx(f,{}),e.jsxs(x.SearchBox,{children:[e.jsx("input",{ref:d,value:r,onChange:n=>t(n.target.value),onKeyDown:a,placeholder:"Search questions...  (press /, Esc to clear)","aria-label":"Search questions","aria-keyshortcuts":"/ Escape"}),r&&e.jsxs(e.Fragment,{children:[e.jsx("small",{className:"hint",children:"esc"}),e.jsx("button",{className:"clear",onClick:()=>t(""),"aria-label":"Clear search",title:"Clear (Esc)",children:"✕"})]})]})]}),e.jsx("p",{children:"Last updated: Sep 14, 2025"}),e.jsxs(x.Count,{children:[o.length," result",o.length!==1?"s":"",r?` for "${r}"`:""]}),o.length===0?e.jsx("p",{style:{opacity:.7},children:"No matches. Try a different keyword."}):o.map(n=>e.jsx(w,{question:n.question,children:n.answer},n.id))]})}export{O as default};
+JSON.stringify(o);              // "{"x":1}" (symbol key omitted)`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Well-known symbols (glimpse):"})," Protocol hooks like",e.jsx("code",{children:"Symbol.iterator"}),", ",e.jsx("code",{children:"Symbol.toPrimitive"}),",",e.jsx("code",{children:"Symbol.toStringTag"}),", ",e.jsx("code",{children:"Symbol.hasInstance"})," let objects integrate with language features. (Covered in separate questions.)"]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," ",e.jsx("code",{children:"new Symbol()"})," is a TypeError (not a constructor); string concatenation with a symbol throws (",e.jsx("code",{children:'"" + Symbol()'}),") - use ",e.jsx("code",{children:"String(sym)"})," if needed."]})]})},{id:"js-iterables-and-iterators",question:"What are iterables and iterators in JavaScript?",text:"An iterable has [Symbol.iterator]() that returns an iterator. An iterator has next() → { value, done }. for...of, spread, and array-from use this protocol.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," An ",e.jsx("em",{children:"iterable"})," is any object with a",e.jsx("code",{children:"[Symbol.iterator]()"})," method that returns an ",e.jsx("em",{children:"iterator"}),". An iterator is an object with ",e.jsx("code",{children:"next()"})," that returns",e.jsx("code",{children:"{ value, done }"}),". ",e.jsx("code",{children:"for...of"}),", spread (",e.jsx("code",{children:"..."}),"), destructuring, and ",e.jsx("code",{children:"Array.from"})," consume iterables."]}),e.jsx(s,{children:`// Built-in iterables: Array, String, Map, Set, TypedArrays, arguments, NodeList (most)
+// for...of uses the iterator under the hood
+for (const ch of "hi") console.log(ch); // h, i
+
+// Spread & destructuring consume iterables
+const set = new Set([1,2,3]);
+const arr = [...set];        // [1,2,3]
+const [a, b] = new Map([["x",1],["y",2]]); // a=["x",1], b=["y",2]`}),e.jsx("p",{children:e.jsx("strong",{children:"Custom iterable (manual iterator):"})}),e.jsx(s,{children:`const countdown = {
+  from: 3,
+  [Symbol.iterator]() {
+    let n = this.from;
+    return {
+      next() {
+        return n >= 0 ? { value: n--, done: false } : { done: true };
+      }
+    };
+  }
+};
+
+[...countdown]; // [3, 2, 1, 0]
+for (const n of countdown) console.log(n);`}),e.jsx("p",{children:e.jsx("strong",{children:"Custom iterable (generator shortcut):"})}),e.jsx(s,{children:`const range = {
+  *[Symbol.iterator]() { // generator makes an iterator easily
+    for (let i = 1; i <= 3; i++) yield i;
+  }
+};
+Array.from(range); // [1,2,3]`}),e.jsxs("p",{children:[e.jsx("strong",{children:"for...of vs for...in:"})," ",e.jsx("code",{children:"for...of"})," iterates ",e.jsx("em",{children:"values from the iterator"}),";",e.jsx("code",{children:"for...in"})," iterates ",e.jsx("em",{children:"enumerable property keys"})," (including inherited) of plain objects. Plain objects are ",e.jsx("em",{children:"not"})," iterable by default."]}),e.jsx(s,{children:`const obj = { a:1, b:2 };
+for (const k in obj) console.log(k); // "a", "b"
+// for (const v of obj) ... // TypeError: obj is not iterable
+Object.values(obj); // [1,2]  (use this for values)`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Map/Set iteration:"})," ",e.jsx("code",{children:"for...of new Map([[k,v]])"})," yields ",e.jsx("code",{children:"[key, value]"})," pairs;",e.jsx("code",{children:"for...of new Set([v])"})," yields values."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," Don't confuse array-like (has length, numeric keys) with iterable (needs ",e.jsx("code",{children:"[Symbol.iterator]"}),"). For async data streams see ",e.jsx("em",{children:"async iterables"})," (",e.jsx("code",{children:"[Symbol.asyncIterator]"}),") and ",e.jsx("code",{children:"for await...of"})," (covered separately)."]})]})},{id:"js-generators",question:"What are generators (`function*`) and `yield`?",text:"Generators are functions that can pause/resume via yield. Calling a generator returns an iterator that's also iterable. You can send values in with next(v), delegate with yield*, and end early with return()/throw().",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," A ",e.jsx("code",{children:"generator"})," is a function declared with",e.jsx("code",{children:" function*"})," that can ",e.jsx("em",{children:"pause"})," at ",e.jsx("code",{children:"yield"})," and ",e.jsx("em",{children:"resume"})," later. Invoking it returns a ",e.jsx("em",{children:"generator object"})," (an iterator ",e.jsx("em",{children:"and"})," iterable) with",e.jsx("code",{children:"next()"}),", ",e.jsx("code",{children:"return()"}),", and ",e.jsx("code",{children:"throw()"}),"."]}),e.jsx(s,{children:`// Basic generator: infinite ID sequence
+function* idGen(start = 1) {
+  let id = start;
+  while (true) yield id++;
+}
+const g = idGen(100);
+g.next(); // { value: 100, done: false }
+g.next(); // { value: 101, done: false }`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Sending values into a generator:"})," the value passed to ",e.jsx("code",{children:"next(v)"})," becomes the result of the last ",e.jsx("code",{children:"yield"})," expression."]}),e.jsx(s,{children:`function* dialog() {
+  const name = yield "What's your name?";
+  return "Hi " + name;
+}
+const d = dialog();
+d.next();           // { value: "What's your name?", done: false }
+d.next("Ada");      // { value: "Hi Ada", done: true }`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Iterating & delegation:"})," Generators are iterable; use ",e.jsx("code",{children:"for...of"}),", spread, or ",e.jsx("code",{children:"yield*"})," to delegate to another iterable/generator."]}),e.jsx(s,{children:`function* letters() { yield* "abc"; } // delegate to string (iterable)
+[...letters()]; // ["a","b","c"]
+
+function* combo() {
+  yield 1;
+  yield* [2,3];      // delegate to array
+  yield* letters();  // delegate to generator/iterable
+}
+[...combo()]; // [1,2,3,"a","b","c"]`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Early finish & errors:"})," ",e.jsx("code",{children:"return(v)"})," ends the generator (runs ",e.jsx("code",{children:"finally"})," blocks). ",e.jsx("code",{children:"throw(err)"})," throws inside the generator at the current pause point."]}),e.jsx(s,{children:`function* g1() {
+  try {
+    yield 1;
+    yield 2;
+  } finally {
+    console.log("cleanup");
+  }
+}
+const it = g1();
+it.next();         // {value:1, done:false}
+it.return(99);     // logs "cleanup", returns {value:99, done:true}
+it.next();         // {value:undefined, done:true}`}),e.jsx("p",{children:e.jsx("strong",{children:"Key points:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:["Calling a generator ",e.jsx("em",{children:"does not run it"})," immediately; it returns an iterator. Execution starts on ",e.jsx("code",{children:"next()"}),"."]}),e.jsxs("li",{children:["The generator object is both ",e.jsx("em",{children:"iterator"})," and ",e.jsx("em",{children:"iterable"}),": ",e.jsx("code",{children:"it[Symbol.iterator]() === it"}),"."]}),e.jsx("li",{children:"Use generators to create lazy sequences, control flows, or implement custom iterables concisely."})]}),e.jsx("p",{children:e.jsx("strong",{children:"Gotchas:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:["Arrow functions can't be generators; use ",e.jsx("code",{children:"function*"})," or ",e.jsx("code",{children:"class A { * method() { } }"}),"."]}),e.jsxs("li",{children:[e.jsx("code",{children:"yield"})," is only valid inside generator bodies."]}),e.jsxs("li",{children:["This topic is ",e.jsx("em",{children:"sync generators"}),"; ",e.jsx("em",{children:"async generators"})," (",e.jsx("code",{children:"async function*"})," + ",e.jsx("code",{children:"for await...of"}),") are separate."]})]})]})},{id:"js-async-iterables-and-for-await-of",question:"What are async iterables and `for await...of`?",text:"An async iterable has [Symbol.asyncIterator]() returning an async iterator whose next() returns a Promise of {value, done}. Consume with for await...of or Array.fromAsync; create via async function*.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," An ",e.jsx("em",{children:"async iterable"})," exposes"," ",e.jsx("code",{children:"[Symbol.asyncIterator]()"})," which returns an ",e.jsx("em",{children:"async iterator"}),". Its ",e.jsx("code",{children:"next()"})," method returns a ",e.jsx("strong",{children:"Promise"})," resolving to"," ",e.jsx("code",{children:"{ value, done }"}),". Consume it with"," ",e.jsx("code",{children:"for await...of"})," or ",e.jsx("code",{children:"Array.fromAsync"}),"."]}),e.jsx(s,{children:`// Manual async iterable: yields 1,2,3 with delays
+const delayed = {
+  async *[Symbol.asyncIterator]() {
+    for (const v of [1,2,3]) {
+      await new Promise(r => setTimeout(r, 200));
+      yield v;
+    }
+  }
+};
+
+(async () => {
+  for await (const n of delayed) {
+    console.log(n); // 1, then 2, then 3 (with delays)
+  }
+})();`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Async generator shortcut:"})," ",e.jsx("code",{children:"async function*"})," creates async iterables easily."]}),e.jsx(s,{children:`async function* fetchPages(pages) {
+  for (const url of pages) {
+    const res = await fetch(url);        // awaits between yields
+    yield await res.text();
+  }
+}
+
+// Collect all chunks:
+const texts = await Array.fromAsync(fetchPages(["/a","/b"]));`}),e.jsxs("p",{children:[e.jsxs("strong",{children:["for...of vs for ",e.jsx("em",{children:"await"}),"...of:"]}),e.jsx("code",{children:"for...of"})," consumes ",e.jsx("em",{children:"sync"})," iterables (",e.jsx("code",{children:"[Symbol.iterator]"}),");",e.jsx("code",{children:"for await...of"})," consumes ",e.jsx("em",{children:"async"})," iterables and also awaits values if they are Promises."]}),e.jsx(s,{children:`// Array of promises: for-await awaits each element
+const arr = [Promise.resolve(1), 2, Promise.resolve(3)];
+for await (const v of arr) console.log(v); // 1, 2, 3`}),e.jsx("p",{children:e.jsx("strong",{children:"Key points:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:["Use inside an ",e.jsx("code",{children:"async"})," function (or at module top level with TLA)."]}),e.jsxs("li",{children:["No async spread: ",e.jsx("code",{children:"[...asyncIterable]"})," is invalid—use ",e.jsx("code",{children:"Array.fromAsync"})," or a loop."]}),e.jsxs("li",{children:["Plain objects aren't async iterable unless you add ",e.jsx("code",{children:"[Symbol.asyncIterator]"}),"."]})]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," Don't mix ",e.jsx("code",{children:"for...of"})," with async iterables (TypeError). Be mindful of backpressure—awaiting each item processes them sequentially."]})]})},{id:"js-what-is-promise",question:"What is a Promise in JavaScript?",text:"A Promise is an object representing the eventual result of an async operation. It's pending → fulfilled or rejected once, and then immutable. Use .then/.catch/.finally; handlers run as microtasks.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," A ",e.jsx("em",{children:"Promise"})," wraps an asynchronous result. It starts ",e.jsx("strong",{children:"pending"})," and settles exactly once to ",e.jsx("strong",{children:"fulfilled"})," (value) or ",e.jsx("strong",{children:"rejected"})," (reason). Handlers attached via ",e.jsx("code",{children:".then"}),", ",e.jsx("code",{children:".catch"}),", and ",e.jsx("code",{children:".finally"})," run in the microtask queue."]}),e.jsx(s,{children:`// Basic creation and consumption
+const p = new Promise((resolve, reject) => {
+  setTimeout(() => resolve(42), 100);   // succeed later
+  // reject(new Error("oops"));          // or fail
+});
+
+p.then(value => value * 2)              // returns a NEW promise
+ .then(x => console.log(x))             // 84
+ .catch(err => console.error("error:", err))
+ .finally(() => console.log("done"));`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Chaining & errors:"})," Returning a value in ",e.jsx("code",{children:".then"})," passes it down. Throwing (or returning a rejected promise) jumps to the nearest ",e.jsx("code",{children:".catch"}),".",e.jsx("code",{children:".finally"})," runs after settle and passes through the original outcome."]}),e.jsx(s,{children:`Promise.resolve("A")
+  .then(v => v + "B")             // "AB"
+  .then(() => { throw new Error("X"); })
+  .catch(e => "recover")          // handles the error -> "recover"
+  .finally(() => console.log("cleanup"));`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Microtask timing:"})," Promise callbacks run before timers of the same tick."]}),e.jsx(s,{children:`setTimeout(() => console.log("timeout"), 0);
+Promise.resolve().then(() => console.log("microtask"));
+// order: microtask -> timeout`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," The executor runs ",e.jsx("em",{children:"synchronously"})," at construction time; a promise settles only once; missing a ",e.jsx("code",{children:".catch"})," can cause an",e.jsx("code",{children:"unhandledrejection"})," event in browsers/Node. Prefer using ",e.jsx("code",{children:"async/await"})," for readability (separate topics cover that and combinators)."]})]})},{id:"js-promise-combinators",question:"What are Promise combinators (all, allSettled, race, any)?",text:"all waits for all to fulfill (fails fast on first reject). allSettled waits for all (never throws). race settles with the first settled promise. any fulfills on the first fulfillment (AggregateError if all reject).",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Overview:"})," Combinators coordinate multiple promises:"]}),e.jsxs("ul",{children:[e.jsxs("li",{children:[e.jsx("code",{children:"Promise.all(iterable)"})," → fulfills with ",e.jsx("em",{children:"array of values"})," when ",e.jsx("em",{children:"all"})," fulfill; ",e.jsx("strong",{children:"rejects fast"})," on the first rejection."]}),e.jsxs("li",{children:[e.jsx("code",{children:"Promise.allSettled(iterable)"})," → always fulfills with ",e.jsx("em",{children:"array of result objects"})," (",e.jsx("code",{children:"{ status, value | reason }"}),")."]}),e.jsxs("li",{children:[e.jsx("code",{children:"Promise.race(iterable)"})," → settles with the ",e.jsx("em",{children:"first settled"})," promise (fulfill or reject)."]}),e.jsxs("li",{children:[e.jsx("code",{children:"Promise.any(iterable)"})," → fulfills with the ",e.jsx("em",{children:"first fulfillment"}),"; rejects with ",e.jsx("strong",{children:"AggregateError"})," if all reject."]})]}),e.jsx(s,{children:`// 1) Promise.all — parallel & fail-fast
+const a = fetch("/a").then(r => r.text());
+const b = fetch("/b").then(r => r.text());
+const [ta, tb] = await Promise.all([a, b]); // throws if a or b rejects`}),e.jsx(s,{children:`// 2) Promise.allSettled — never throws; inspect per-item status
+const results = await Promise.allSettled([
+  fetch("/ok"),
+  fetch("/missing")
+]);
+/*
+results = [
+  { status: "fulfilled", value: Response(...) },
+  { status: "rejected",  reason: ... }
+]
+*/`}),e.jsx(s,{children:`// 3) Promise.race — first to settle wins (success or failure)
+await Promise.race([
+  fetch("/slow"),
+  new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 1000))
+]);`}),e.jsx(s,{children:`// 4) Promise.any — first fulfillment wins; all reject -> AggregateError
+try {
+  const v = await Promise.any([
+    Promise.reject("x"),
+    Promise.resolve("ok"),
+    Promise.resolve("later")
+  ]);
+  // v === "ok"
+} catch (e) {
+  // e is AggregateError if all reject
+}`}),e.jsx("p",{children:e.jsx("strong",{children:"Patterns:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:[e.jsx("em",{children:"Parallel mapping:"})," ",e.jsx("code",{children:"await Promise.all(arr.map(doAsync))"})," (start all first, then await)."]}),e.jsxs("li",{children:[e.jsx("em",{children:"Timeout wrapper:"})," ",e.jsx("code",{children:"await Promise.race([task, timeoutPromise])"}),"."]}),e.jsxs("li",{children:[e.jsx("em",{children:"Best-effort batch:"})," use ",e.jsx("code",{children:"allSettled"})," to collect successes + errors."]})]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," ",e.jsx("code",{children:"all"})," rejects fast (others may still be running); ",e.jsx("code",{children:"any"})," needs a polyfill in very old environments; always handle rejections to avoid ",e.jsx("code",{children:"unhandledrejection"}),"."]})]})},{id:"js-async-await",question:"What is async/await and how does it relate to Promises?",text:"async functions return Promises; await pauses within them until a Promise settles. Use try/catch/finally; prefer Promise.all for parallel work; avoid forEach with async.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," ",e.jsx("code",{children:"async"})," marks a function that ",e.jsx("em",{children:"always returns a Promise"}),". Inside it, ",e.jsx("code",{children:"await"})," pauses the function until the awaited Promise ",e.jsx("em",{children:"fulfills or rejects"}),", resuming with the value or throwing the reason."]}),e.jsx(s,{children:`async function getText(url) {
+  const res = await fetch(url);           // await a Promise
+  if (!res.ok) throw new Error(res.status); // turn HTTP errors into rejections
+  return res.text();                      // returned value -> resolved Promise
+}
+
+getText("/a").then(console.log).catch(console.error);`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Error handling:"})," Use ",e.jsx("code",{children:"try/catch/finally"}),". A thrown error rejects the returned Promise."]}),e.jsx(s,{children:`async function load() {
+  try {
+    const data = await getText("/data");
+    return JSON.parse(data);
+  } catch (e) {
+    // handle/log/convert
+    return { error: String(e) };
+  } finally {
+    console.log("cleanup");
+  }
+}`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Sequential vs parallel:"})," Awaiting one-by-one is sequential; start tasks first and ",e.jsx("code",{children:"await Promise.all"})," for parallelism."]}),e.jsx(s,{children:`// ❌ Sequential (slow)
+const a = await getText("/a");
+const b = await getText("/b");
+
+// ✅ Parallel (start both, then await)
+const [a2, b2] = await Promise.all([getText("/a"), getText("/b")]);`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Loop patterns:"})," ",e.jsx("code",{children:"for...of"})," works with ",e.jsx("code",{children:"await"}),". Avoid ",e.jsx("code",{children:"forEach"})," (it ignores async)."]}),e.jsx(s,{children:`// ✅ sequential per item
+for (const url of urls) {
+  const t = await getText(url);
+  console.log(t);
+}
+
+// ✅ parallel per item
+const texts = await Promise.all(urls.map(getText));
+
+// ❌ forEach doesn't await
+urls.forEach(async u => { await getText(u) }); // fires and forgets`}),e.jsxs("p",{children:[e.jsxs("strong",{children:["Top-level ",e.jsx("code",{children:"await"}),":"]})," In ES modules you can use ",e.jsx("em",{children:"top-level await"})," (TLA). It pauses module evaluation until resolved."]}),e.jsx(s,{children:`// module.mjs
+const config = await (await fetch("/config.json")).json();`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Cancellation:"})," Promises aren't cancelable by default; use ",e.jsx("code",{children:"AbortController"})," with APIs that support it (e.g., ",e.jsx("code",{children:"fetch"}),")."]}),e.jsx(s,{children:`const c = new AbortController();
+const p = fetch("/slow", { signal: c.signal });
+// later
+c.abort(); // rejects fetch with AbortError`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," forgetting ",e.jsx("code",{children:"await"})," returns a pending Promise; mixing ",e.jsx("code",{children:"??"}),"/",e.jsx("code",{children:"||"})," with awaited values can hide errors; don't block the event loop with heavy sync work—offload to Workers."]})]})},{id:"js-strict-mode",question:"What is strict mode ('use strict')?",text:"Strict mode opts into safer semantics: no implicit globals, this is undefined in plain calls, duplicate params forbidden, some silent errors become throw, 'with' disallowed.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," ",e.jsx("em",{children:"Strict mode"})," is an opt-in subset of JS with tighter rules that catch mistakes. Enable it with ",e.jsx("code",{children:'"use strict"'})," at the top of a file/function. ES modules are ",e.jsx("em",{children:"strict by default"}),"."]}),e.jsx(s,{children:`"use strict";        // file-level strict
+function f(){ "use strict"; } // or function-level`}),e.jsx("p",{children:e.jsx("strong",{children:"Key effects:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:[e.jsx("strong",{children:"No implicit globals:"})," assigning to an undeclared name throws."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"this in plain calls:"})," ",e.jsx("code",{children:"this === undefined"})," (not ",e.jsx("code",{children:"globalThis"}),")."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"No duplicate parameter names"}),"; ",e.jsx("strong",{children:"octal literals"})," like ",e.jsx("code",{children:"012"})," banned (use ",e.jsx("code",{children:"0o12"}),")."]}),e.jsxs("li",{children:["Some silent failures become ",e.jsx("strong",{children:"errors"})," (e.g., writing to read-only props)."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"with"})," statement disallowed; ",e.jsx("code",{children:"eval"}),"/",e.jsx("code",{children:"arguments"})," are more restricted."]})]}),e.jsx(s,{children:`"use strict";
+
+// 1) No implicit globals
+function g(){
+  x = 10; // ReferenceError (x not declared)
+}
+
+// 2) this on plain call
+function who(){ return this; }
+who(); // undefined
+
+// 3) Duplicate params -> SyntaxError
+// function bad(a, a) {} // ❌
+
+// 4) Octal literal old style -> SyntaxError
+// const n = 012; // ❌
+const ok = 0o12;  // 10 ✅
+
+// 5) Writing to read-only -> TypeError (instead of silent no-op)
+const o = {};
+Object.defineProperty(o, "id", { value:1, writable:false });
+try { o.id = 2; } catch(e){ /* TypeError */ }
+
+// 6) with is banned
+// with (o) { /* ❌ */ }`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Notes:"})," In strict (and modules), ",e.jsx("code",{children:"arguments"})," is not linked to parameter variables; ",e.jsx("code",{children:"callee"}),"/",e.jsx("code",{children:"caller"})," on functions are restricted."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Why use it:"})," catches bugs early, prevents accidental globals, enables better optimizations. Since ES modules are strict by default, most modern code already benefits."]})]})},{id:"js-number-type",question:"What is the Number type in JavaScript?",text:"Number is IEEE-754 double-precision floating point. Safe integer range is ±(2^53−1). Special values: NaN, Infinity, -Infinity, and -0. Use Number.isNaN/Number.isFinite.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," JavaScript ",e.jsx("code",{children:"Number"})," is a 64-bit IEEE-754 floating-point type (double). Integers are represented exactly only up to",e.jsx("strong",{children:" ±(2^53 − 1)"}),"."]}),e.jsx(s,{children:`Number.MAX_SAFE_INTEGER; // 9007199254740991  (2^53 - 1)
+Number.MIN_SAFE_INTEGER; // -9007199254740991
+Number.EPSILON; // ~2.220446049250313e-16 (smallest diff between 1 and next)`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Special values:"})," ",e.jsx("code",{children:"NaN"}),", ",e.jsx("code",{children:"Infinity"}),", ",e.jsx("code",{children:"-Infinity"}),", and signed zero ",e.jsx("code",{children:"-0"}),"."]}),e.jsx(s,{children:`0 === -0;             // true
+Object.is(0, -0);      // false (distinguishes sign of zero)
+Number.isNaN(NaN);     // true
+Number.isFinite(42);   // true
+isNaN("foo");          // true (coerces!) — avoid; prefer Number.isNaN`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Floating point pitfalls:"})," fractions like 0.1 are approximations."]}),e.jsx(s,{children:`0.1 + 0.2 === 0.3;          // false
+Math.abs(0.1 + 0.2 - 0.3) < Number.EPSILON; // true (tolerant compare)`}),e.jsx("p",{children:e.jsx("strong",{children:"Parsing & conversion:"})}),e.jsx(s,{children:`Number("42");        // 42
+parseInt("42px", 10); // 42   (stops at non-digit)
+parseFloat("3.14ms"); // 3.14
+Number("  ");         // 0
+Number("");           // 0
+Number("0x10");       // 16
+Number("1_000");      // NaN (underscores only in literals, not strings)
+
+// Safer checks
+Number.isInteger(3.0);        // true
+Number.isSafeInteger(2**53);  // false`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Common Math helpers:"})," ",e.jsx("code",{children:"Math.floor"}),", ",e.jsx("code",{children:"ceil"}),", ",e.jsx("code",{children:"round"}),", ",e.jsx("code",{children:"trunc"}),", ",e.jsx("code",{children:"abs"}),", ",e.jsx("code",{children:"max/min"}),", ",e.jsx("code",{children:"pow"}),", ",e.jsx("code",{children:"random"}),"."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"When you need big integers:"})," use ",e.jsx("code",{children:"BigInt"})," (separate topic) for integers beyond the safe range or exact integer math."]})]})},{id:"js-bigint-type",question:"What is BigInt in JavaScript?",text:"BigInt is an arbitrary-size integer primitive. Write with an n suffix (123n) or BigInt('123'). You can't mix BigInt and Number in arithmetic; division truncates toward zero.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," ",e.jsx("code",{children:"BigInt"})," is a primitive for integers of arbitrary size. Use it when you need integers beyond ",e.jsx("code",{children:"Number.MAX_SAFE_INTEGER"})," or exact integer math."]}),e.jsx(s,{children:`// Creating BigInts
+const a = 123n;                 // literal (n suffix)
+const b = BigInt("9007199254740993"); // from string
+const c = BigInt(42);           // from number (safe only if integer within range)
+
+// Basic arithmetic (integers only)
+1n + 2n;        // 3n
+5n * 10n;       // 50n
+5n / 2n;        // 2n  (truncates toward 0)
+-5n / 2n;       // -2n`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Mixing with Number:"})," Not allowed in operators (throws). Convert explicitly."]}),e.jsx(s,{children:`1n + 2;             // TypeError (can't mix)
+Number(1n) + 2;      // 3
+BigInt(2) * 3n;      // 6n`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Comparisons & truthiness:"})," Relational compare works across types; strict equality does not."]}),e.jsx(s,{children:`1n < 2;           // true
+1n === 1;          // false (different types)
+1n == 1;           // true  (loose equality, avoid in general)`}),e.jsx("p",{children:e.jsx("strong",{children:"Utilities & limits:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:["No ",e.jsx("code",{children:"Math.*"})," support; use your own integer helpers."]}),e.jsxs("li",{children:["Bitwise ops (",e.jsx("code",{children:"&"}),", ",e.jsx("code",{children:"|"}),", ",e.jsx("code",{children:"^"}),", ",e.jsx("code",{children:"~"}),", ",e.jsx("code",{children:"<<"}),", ",e.jsx("code",{children:">>"}),") work on BigInt."]}),e.jsxs("li",{children:["Convert/base formatting with ",e.jsx("code",{children:"toString(radix)"}),"."]}),e.jsxs("li",{children:["Clamp to N bits with ",e.jsx("code",{children:"BigInt.asUintN"})," / ",e.jsx("code",{children:"BigInt.asIntN"}),"."]}),e.jsxs("li",{children:["Typed arrays: ",e.jsx("code",{children:"BigInt64Array"}),", ",e.jsx("code",{children:"BigUint64Array"}),"."]})]}),e.jsx(s,{children:`(255n).toString(16);          // "ff"
+BigInt.asUintN(8, 300n);       // 44n  (300 mod 2^8)
+BigInt.asIntN(8, 0xffn);       // -1n`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Interoperability:"})," JSON doesn't support BigInt natively."]}),e.jsx(s,{children:`JSON.stringify({ n: 1n }); // TypeError
+// Workaround: stringify as string
+const payload = { n: 1n.toString() };`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," No decimals (only integers); division truncates; avoid mixing with Number without explicit conversion; performance differs by engine—measure for large-int workloads."]})]})},{id:"js-string-type",question:"What is the String type in JavaScript?",text:"String is an immutable primitive sequence of UTF-16 code units. length counts code units (not characters). Use codePointAt/fromCodePoint for full Unicode; strings are compared lexicographically.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," ",e.jsx("code",{children:"String"})," is an ",e.jsx("em",{children:"immutable"})," primitive of UTF-16 ",e.jsx("em",{children:"code units"}),". Indexing uses zero-based positions into code units. Reassign to change; methods return new strings."]}),e.jsx(s,{children:`const s = "hello";
+s[0];           // "h"
+s.length;       // 5
+// s[0] = "H";  // ❌ no effect (immutable)
+const t = s.toUpperCase(); // "HELLO" (original unchanged)`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Unicode & length:"})," Some characters use ",e.jsx("em",{children:"two"})," code units (surrogate pair), so ",e.jsx("code",{children:"length"})," may not equal the number of visible characters."]}),e.jsx(s,{children:`const g = "👋";           // U+1F44B
+g.length;                 // 2 (two code units)
+g.codePointAt(0).toString(16); // "1f44b"
+String.fromCodePoint(0x1f44b); // "👋"`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Safe iteration:"})," ",e.jsx("code",{children:"for...of"})," iterates by Unicode code points (handles surrogate pairs correctly)."]}),e.jsx(s,{children:'for (const ch of "A👋B") console.log(ch); // "A", "👋", "B"'}),e.jsx("p",{children:e.jsx("strong",{children:"Common operations:"})}),e.jsx(s,{children:`"  hi  ".trim();           // "hi"
+"hello".includes("ell"); // true
+"hello".startsWith("he"); // true
+"hello".endsWith("lo");   // true
+"ab,cd".split(",");       // ["ab","cd"]
+"ab".repeat(3);           // "ababab"
+"pad".padStart(5, "0");   // "00pad"
+"Hello".replace("l", "L");         // "HeLlo" (first only)
+"Hello".replaceAll("l", "L");      // "HeLLo"`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Case & locale:"})," Basic ",e.jsx("code",{children:"toLowerCase/toUpperCase"})," don't handle all locales. Use ",e.jsx("code",{children:"Intl.Collator"})," for locale-aware comparisons/sorts."]}),e.jsx(s,{children:'new Intl.Collator("en").compare("a", "B"); // -1 (a < B by locale rules)'}),e.jsxs("p",{children:[e.jsx("strong",{children:"Normalization:"})," Visually identical strings can differ by combining marks. Normalize before comparison."]}),e.jsx(s,{children:'"é".normalize("NFC") === "é".normalize("NFC"); // true'}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," ",e.jsx("code",{children:"length"})," counts code units; slicing in the middle of a surrogate pair breaks the character; prefer ",e.jsx("code",{children:"[...str]"})," or ",e.jsx("code",{children:"Array.from(str)"})," to split by code points when needed."]})]})},{id:"js-template-literals",question:"What are template literals and tagged templates?",text:"Template literals use backticks for multi-line strings and ${expr} interpolation. Tagged templates preprocess parts; String.raw gives backslash escapes verbatim.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," ",e.jsx("em",{children:"Template literals"})," use backticks (",e.jsx("code",{children:"`...`"}),") and support multi-line text plus expression interpolation with ",e.jsxs("code",{children:["$","{expr}"]}),". A",e.jsx("em",{children:"tagged template"})," calls a function with the literal parts and evaluated expressions to customize output."]}),e.jsx(s,{children:`// Basic interpolation & multi-line
+const name = "Ada";
+const n = 3;
+const s = \`Hello \${name}!\\nYou have \${n} messages.\`;
+/*
+Hello Ada!
+You have 3 messages.
+*/
+
+// Expressions inside \${...}
+\`2 + 2 = \${2 + 2}\`; // "2 + 2 = 4"`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Tagged templates:"})," A tag function receives an array of string chunks and the interpolated values."]}),e.jsx(s,{children:`function tag(strings, ...values) {
+  // strings: ["Hello ", "! Price: $", ""]
+  // values:  ["Ada", 9.99]
+  return strings[0] + values[0].toUpperCase() + strings[1] + values[1].toFixed(2) + strings[2];
+}
+const out = tag\`Hello \${"Ada"}! Price: $\${9.99}\`; 
+// "Hello ADA! Price: $9.99"`}),e.jsxs("p",{children:[e.jsx("strong",{children:"String.raw:"})," Returns backslashes ",e.jsx("em",{children:"unprocessed"})," (useful for regexes/paths)."]}),e.jsx(s,{children:'String.raw`C:\\\\Users\\\\me\\n`; // "C:\\\\Users\\\\me\\n" (contains backslash+n, not newline)'}),e.jsx("p",{children:e.jsx("strong",{children:"Common patterns:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:[e.jsx("em",{children:"HTML templating (safe):"})," build strings, but escape untrusted data to prevent XSS."]}),e.jsxs("li",{children:[e.jsx("em",{children:"SQL templating:"})," use a tag that parameterizes values (avoid raw concatenation to prevent injection)."]}),e.jsxs("li",{children:[e.jsx("em",{children:"i18n formatting:"})," tags can reorder/format placeholders."]})]}),e.jsx(s,{children:`// Example: naive escape (demo only)
+const esc = (s) => String(s).replace(/[&<>"']/g, m => ({
+  "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+}[m]));
+const html = (strings, ...vals) =>
+  strings.map((chunk, i) => chunk + (i < vals.length ? esc(vals[i]) : "")).join("");
+
+const user = "<script>alert(1)<\/script>";
+html\`<p>Hello \${user}</p>\`; // "<p>Hello &lt;script&gt;alert(1)&lt;/script&gt;</p>"`}),e.jsx("p",{children:e.jsx("strong",{children:"Gotchas:"})}),e.jsxs("ul",{children:[e.jsx("li",{children:"Indentation inside backticks is preserved (mind leading spaces in multi-line literals)."}),e.jsxs("li",{children:["Tagged templates do ",e.jsx("em",{children:"not"})," use parentheses: ",e.jsx("code",{children:"tag\\`...\\`"})," (not ",e.jsx("code",{children:"tag(\\`...\\`)"}),")."]}),e.jsxs("li",{children:["Escapes like ",e.jsx("code",{children:"\\n"})," are processed normally—use ",e.jsx("code",{children:"String.raw"})," for literal backslashes."]})]})]})},{id:"js-what-is-regexp",question:"What is a regular expression (RegExp) in JavaScript?",text:"RegExp is a pattern used to match/scan/replace text. Use /pattern/flags or new RegExp(). Common methods: test, exec, String.match/matchAll/replace/replaceAll/search/split.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," A ",e.jsx("em",{children:"RegExp"})," is a pattern for matching text. Create with literal syntax ",e.jsx("code",{children:"/pattern/flags"})," or ",e.jsx("code",{children:'new RegExp("pattern", "flags")'}),"."]}),e.jsx(s,{children:`/ab+c/.test("xxabbbcxx");  // true
+const re = /ab+(c)?/i;          // i = ignore case
+re.exec("ABBC");                 // ["ABBc", "c", index:0, input:"ABBC", ...]`}),e.jsx("p",{children:e.jsx("strong",{children:"Using with strings:"})}),e.jsx(s,{children:`"a1 b22 c333".match(/\\d+/g);     // ["1","22","333"]
+"Hello".search(/l+/);             // 2
+"12-34-56".split(/-/);            // ["12","34","56"]
+"color".replace(/or/, "our");     // "colour"
+"lollol".replaceAll(/lo/g, "LO"); // "LOLLOL"`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Capturing groups:"})," unnamed ",e.jsx("code",{children:"(...)"}),", named ",e.jsx("code",{children:"(?<name>...)"}),"; backrefs via ",e.jsx("code",{children:"\\\\1"})," or ",e.jsx("code",{children:"\\\\k<name>"}),"."]}),e.jsx(s,{children:`const m = /(?<word>\\w+)\\s+\\1/.exec("hey hey");
+m.groups.word; // "hey"
+
+"2025-09-14".replace(/(?<y>\\d{4})-(?<m>\\d{2})-(?<d>\\d{2})/,
+                     "$<d>/$<m>/$<y>"); // "14/09/2025"`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Lookarounds:"})," ",e.jsx("code",{children:"(?=...)"})," positive lookahead, ",e.jsx("code",{children:"(?!...)"})," negative; ",e.jsx("code",{children:"(?<=...)"}),"/",e.jsx("code",{children:"(?<!...)"})," lookbehind."]}),e.jsx(s,{children:`"abc123".match(/\\d+(?=\\b)/);     // ["123"]
+"price: $9".match(/(?<=\\$)\\d+/); // ["9"]`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Flags (quick tour):"})," ",e.jsx("code",{children:"g"})," global, ",e.jsx("code",{children:"i"})," ignoreCase, ",e.jsx("code",{children:"m"})," multiline (^/$ across lines),",e.jsx("code",{children:"s"})," dotAll (",e.jsx("code",{children:"."})," matches newline), ",e.jsx("code",{children:"u"})," Unicode, ",e.jsx("code",{children:"y"})," sticky (match at ",e.jsx("code",{children:"lastIndex"}),"), ",e.jsx("code",{children:"d"})," indices."]}),e.jsx(s,{children:`// Global vs sticky & lastIndex
+const r1 = /\\w+/g;
+r1.lastIndex = 3;
+r1.exec("abc def"); // matches from 3 onwards ("def")
+const r2 = /\\w+/y;
+r2.lastIndex = 3;
+r2.exec("abc def"); // null unless pattern starts exactly at index 3`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Indices flag (d):"})," get start/end indices of captures."]}),e.jsx(s,{children:`const r = /(\\w+)-(\\w+)/d;
+const m2 = r.exec("foo-bar");
+m2.indices; // e.g., [[0,7],[0,3],[4,7]]`}),e.jsx("p",{children:e.jsx("strong",{children:"Gotchas:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:[e.jsx("code",{children:"/g"})," and ",e.jsx("code",{children:"/y"})," are ",e.jsx("em",{children:"stateful"})," (they mutate ",e.jsx("code",{children:"lastIndex"}),"); don’t reuse across unrelated inputs."]}),e.jsxs("li",{children:[e.jsx("code",{children:"String.match(re)"})," behaves differently with and without ",e.jsx("code",{children:"g"}),"; for all matches + groups, prefer ",e.jsx("code",{children:"matchAll"}),"."]}),e.jsxs("li",{children:["Use ",e.jsx("code",{children:"u"})," for correct Unicode handling (e.g., ",e.jsx("code",{children:"."})," vs surrogate pairs)."]}),e.jsxs("li",{children:[e.jsx("code",{children:"m"}),": ",e.jsx("code",{children:"^"}),"/",e.jsx("code",{children:"$"})," align to line starts/ends; ",e.jsx("code",{children:"s"}),": ",e.jsx("code",{children:"."})," matches ",e.jsx("code",{children:"\\\\n"}),"."]})]}),e.jsx(s,{children:`// Match all with groups
+const iter = "a1 b22".matchAll(/(\\w)(\\d+)/g);
+[...iter].map(m => m.slice(1)); // [["a","1"], ["b","22"]]`})]})},{id:"js-what-is-array",question:"What is an Array in JavaScript?",text:"Array is an ordered, zero-indexed, growable object specialized for indexed data. length is 1 + highest index; supports holes; common methods include push/pop, map/filter/reduce, sort with comparator.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," An ",e.jsx("em",{children:"Array"})," is an ordered, zero-indexed, dynamically sized object optimized for indexed elements. The ",e.jsx("code",{children:"length"})," is one more than the highest numeric index (not the count of defined elements)."]}),e.jsx(s,{children:`// Create
+const a = [1, 2, 3];
+const b = new Array(3);   // [ <3 empty items> ] (a HOLEY array)
+const c = Array.of(1, 2); // [1, 2]
+
+// Length & holes
+const arr = [];
+arr[3] = "x";
+arr.length;      // 4
+arr;             // [ <3 empty items>, "x" ]`}),e.jsx("p",{children:e.jsx("strong",{children:"Adding/removing:"})}),e.jsx(s,{children:`const xs = [1,2];
+xs.push(3);      // [1,2,3]      (add at end)
+xs.pop();        // [1,2]        (remove end)
+xs.unshift(0);   // [0,1,2]      (add at start)
+xs.shift();      // [1,2]        (remove start)
+xs.splice(1, 0, 99); // [1,99,2] (insert/delete at index)`}),e.jsx("p",{children:e.jsx("strong",{children:"Iteration & transform:"})}),e.jsx(s,{children:`[1,2,3].forEach(x => console.log(x));
+[1,2,3].map(x => x * 2);           // [2,4,6]
+[1,2,3].filter(x => x % 2);        // [1,3]
+[1,2,3].reduce((a,b) => a + b, 0); // 6
+[1,2,3].some(x => x > 2);          // true
+[1,2,3].every(x => x > 0);         // true`}),e.jsx("p",{children:e.jsx("strong",{children:"Search & copy:"})}),e.jsx(s,{children:`["a","b","c"].includes("b"); // true
+["a","b","c"].indexOf("b");    // 1
+["x","y","z"].slice(1);        // ["y","z"] (non-mutating)
+["x","y","z"].concat(["w"]);   // ["x","y","z","w"]`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Sort:"})," Default is ",e.jsx("em",{children:"lexicographic"})," on strings; use a comparator for numbers."]}),e.jsx(s,{children:`[10,2,5].sort();              // [10,2,5] -> ["10","2","5"] => ["10","2","5"] => [10,2,5]
+[10,2,5].sort((a,b) => a - b); // [2,5,10]`}),e.jsx("p",{children:e.jsx("strong",{children:"Array-like ↔ Array:"})}),e.jsx(s,{children:`function f(){
+  // arguments is array-like (has length, numeric keys) but not an Array
+  return Array.from(arguments);     // make a real array
+}
+const nodes = document.querySelectorAll("div"); // NodeList (iterable)
+const arrNodes = [...nodes]; // via spread (uses the iterator)`}),e.jsx("p",{children:e.jsx("strong",{children:"Gotchas:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:[e.jsxs("strong",{children:["Holes vs ",e.jsx("code",{children:"undefined"}),":"]})," ",e.jsx("code",{children:"delete a[i]"})," makes a hole; prefer ",e.jsx("code",{children:"splice"})," to remove items."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"length truncates:"})," setting ",e.jsx("code",{children:"arr.length = 0"})," clears the array."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"Performance:"})," frequent ",e.jsx("code",{children:"shift/unshift"})," are costlier than ",e.jsx("code",{children:"push/pop"})," (reindexing)."]}),e.jsxs("li",{children:["Plain objects aren't arrays; use ",e.jsx("code",{children:"Array.isArray(v)"})," to check."]})]}),e.jsx(s,{children:`const a2 = [1,2,3];
+delete a2[1];     // [1, <1 empty item>, 3]
+a2.length;        // 3
+a2.splice(1,1);   // removes properly -> [1,3]
+
+Array.isArray([]);        // true
+Array.isArray({ length:1 }); // false`})]})}];function S(){const[r,t]=c.useState(""),d=c.useRef(null);c.useEffect(()=>{const n=l=>{var j,u;const h=(j=document.activeElement)==null?void 0:j.tagName;l.key==="/"&&h!=="INPUT"&&h!=="TEXTAREA"&&(l.preventDefault(),(u=d.current)==null||u.focus())};return window.addEventListener("keydown",n),()=>window.removeEventListener("keydown",n)},[]);const a=n=>{(n.key==="Escape"||n.key==="Esc")&&(r?t(""):n.currentTarget.blur(),n.preventDefault())},o=c.useMemo(()=>{const n=r.trim().toLowerCase();return n?p.filter(({question:l,text:h})=>l.toLowerCase().includes(n)||h.toLowerCase().includes(n)):p},[r]);return e.jsxs(x.Wrapper,{children:[e.jsxs(x.TopBar,{children:[e.jsx(m,{}),e.jsxs(x.SearchBox,{children:[e.jsx("input",{ref:d,value:r,onChange:n=>t(n.target.value),onKeyDown:a,placeholder:"Search questions...  (press /, Esc to clear)","aria-label":"Search questions","aria-keyshortcuts":"/ Escape"}),r&&e.jsxs(e.Fragment,{children:[e.jsx("small",{className:"hint",children:"esc"}),e.jsx("button",{className:"clear",onClick:()=>t(""),"aria-label":"Clear search",title:"Clear (Esc)",children:"✕"})]})]})]}),e.jsx("p",{children:"Last updated: Sep 14, 2025"}),e.jsxs(x.Count,{children:[o.length," result",o.length!==1?"s":"",r?` for "${r}"`:""]}),o.length===0?e.jsx("p",{style:{opacity:.7},children:"No matches. Try a different keyword."}):o.map(n=>e.jsx(w,{question:n.question,children:n.answer},n.id))]})}export{S as default};
