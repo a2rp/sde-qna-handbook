@@ -1,4 +1,4 @@
-import{r as l,j as e,d as t}from"./index-DlFPj49j.js";import{B as g}from"./BreadcrumbsBar-DIBOYOZ1.js";const m=t.div`
+import{r as l,j as e,d as t}from"./index-DUBKA-0G.js";import{B as g}from"./BreadcrumbsBar-DTcWuLy9.js";const m=t.div`
   border: 1px solid hsl(0 0% 100% / 0.14);
   border-radius: 12px;
   background: hsl(0 0% 100% / 0.03);
@@ -1712,7 +1712,7 @@ var exprVar = function() { console.log("late value"); };`}),e.jsxs("p",{children
 };`}),e.jsxs("p",{children:[e.jsx("strong",{children:"When to use:"})," Declarations for top-level utilities (clear & hoisted). Expressions for conditional creation, passing as arguments, or attaching to objects."]}),e.jsx(s,{children:`// Attaching as a method (expression)
 const math = {
   add: function(a,b){ return a + b; }, // or add(a,b) { ... } in class/obj literal
-};`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Notes:"})," In ES modules/strict mode, block-scoped function ",e.jsx("em",{children:"declarations"})," behave consistently (scoped to the block). Avoid relying on cross-environment quirks of function-in-block in old scripts."]})]})},{id:"js-web-workers",question:"What are Web Workers and when should you use them?",text:"Web Workers run JS on a background thread separate from the main UI thread. Use them for CPU-heavy work so the page doesn’t freeze. Communicate with postMessage/onmessage; no DOM access.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," A ",e.jsx("em",{children:"Web Worker"})," lets you run JS off the main thread. It has its own global scope (",e.jsx("code",{children:"self"}),"), no DOM access, and communicates with the page via messages."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"When to use:"})," CPU-heavy tasks (parsing, image processing, crunching data) that would block UI."]}),e.jsx(s,{children:`// main.js — create a dedicated worker (ES module worker)
+};`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Notes:"})," In ES modules/strict mode, block-scoped function ",e.jsx("em",{children:"declarations"})," behave consistently (scoped to the block). Avoid relying on cross-environment quirks of function-in-block in old scripts."]})]})},{id:"js-web-workers",question:"What are Web Workers and when should you use them?",text:"Web Workers run JS on a background thread separate from the main UI thread. Use them for CPU-heavy work so the page doesn't freeze. Communicate with postMessage/onmessage; no DOM access.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," A ",e.jsx("em",{children:"Web Worker"})," lets you run JS off the main thread. It has its own global scope (",e.jsx("code",{children:"self"}),"), no DOM access, and communicates with the page via messages."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"When to use:"})," CPU-heavy tasks (parsing, image processing, crunching data) that would block UI."]}),e.jsx(s,{children:`// main.js — create a dedicated worker (ES module worker)
 const worker = new Worker("./worker.js", { type: "module" });
 
 worker.onmessage = (e) => {
@@ -1759,4 +1759,151 @@ document.cookie = \`token=abc123; Max-Age=\${60*60*24*days}; Path=/; SameSite=La
 document.cookie; // "token=abc123; theme=dark"
 
 // Delete (set Max-Age=0)
-document.cookie = "token=; Max-Age=0; Path=/";`}),e.jsx("p",{children:e.jsx("strong",{children:"When to use what:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:[e.jsx("strong",{children:"localStorage"}),": user prefs, cached UI state that should survive reloads."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"sessionStorage"}),": wizard steps, per-tab state that shouldn’t leak across tabs."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"Cookies"}),": data the ",e.jsx("em",{children:"server"})," must see (e.g., session id). Keep them tiny."]})]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Security notes (short):"})," Avoid putting sensitive tokens in Web Storage (vulnerable to XSS). For cookies, set ",e.jsx("code",{children:"Secure"})," (HTTPS), ",e.jsx("code",{children:"SameSite"})," (Lax/Strict), and prefer ",e.jsx("code",{children:"HttpOnly"})," (set by server only; JS can’t read it)."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," All three are same-origin. Storage is synchronous (don’t spam in hot paths). Cookies are included in requests → bandwidth/perf considerations."]})]})}];function S(){const[n,i]=l.useState(""),d=l.useRef(null);l.useEffect(()=>{const r=c=>{var x,u;const h=(x=document.activeElement)==null?void 0:x.tagName;c.key==="/"&&h!=="INPUT"&&h!=="TEXTAREA"&&(c.preventDefault(),(u=d.current)==null||u.focus())};return window.addEventListener("keydown",r),()=>window.removeEventListener("keydown",r)},[]);const a=r=>{(r.key==="Escape"||r.key==="Esc")&&(n?i(""):r.currentTarget.blur(),r.preventDefault())},o=l.useMemo(()=>{const r=n.trim().toLowerCase();return r?p.filter(({question:c,text:h})=>c.toLowerCase().includes(r)||h.toLowerCase().includes(r)):p},[n]);return e.jsxs(j.Wrapper,{children:[e.jsxs(j.TopBar,{children:[e.jsx(g,{}),e.jsxs(j.SearchBox,{children:[e.jsx("input",{ref:d,value:n,onChange:r=>i(r.target.value),onKeyDown:a,placeholder:"Search questions...  (press /, Esc to clear)","aria-label":"Search questions","aria-keyshortcuts":"/ Escape"}),n&&e.jsxs(e.Fragment,{children:[e.jsx("small",{className:"hint",children:"esc"}),e.jsx("button",{className:"clear",onClick:()=>i(""),"aria-label":"Clear search",title:"Clear (Esc)",children:"✕"})]})]})]}),e.jsx("p",{children:"Last updated: Sep 14, 2025"}),e.jsxs(j.Count,{children:[o.length," result",o.length!==1?"s":"",n?` for "${n}"`:""]}),o.length===0?e.jsx("p",{style:{opacity:.7},children:"No matches. Try a different keyword."}):o.map(r=>e.jsx(w,{question:r.question,children:r.answer},r.id))]})}export{S as default};
+document.cookie = "token=; Max-Age=0; Path=/";`}),e.jsx("p",{children:e.jsx("strong",{children:"When to use what:"})}),e.jsxs("ul",{children:[e.jsxs("li",{children:[e.jsx("strong",{children:"localStorage"}),": user prefs, cached UI state that should survive reloads."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"sessionStorage"}),": wizard steps, per-tab state that shouldn't leak across tabs."]}),e.jsxs("li",{children:[e.jsx("strong",{children:"Cookies"}),": data the ",e.jsx("em",{children:"server"})," must see (e.g., session id). Keep them tiny."]})]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Security notes (short):"})," Avoid putting sensitive tokens in Web Storage (vulnerable to XSS). For cookies, set ",e.jsx("code",{children:"Secure"})," (HTTPS), ",e.jsx("code",{children:"SameSite"})," (Lax/Strict), and prefer ",e.jsx("code",{children:"HttpOnly"})," (set by server only; JS can't read it)."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," All three are same-origin. Storage is synchronous (don't spam in hot paths). Cookies are included in requests → bandwidth/perf considerations."]})]})},{id:"js-event-bubbling-capturing",question:"What is event bubbling and capturing in the DOM?",text:"DOM events travel in phases: capturing (top→target), target, then bubbling (target→top). By default, listeners run in the bubbling phase; pass { capture: true } to listen during capture. Use stopPropagation()/stopImmediatePropagation() to halt travel; preventDefault() blocks the default action.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Phases:"})," 1) ",e.jsx("em",{children:"Capturing"})," (window → document → ... → target), 2) ",e.jsx("em",{children:"Target"}),", 3) ",e.jsx("em",{children:"Bubbling"})," (target → ... → document → window)."]}),e.jsx(s,{children:`// Bubbling (default)
+parent.addEventListener("click", (e) => console.log("parent bubble"));
+child.addEventListener("click",  (e) => console.log("child bubble"));
+
+// Capturing
+parent.addEventListener("click", (e) => console.log("parent capture"), { capture: true });
+
+// Click on child prints:
+// parent capture -> child bubble -> parent bubble`}),e.jsx("p",{children:e.jsx("strong",{children:"Stopping:"})}),e.jsx(s,{children:`child.addEventListener("click", (e) => {
+  e.stopPropagation();          // stops further propagation (no parent handlers in same phase)
+  // e.stopImmediatePropagation(); // also stops other handlers on the same node
+  // e.preventDefault();           // cancels default action (e.g., link navigation) if cancelable
+});`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Event object tips:"})," ",e.jsx("code",{children:"e.target"})," = origin node; ",e.jsx("code",{children:"e.currentTarget"})," = node whose listener is running; ",e.jsx("code",{children:"e.eventPhase"})," = 1(capture)/2(target)/3(bubble)."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Delegation:"})," Attach one listener high up and branch by ",e.jsx("code",{children:"e.target"}),"/",e.jsx("code",{children:"closest()"})," to handle many children efficiently."]}),e.jsx(s,{children:`list.addEventListener("click", (e) => {
+  const btn = (e.target as Element).closest("button.delete");
+  if (!btn) return;
+  // handle delete for the clicked item
+});`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Options:"})," ",e.jsx("code",{children:"{ capture: true, once: true, passive: true }"})," (passive hints “won't call preventDefault” — useful for scroll/touch perf)."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," Not all events bubble (e.g., ",e.jsx("code",{children:"focus"}),"/",e.jsx("code",{children:"blur"})," don't; use ",e.jsx("code",{children:"focusin"}),"/",e.jsx("code",{children:"focusout"}),"). Stopping propagation doesn't cancel defaults—use ",e.jsx("code",{children:"preventDefault()"})," for that."]})]})},{id:"js-json-stringify",question:"How does JSON.stringify work? What gets serialized and what doesn't?",text:"JSON.stringify(value, replacer?, space?) serializes JSON-safe data. It keeps own enumerable string-keyed props of plain objects/arrays. Omits functions/undefined/symbols in objects (become null in arrays). NaN/±Infinity → null. Dates use toJSON (ISO). BigInt throws. Circular refs throw.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Signature:"})," ",e.jsx("code",{children:"JSON.stringify(value, replacer?, space?)"})]}),e.jsx(s,{children:`// What serializes:
+JSON.stringify({ a: 1, s: "hi", b: true, n: null }); // '{"a":1,"s":"hi","b":true,"n":null}'
+
+// Objects & arrays: only OWN, ENUMERABLE, STRING-KEYED props (no prototype props)
+const base = { p: 1 };
+const obj = Object.assign(Object.create(base), { a: 1 });
+JSON.stringify(obj); // '{"a":1}'`}),e.jsx(s,{children:`// Omissions / conversions:
+JSON.stringify({ u: undefined, f: () => {}, [Symbol("k")]: 1, x: 2 }); // '{"x":2}'
+JSON.stringify([1, undefined, () => {}, Symbol()]); // '[1,null,null,null]'
+JSON.stringify({ n: NaN, i: Infinity, m: -Infinity }); // '{"n":null,"i":null,"m":null}'
+try { JSON.stringify({ big: 1n }); } catch (e) { /* TypeError (BigInt not supported) */ }`}),e.jsx(s,{children:`// Dates: use toJSON() -> ISO string
+JSON.stringify({ d: new Date("2020-01-02T03:04:05Z") });
+// '{"d":"2020-01-02T03:04:05.000Z"}' (ISO format)`}),e.jsx(s,{children:`// Circular references: TypeError
+const a = {}; a.self = a;
+JSON.stringify(a); // TypeError: Converting circular structure to JSON`}),e.jsx(s,{children:`// Replacer: function or allowlist array
+const user = { id: 1, name: "Ada", password: "secret" };
+JSON.stringify(user, ["id", "name"]); // '{"id":1,"name":"Ada"}'
+
+JSON.stringify(user, (key, value) => key === "password" ? undefined : value);
+// '{"id":1,"name":"Ada"}'`}),e.jsx(s,{children:`// Pretty-print with space (number or string)
+const obj2 = { a: 1, b: { c: 2 } };
+JSON.stringify(obj2, null, 2);
+/*
+{
+  "a": 1,
+  "b": {
+    "c": 2
+  }
+}
+*/`}),e.jsx(s,{children:`// Custom toJSON (runs before serialization)
+const account = {
+  id: 7, balance: 100, secret: "xxx",
+  toJSON(){ return { id: this.id, balance: this.balance }; }
+};
+JSON.stringify(account); // '{"id":7,"balance":100}'`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Quick rules:"})," Own enumerable string keys only; functions/undefined/symbols are skipped in objects (→ ",e.jsx("code",{children:"null"})," in arrays); non-finite numbers → ",e.jsx("code",{children:"null"}),"; Dates stringify to ISO; BigInt & cycles throw; use ",e.jsx("code",{children:"replacer"})," to filter/transform and ",e.jsx("code",{children:"space"})," to pretty-print."]})]})},{id:"js-pure-function",question:"What is a Pure Function?",text:"A pure function always returns the same output for the same inputs and has no side effects (doesn't mutate external state, perform I/O, or depend on non-deterministic data).",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," Same inputs → same output; ",e.jsx("em",{children:"no side effects"}),". No reading/writing external mutable state, no I/O, no randomness/clock."]}),e.jsx(s,{children:`// Impure: reads external state and mutates it
+let total = 0;
+function addToTotal(x) {
+  total += x;         // side effect (mutates external variable)
+  return total;
+}
+
+// Pure: depends only on inputs, no mutations
+function sum(a, b) {
+  return a + b;       // same a,b => same result
+}`}),e.jsx(s,{children:`// More examples
+// ❌ Impure: depends on current time
+function greeting(name) {
+  return \`Hi \${name}, time: \${Date.now()}\`;
+}
+
+// ✅ Pure: deterministic
+function greet(name) {
+  return \`Hi \${name}\`;
+}
+
+// ❌ Impure: mutates the array argument
+function pushX(arr) {
+  arr.push("x");
+  return arr;
+}
+
+// ✅ Pure: returns a new array (original unchanged)
+function withX(arr) {
+  return [...arr, "x"];
+}`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Benefits:"})," Predictable, easy to test, cacheable (memoization), enables safe parallelization."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Tips:"})," Avoid using ",e.jsx("code",{children:"Date.now()"}),", ",e.jsx("code",{children:"Math.random()"}),", global vars, or mutating inputs inside a “pure” function. Prefer returning new data instead of mutating."]})]})},{id:"js-memoization",question:"What is Memoization?",text:"Memoization caches a function's results for given inputs so repeated calls with the same arguments return instantly from cache instead of recomputing. Works best with pure functions.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," Store the result of a function call keyed by its arguments. Next time the same inputs appear, return the cached value instead of recalculating. Best for ",e.jsx("em",{children:"pure"})," (deterministic, no side effects) functions."]}),e.jsx(s,{children:`// Tiny memoize helper (primitive args or JSON-serializable)
+function memoize(fn) {
+  const cache = new Map();
+  return function (...args) {
+    const key = JSON.stringify(args); // simple keying
+    if (cache.has(key)) return cache.get(key);
+    const result = fn.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+
+// Example: expensive computation
+function slowFib(n) {
+  if (n <= 1) return n;
+  return slowFib(n - 1) + slowFib(n - 2);
+}
+
+const fastFib = memoize(function fib(n) {
+  if (n <= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+});
+
+fastFib(40); // much faster on repeated calls than slowFib(40)`}),e.jsx(s,{children:`// Safer keying for object args: use a nested Map chain
+function memoizeByRef(fn) {
+  const root = new Map();
+  return function (...args) {
+    let node = root;
+    for (const a of args) {
+      const key = (a !== Object(a)) ? \`[p]:\${a}\` : a; // primitives as tagged strings, objects by reference
+      if (!node.has(key)) node.set(key, new Map());
+      node = node.get(key);
+    }
+    if (node.has('v')) return node.get('v');
+    const res = fn.apply(this, args);
+    node.set('v', res);
+    return res;
+  };
+}`}),e.jsxs("p",{children:[e.jsx("strong",{children:"When to use:"})," heavy CPU work, repeated with the same inputs (e.g., formatting, parsing, DP)."]}),e.jsxs("p",{children:[e.jsx("strong",{children:"Gotchas:"})," memoize only pure functions; beware of mutating arguments (cache becomes stale); JSON keying ignores property order issues and drops functions/symbols; consider ",e.jsx("code",{children:"WeakMap"})," for object keys to avoid leaks; add eviction/TTL if the cache might grow unbounded."]})]})},{id:"js-setTimeout-vs-setInterval",question:"What's the difference between setTimeout and setInterval?",text:"setTimeout(fn, delay) runs once after delay. setInterval(fn, delay) runs repeatedly every delay ms until cleared. Use clearTimeout/clearInterval to stop. Prefer a recursive timeout for more consistent spacing and to avoid overlap.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"setTimeout:"})," schedule a one-time call after ",e.jsx("code",{children:"delay"})," ms.",e.jsx("br",{}),e.jsx("strong",{children:"setInterval:"})," schedule repeated calls every ",e.jsx("code",{children:"delay"})," ms."]}),e.jsx(s,{children:`// 1) One-shot
+const id = setTimeout(() => console.log("run once"), 500);
+clearTimeout(id); // cancels if needed`}),e.jsx(s,{children:`// 2) Repeating
+const iid = setInterval(() => console.log("tick"), 1000);
+clearInterval(iid); // stop later`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Drift & overlap:"})," If the callback takes longer than the interval, ",e.jsx("code",{children:"setInterval"})," can queue up (overlap). A recursive ",e.jsx("code",{children:"setTimeout"})," schedules the next run after the previous finishes, which is often safer."]}),e.jsx(s,{children:`// Safer repeating with recursive timeout
+function startTicker(delay = 1000) {
+  let stopped = false;
+  (function tick() {
+    if (stopped) return;
+    // ...work...
+    setTimeout(tick, delay); // schedule after work completes
+  })();
+  return () => { stopped = true; }; // return a stop function
+}
+const stop = startTicker(1000);
+// stop(); // call to stop`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Animation tip:"})," For UI animation, prefer ",e.jsx("code",{children:"requestAnimationFrame"})," (syncs with display refresh)."]}),e.jsx(s,{children:`function animate() {
+  // draw...
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Notes:"})," ",e.jsx("code",{children:"setTimeout(fn, 0)"})," still runs after the current task and microtasks; both timers have a minimum clamp in browsers; always keep callbacks quick (don't block the event loop)."]})]})},{id:"js-void-operator",question:"What is the `void` operator and when would you use it?",text:"`void expr` evaluates `expr` and returns `undefined`. Common uses: (1) ensure an IIFE is parsed as an expression, (2) deliberately return `undefined` (e.g., in bookmarklets / links like `javascript:void 0`), and (3) historically, a guaranteed `undefined` value via `void 0`.",answer:e.jsxs(e.Fragment,{children:[e.jsxs("p",{children:[e.jsx("strong",{children:"Definition:"})," The unary ",e.jsx("code",{children:"void"})," operator evaluates its operand and discards the result, returning ",e.jsx("code",{children:"undefined"}),"."]}),e.jsx(s,{children:`void (console.log("runs, but value becomes undefined"));
+// -> logs "runs", expression value is undefined`}),e.jsx("p",{children:e.jsx("strong",{children:"Common uses:"})}),e.jsx("ul",{children:e.jsxs("li",{children:[e.jsx("strong",{children:"IIFE prefix:"})," Force a function expression without relying on leading punctuation."]})}),e.jsx(s,{children:`// Ensures this is parsed as an expression-IIFE:
+void function () {
+  // isolated scope
+  console.log("IIFE");
+}();`}),e.jsx("ul",{children:e.jsxs("li",{children:[e.jsx("strong",{children:"Deliberate undefined:"})," Use ",e.jsx("code",{children:"void 0"})," as a guaranteed ",e.jsx("code",{children:"undefined"})," value (historic safety; today ",e.jsx("code",{children:"undefined"})," is already immutable)."]})}),e.jsx(s,{children:`const UNSET = void 0; // always undefined
+typeof UNSET; // "undefined"`}),e.jsx("ul",{children:e.jsxs("li",{children:[e.jsx("strong",{children:"Prevent navigation in links/bookmarklets:"})," Evaluate code but yield ",e.jsx("code",{children:"undefined"})," so the page doesn't navigate. (Prefer buttons + JS handlers in real apps.)"]})}),e.jsx(s,{children:`// In HTML (demo):
+// <a href="javascript:void 0" onclick="doSomething()">Click</a>
+
+// Bookmarklet idea (demo):
+// javascript:void (function(){ alert("Hi"); }())`}),e.jsxs("p",{children:[e.jsx("strong",{children:"Notes:"})," ",e.jsx("code",{children:"void"})," does not stop execution like ",e.jsx("code",{children:"return"}),"; it only controls the expression result. Use parentheses when needed due to operator precedence."]})]})}];function S(){const[n,i]=l.useState(""),d=l.useRef(null);l.useEffect(()=>{const r=c=>{var x,u;const h=(x=document.activeElement)==null?void 0:x.tagName;c.key==="/"&&h!=="INPUT"&&h!=="TEXTAREA"&&(c.preventDefault(),(u=d.current)==null||u.focus())};return window.addEventListener("keydown",r),()=>window.removeEventListener("keydown",r)},[]);const a=r=>{(r.key==="Escape"||r.key==="Esc")&&(n?i(""):r.currentTarget.blur(),r.preventDefault())},o=l.useMemo(()=>{const r=n.trim().toLowerCase();return r?p.filter(({question:c,text:h})=>c.toLowerCase().includes(r)||h.toLowerCase().includes(r)):p},[n]);return e.jsxs(j.Wrapper,{children:[e.jsxs(j.TopBar,{children:[e.jsx(g,{}),e.jsxs(j.SearchBox,{children:[e.jsx("input",{ref:d,value:n,onChange:r=>i(r.target.value),onKeyDown:a,placeholder:"Search questions...  (press /, Esc to clear)","aria-label":"Search questions","aria-keyshortcuts":"/ Escape"}),n&&e.jsxs(e.Fragment,{children:[e.jsx("small",{className:"hint",children:"esc"}),e.jsx("button",{className:"clear",onClick:()=>i(""),"aria-label":"Clear search",title:"Clear (Esc)",children:"✕"})]})]})]}),e.jsx("p",{children:"Last updated: Sep 14, 2025"}),e.jsxs(j.Count,{children:[o.length," result",o.length!==1?"s":"",n?` for "${n}"`:""]}),o.length===0?e.jsx("p",{style:{opacity:.7},children:"No matches. Try a different keyword."}):o.map(r=>e.jsx(w,{question:r.question,children:r.answer},r.id))]})}export{S as default};
