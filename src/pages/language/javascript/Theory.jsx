@@ -241,7 +241,7 @@ typeof function(){} // "function" // special-case object`}</Code>
         id: "js-what-is-object",
         question: "What is an object in JavaScript?",
         text:
-            "An object is a mutable collection of key–value pairs with a prototype. Keys are strings or symbols. Objects are reference types and are compared by reference.",
+            "An object is a mutable collection of key-value pairs with a prototype. Keys are strings or symbols. Objects are reference types and are compared by reference.",
         answer: (
             <>
                 <p>
@@ -1431,8 +1431,8 @@ obj.b = 2;
 "c" in obj;                  // false`}</Code>
 
                 <p>
-                    <strong>Own-only check:</strong> Use <code>Object.hasOwn(obj, key)</code> (ES2022).
-                    Older style: <code>Object.prototype.hasOwnProperty.call(obj, key)</code>.
+                    <strong>Own-only check:</strong> Use <code>{`Object.hasOwn(obj, key)`}</code> (ES2022).
+                    Older style: <code>{`Object.prototype.hasOwnProperty.call(obj, key)`}</code>.
                 </p>
 
                 <Code>{`Object.hasOwn(obj, "b"); // true
@@ -1977,12 +1977,12 @@ for await (const v of arr) console.log(v); // 1, 2, 3`}</Code>
                 <p><strong>Key points:</strong></p>
                 <ul>
                     <li>Use inside an <code>async</code> function (or at module top level with TLA).</li>
-                    <li>No async spread: <code>[...asyncIterable]</code> is invalid—use <code>Array.fromAsync</code> or a loop.</li>
+                    <li>No async spread: <code>[...asyncIterable]</code> is invalid-use <code>Array.fromAsync</code> or a loop.</li>
                     <li>Plain objects aren't async iterable unless you add <code>[Symbol.asyncIterator]</code>.</li>
                 </ul>
 
                 <p><strong>Gotchas:</strong> Don't mix <code>for...of</code> with async iterables (TypeError).
-                    Be mindful of backpressure—awaiting each item processes them sequentially.</p>
+                    Be mindful of backpressure-awaiting each item processes them sequentially.</p>
             </>
         )
     },
@@ -2056,12 +2056,12 @@ Promise.resolve().then(() => console.log("microtask"));
                     <li><code>Promise.any(iterable)</code> → fulfills with the <em>first fulfillment</em>; rejects with <strong>AggregateError</strong> if all reject.</li>
                 </ul>
 
-                <Code>{`// 1) Promise.all — parallel & fail-fast
+                <Code>{`// 1) Promise.all - parallel & fail-fast
 const a = fetch("/a").then(r => r.text());
 const b = fetch("/b").then(r => r.text());
 const [ta, tb] = await Promise.all([a, b]); // throws if a or b rejects`}</Code>
 
-                <Code>{`// 2) Promise.allSettled — never throws; inspect per-item status
+                <Code>{`// 2) Promise.allSettled - never throws; inspect per-item status
 const results = await Promise.allSettled([
   fetch("/ok"),
   fetch("/missing")
@@ -2073,13 +2073,13 @@ results = [
 ]
 */`}</Code>
 
-                <Code>{`// 3) Promise.race — first to settle wins (success or failure)
+                <Code>{`// 3) Promise.race - first to settle wins (success or failure)
 await Promise.race([
   fetch("/slow"),
   new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), 1000))
 ]);`}</Code>
 
-                <Code>{`// 4) Promise.any — first fulfillment wins; all reject -> AggregateError
+                <Code>{`// 4) Promise.any - first fulfillment wins; all reject -> AggregateError
 try {
   const v = await Promise.any([
     Promise.reject("x"),
@@ -2168,7 +2168,7 @@ const p = fetch("/slow", { signal: c.signal });
 // later
 c.abort(); // rejects fetch with AbortError`}</Code>
 
-                <p><strong>Gotchas:</strong> forgetting <code>await</code> returns a pending Promise; mixing <code>??</code>/<code>||</code> with awaited values can hide errors; don't block the event loop with heavy sync work—offload to Workers.</p>
+                <p><strong>Gotchas:</strong> forgetting <code>await</code> returns a pending Promise; mixing <code>??</code>/<code>||</code> with awaited values can hide errors; don't block the event loop with heavy sync work-offload to Workers.</p>
             </>
         )
     },
@@ -2259,7 +2259,7 @@ Number.EPSILON; // ~2.220446049250313e-16 (smallest diff between 1 and next)`}</
 Object.is(0, -0);      // false (distinguishes sign of zero)
 Number.isNaN(NaN);     // true
 Number.isFinite(42);   // true
-isNaN("foo");          // true (coerces!) — avoid; prefer Number.isNaN`}</Code>
+isNaN("foo");          // true (coerces!) - avoid; prefer Number.isNaN`}</Code>
 
                 <p><strong>Floating point pitfalls:</strong> fractions like 0.1 are approximations.</p>
                 <Code>{`0.1 + 0.2 === 0.3;          // false
@@ -2336,7 +2336,7 @@ BigInt.asIntN(8, 0xffn);       // -1n`}</Code>
 // Workaround: stringify as string
 const payload = { n: 1n.toString() };`}</Code>
 
-                <p><strong>Gotchas:</strong> No decimals (only integers); division truncates; avoid mixing with Number without explicit conversion; performance differs by engine—measure for large-int workloads.</p>
+                <p><strong>Gotchas:</strong> No decimals (only integers); division truncates; avoid mixing with Number without explicit conversion; performance differs by engine-measure for large-int workloads.</p>
             </>
         )
     },
@@ -2453,7 +2453,7 @@ html\`<p>Hello \${user}</p>\`; // "<p>Hello &lt;script&gt;alert(1)&lt;/script&gt
                 <ul>
                     <li>Indentation inside backticks is preserved (mind leading spaces in multi-line literals).</li>
                     <li>Tagged templates do <em>not</em> use parentheses: <code>tag\`...\`</code> (not <code>tag(\`...\`)</code>).</li>
-                    <li>Escapes like <code>\n</code> are processed normally—use <code>String.raw</code> for literal backslashes.</li>
+                    <li>Escapes like <code>\n</code> are processed normally-use <code>String.raw</code> for literal backslashes.</li>
                 </ul>
             </>
         )
@@ -2510,7 +2510,7 @@ m2.indices; // e.g., [[0,7],[0,3],[4,7]]`}</Code>
 
                 <p><strong>Gotchas:</strong></p>
                 <ul>
-                    <li><code>/g</code> and <code>/y</code> are <em>stateful</em> (they mutate <code>lastIndex</code>); don’t reuse across unrelated inputs.</li>
+                    <li><code>/g</code> and <code>/y</code> are <em>stateful</em> (they mutate <code>lastIndex</code>); don't reuse across unrelated inputs.</li>
                     <li><code>String.match(re)</code> behaves differently with and without <code>g</code>; for all matches + groups, prefer <code>matchAll</code>.</li>
                     <li>Use <code>u</code> for correct Unicode handling (e.g., <code>.</code> vs surrogate pairs).</li>
                     <li><code>m</code>: <code>^</code>/<code>$</code> align to line starts/ends; <code>s</code>: <code>.</code> matches <code>\\n</code>.</li>
@@ -2599,21 +2599,2012 @@ Array.isArray([]);        // true
 Array.isArray({ length:1 }); // false`}</Code>
             </>
         )
+    },
+
+    {
+        id: "js-what-are-map-and-set",
+        question: "What are Map and Set in JavaScript?",
+        text:
+            "Set stores unique values (insertion-ordered). Map stores key-value pairs where keys can be any value (objects included). Use fromEntries/entries to convert.",
+        answer: (
+            <>
+                <p>
+                    <strong>Set:</strong> a collection of <em>unique</em> values (no duplicates), preserving insertion order.
+                    Common ops: <code>add</code>, <code>has</code>, <code>delete</code>, <code>size</code>. Iterates values.
+                </p>
+
+                <Code>{`const s = new Set([1, 2, 2, 3]);
+s.size;           // 3
+s.has(2);         // true
+s.add(4).delete(1);
+[...s];           // [2,3,4] (spread to array)
+
+// Dedupe an array:
+const deduped = [...new Set([3,3,2,1,2])]; // [3,2,1]`}</Code>
+
+                <p>
+                    <strong>Map:</strong> a dictionary of <em>key → value</em> pairs. Keys can be <em>any</em> values, including objects and functions.
+                    Common ops: <code>set</code>, <code>get</code>, <code>has</code>, <code>delete</code>, <code>size</code>. Iterates entries (<code>[key, value]</code>) in insertion order.
+                </p>
+
+                <Code>{`const m = new Map();
+const k = { id: 1 };
+m.set(k, "user-1").set("mode", "dark");
+m.get(k);          // "user-1"
+m.has("mode");     // true
+for (const [key, val] of m) console.log(key, val);`}</Code>
+
+                <p><strong>Conversion helpers:</strong></p>
+                <Code>{`// Object <-> Map
+const obj = { a: 1, b: 2 };
+const mapFromObj = new Map(Object.entries(obj));
+const objFromMap = Object.fromEntries(mapFromObj);
+
+// Array of pairs <-> Map
+const pairs = [["x", 10], ["y", 20]];
+const mapFromPairs = new Map(pairs);
+const backToPairs = [...mapFromPairs];`}</Code>
+
+                <p><strong>When to use which:</strong></p>
+                <ul>
+                    <li><strong>Set</strong>: uniqueness (dedupe lists, track seen items).</li>
+                    <li><strong>Map</strong>: keys aren't limited to strings/symbols; predictable iteration order; easy size checks.</li>
+                    <li><strong>Object</strong>: good for simple JSON-like structures, but keys are strings/symbols only and need manual size counting.</li>
+                </ul>
+
+                <p><strong>Gotchas:</strong> <code>Set</code> uniqueness uses <code>SameValueZero</code> (<code>NaN</code> equals <code>NaN</code>, <code>0</code> equals <code>-0</code>).
+                    For <code>Map</code>, object keys are by <em>reference</em>-two identical-looking objects are different keys.</p>
+
+                <Code>{`new Set([NaN, NaN]).size; // 1
+const a = { x: 1 }, b = { x: 1 };
+const mm = new Map([[a, "A"]]);
+mm.get(b); // undefined (different reference)`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-weakmap-weakset",
+        question: "What are WeakMap and WeakSet?",
+        text:
+            "WeakMap maps from object keys to values with weak references; WeakSet stores objects weakly. Entries disappear when the object is garbage-collected; not iterable, no size, keys/members must be objects.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>WeakMap</code> holds <em>weak</em> references from
+                    <strong>object keys</strong> → values. <code>WeakSet</code> holds <strong>objects</strong> as members
+                    with weak references. If the only remaining reference to a key/object is inside the WeakMap/WeakSet,
+                    the GC can remove that entry automatically.
+                </p>
+
+                <Code>{`// WeakMap: keys must be objects; values can be anything
+const meta = new WeakMap();
+
+let node = { id: 1 };
+meta.set(node, { selected: true });
+
+meta.get(node); // { selected: true }
+meta.has(node); // true
+
+// Drop the last strong ref to 'node'
+node = null;
+// At some later time, GC may remove the entry automatically.
+// (You cannot observe the exact moment.)`}</Code>
+
+                <Code>{`// WeakSet: stores objects, weakly
+const seen = new WeakSet();
+
+let obj = {};
+seen.add(obj);
+seen.has(obj); // true
+obj = null;    // entry can be GC'd later`}</Code>
+
+                <p><strong>Why use them:</strong> associate metadata/caches with objects (DOM nodes, AST nodes, model instances)
+                    <em>without</em> creating memory leaks-entries vanish when the objects go out of scope.</p>
+
+                <Code>{`// Cache per-object computation without leaks
+const cache = new WeakMap();
+function computeFor(obj) {
+  if (cache.has(obj)) return cache.get(obj);
+  const result = heavyCompute(obj);
+  cache.set(obj, result); // no need to delete; GC handles it
+  return result;
+}`}</Code>
+
+                <p><strong>Key properties:</strong></p>
+                <ul>
+                    <li><strong>Not enumerable:</strong> No iteration (<code>for...of</code>), no <code>keys()</code>, no <code>size</code>, no <code>clear()</code>.</li>
+                    <li><strong>Keys/members must be objects:</strong> primitives are not allowed as WeakMap keys or WeakSet entries.</li>
+                    <li><strong>APIs:</strong> WeakMap → <code>set</code>, <code>get</code>, <code>has</code>, <code>delete</code>. WeakSet → <code>add</code>, <code>has</code>, <code>delete</code>.</li>
+                </ul>
+
+                <p><strong>Gotchas:</strong> You can't iterate or observe when GC removes entries; use normal <code>Map/Set</code> if you need enumeration or counts.
+                    For advanced scenarios (carefully!), JS also has <code>WeakRef</code> and <code>FinalizationRegistry</code>, but they should be used sparingly.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-classes",
+        question: "What is a class in JavaScript?",
+        text:
+            "Class syntax is sugar over prototypes: constructor, instance methods, fields (public/private #), getters/setters, static members, extends/super. Class declarations are hoisted into TDZ and must be called with new.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>class</code> provides a cleaner syntax over the prototype system.
+                    It supports a <code>constructor</code>, instance methods, <strong>public</strong> and <strong>private</strong> fields (<code>#</code>), getters/setters,
+                    <strong>static</strong> members, and inheritance with <code>extends</code>/<code>super</code>.
+                </p>
+
+                <Code>{`// Basic class
+class Person {
+  // public field
+  role = "user";
+
+  // private field (true privacy)
+  #id = 0;
+
+  constructor(name) {
+    this.name = name;        // instance property
+    this.#id = Math.random();
+  }
+
+  // instance method
+  greet() { return \`Hi, I'm \${this.name}\`; }
+
+  // getter/setter
+  get id() { return this.#id; }
+  set nickname(n) { this.name = String(n).trim(); }
+
+  // static method (on the constructor)
+  static species() { return "H. sapiens"; }
+
+  // static field
+  static counter = 0;
+
+  // static initialization block (one-time setup)
+  static {
+    Person.counter = 100;
+  }
+}
+
+const p = new Person("Ada");
+p.greet();          // "Hi, I'm Ada"
+Person.species();   // "H. sapiens"
+p.id;               // private field exposed via getter`}</Code>
+
+                <p><strong>Inheritance:</strong> Use <code>extends</code>. In a subclass constructor, call <code>super(...)</code> before using <code>this</code>.</p>
+                <Code>{`class Employee extends Person {
+  // public field as class property
+  company = "ACME";
+
+  constructor(name, title) {
+    super(name);           // must call super() first
+    this.title = title;
+  }
+
+  // override + use super.method()
+  greet() { return super.greet() + \` - \${this.title}\`; }
+
+  // private field in subclass is separate (#)
+  #salary = 0;
+}
+new Employee("Lin", "Engineer").greet(); // "Hi, I'm Lin - Engineer"`}</Code>
+
+                <p><strong>Class fields & arrows:</strong> Fields are initialized per-instance. Arrow methods defined as fields capture lexical <code>this</code> (useful for callbacks).</p>
+                <Code>{`class Button {
+  label = "Save";
+  onClick = () => console.log(this.label); // lexical this
+}`}</Code>
+
+                <p><strong>Key facts:</strong></p>
+                <ul>
+                    <li>Classes are <em>sugar</em> over prototypes; methods live on <code>Class.prototype</code> and are <em>non-enumerable</em>.</li>
+                    <li>Class bodies are <em>strict mode</em> by default.</li>
+                    <li>Class <em>declarations</em> are hoisted into the <strong>TDZ</strong> (can't use before their line).</li>
+                    <li>You <strong>must</strong> call classes with <code>new</code>; calling as a function throws.</li>
+                    <li>Private fields (<code>#x</code>) are not accessible via brackets or <code>this["#x"]</code>; access only within the class.</li>
+                </ul>
+
+                <p><strong>Gotchas:</strong> Don't forget <code>super()</code> in subclass constructors. Arrow methods as fields are per-instance (more memory) but avoid manual binding for callbacks.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-es-modules",
+        question: "What are ES Modules (import/export)?",
+        text:
+            "ESM is the standard module system with static imports/exports, live bindings, and tree-shakeable syntax. Supports named/default exports, dynamic import(), and top-level await in modules.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <em>ES Modules (ESM)</em> provide a native, static module system.
+                    Imports/exports are analyzed at compile time (good for tree-shaking). Imported names are <em>live bindings</em>
+                    (they reflect updates in the exporter).
+                </p>
+
+                <Code>{`// math.js (exporter)
+export const PI = 3.14159;
+export function area(r){ return PI * r * r; }
+let counter = 0;
+export function inc(){ counter++; }
+export { counter };             // live binding
+export default function add(a,b){ return a + b; }`}</Code>
+
+                <Code>{`// app.js (importer)
+import add, { PI, area, counter, inc } from "./math.js";
+console.log(add(2,3)); // 5
+inc();
+console.log(counter);  // 1  (live view, not a copy)`}</Code>
+
+                <p><strong>Named vs default:</strong> A file can have many <code>named</code> exports, but at most one <code>default</code> export.
+                    You can alias on import.</p>
+                <Code>{`import theAdd, { area as circleArea } from "./math.js";`}</Code>
+
+                <p><strong>Dynamic import:</strong> Load modules on demand; returns a Promise.</p>
+                <Code>{`const mod = await import("./heavy.js");
+mod.run();`}</Code>
+
+                <p><strong>Top-level await (TLA):</strong> In modules, you may <code>await</code> at the top level; it pauses module evaluation.</p>
+                <Code>{`// config.mjs
+export const cfg = await (await fetch("/config.json")).json();`}</Code>
+
+                <p><strong>Browser vs Node notes:</strong></p>
+                <ul>
+                    <li><strong>Browser:</strong> use <code>&lt;script type="module"&gt;</code>; imports must use URLs (usually include file extensions).</li>
+                    <li><strong>Node:</strong> use <code>.mjs</code> or <code>package.json{"{ type:\"module\" }"}</code>; imports usually need <em>file extensions</em> (or package <code>exports</code>).</li>
+                </ul>
+
+                <p><strong>CommonJS interop (separate topic):</strong> <code>require</code>/<code>module.exports</code> is different; mixing systems has edge cases.</p>
+
+                <p><strong>Gotchas:</strong> imports are read-only views (can't reassign); circular deps load with <em>temporal dead</em> partially-initialized bindings; bare specifiers need a resolver (bundler/Node pkg resolution) or import maps in the browser.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-commonjs-vs-esm",
+        question: "What is CommonJS and how is it different from ES Modules?",
+        text:
+            "CommonJS (CJS) uses require/module.exports and loads at runtime; ES Modules (ESM) use import/export with static analysis, live bindings, and top-level await. Node supports both with interop caveats.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definitions:</strong> <em>CommonJS (CJS)</em> is the older Node module system using
+                    <code>require</code> / <code>module.exports</code>. <em>ES Modules (ESM)</em> are the standard JS module
+                    system using <code>import</code> / <code>export</code> with <em>static</em> structure and <em>live bindings</em>.
+                </p>
+
+                <Code>{`// ----- CommonJS (cjs.cjs) -----
+const fs = require("node:fs");
+const add = (a,b) => a + b;
+module.exports = { add };
+
+// Re-export pattern
+exports.mul = (a,b) => a * b;`}</Code>
+
+                <Code>{`// ----- ES Module (esm.mjs) -----
+export const sub = (a,b) => a - b;
+export default function div(a,b){ return a / b; }`}</Code>
+
+                <p><strong>Key differences:</strong></p>
+                <ul>
+                    <li><strong>Syntax & timing:</strong> CJS <em>evaluates</em> <code>require()</code> at runtime (can be conditional). ESM imports are <em>static</em> (hoisted and analyzed before running).</li>
+                    <li><strong>Bindings:</strong> ESM exports are <em>live</em> (reflect updates in the exporter). CJS exports are values on an object snapshot.</li>
+                    <li><strong>Top-level await:</strong> Supported in ESM; not in CJS.</li>
+                    <li><strong>Scope:</strong> CJS files have a wrapper (with <code>__filename</code>, <code>__dirname</code>); ESM uses <code>import.meta</code> instead.</li>
+                </ul>
+
+                <Code>{`// ESM live binding example
+// counter.js (ESM)
+export let n = 0;
+export function inc(){ n++; }
+
+// main.mjs
+import { n, inc } from "./counter.js";
+console.log(n); // 0
+inc();
+console.log(n); // 1  (live view)`}</Code>
+
+                <p><strong>Node usage tips:</strong></p>
+                <ul>
+                    <li>Pick one per package: set <code>"type":"module"</code> for ESM (use <code>.cjs</code> for CJS files), or omit it for CJS (use <code>.mjs</code> for ESM files).</li>
+                    <li><strong>Importing CJS in ESM:</strong> default import gets the <code>module.exports</code> object.</li>
+                    <li><strong>Importing ESM in CJS:</strong> cannot <code>require()</code> it; use <code>await import(...)</code> or Node's <code>createRequire</code> the other way around.</li>
+                </ul>
+
+                <Code>{`// ESM -> import a CJS module (Node):
+import pkg from "./cjs.cjs";
+pkg.add(2,3); // 5  (pkg is the CJS exports object)
+
+// CJS -> import an ESM module (Node):
+(async () => {
+  const mod = await import("./esm.mjs");
+  mod.default(6,2); // 3
+  mod.sub(6,2);     // 4
+})();`}</Code>
+
+                <p><strong>Interoperability gotchas:</strong></p>
+                <ul>
+                    <li>Don't mix <code>module.exports = ...</code> and <code>exports.foo = ...</code> in the same CJS file (reassigning <code>module.exports</code> breaks <code>exports</code> alias).</li>
+                    <li>Named imports from a CJS module (<code>import &#123; x &#125; from "cjs"</code>) won't work unless the runtime provides synthetic named exports-prefer default import then read <code>pkg.x</code>.</li>
+                    <li>In ESM on Node, file extensions (or package <code>exports</code> field) are usually required.</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-toprimitive-coercion",
+        question: "How do objects convert to primitives? (ToPrimitive, valueOf/toString, Symbol.toPrimitive)",
+        text:
+            "When an object is used where a primitive is needed, JS calls ToPrimitive: try obj[Symbol.toPrimitive]? then valueOf()/toString() (order depends on hint). Dates prefer string; others prefer number.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> When an object must become a primitive (for <code>+</code>, comparisons,
+                    <code>Number()</code>, <code>String()</code>…), the engine runs <em>ToPrimitive</em> with a <em>hint</em>:
+                    <code>"number"</code>, <code>"string"</code>, or <code>"default"</code>.
+                </p>
+
+                <ul>
+                    <li><strong>Priority:</strong> If <code>obj[Symbol.toPrimitive]</code> exists → call it.</li>
+                    <li><strong>Otherwise (ordinary objects):</strong>
+                        <ul>
+                            <li>Hint <code>number</code> / <code>default</code>: try <code>valueOf()</code> → then <code>toString()</code>.</li>
+                            <li>Hint <code>string</code> (e.g., <code>String(obj)</code> or <code>Date</code>'s default): <code>toString()</code> → then <code>valueOf()</code>.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Dates:</strong> prefer <code>string</code> by default (so they stringify nicely).</li>
+                </ul>
+
+                <Code>{`const obj = {
+  x: 10,
+  valueOf() { return this.x; }        // numeric-first path
+};
+Number(obj);      // 10 (hint 'number' -> valueOf)
+String(obj);      // "[object Object]" (hint 'string' -> toString)
+
+const date = new Date("2025-09-14");
++date;            // number (ms since epoch)
+String(date);     // "Sun Sep 14 2025 ..." (Dates prefer 'string')`}</Code>
+
+                <p><strong><code>Symbol.toPrimitive</code> override:</strong> Provide your own conversion logic.</p>
+                <Code>{`const price = {
+  amount: 9.99,
+  [Symbol.toPrimitive](hint) {
+    if (hint === "string") return "$" + this.amount.toFixed(2);
+    return this.amount; // number or default
+  }
+};
+String(price); // "$9.99"
++price;        // 9.99
+price + 1;     // 10.99 (numeric) `}</Code>
+
+                <p><strong>"+" operator:</strong> If either operand becomes a string after ToPrimitive, <em>concatenation</em>; else numeric addition.</p>
+                <Code>{`1 + 2;             // 3
+"1" + 2;           // "12" (string concat)
+({ toString(){ return "X"; } }) + 1; // "X1" (left -> string)
+({ valueOf(){ return 7; } }) + 1;    // 8   (both numeric)`}</Code>
+
+                <p><strong>Gotchas:</strong> Custom <code>valueOf/toString</code> must return a primitive, not an object. Ambiguous coercions can hide bugs-prefer explicit <code>Number()</code>/<code>String()</code> when clarity matters.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-errors-and-exceptions",
+        question: "How do errors and exception handling work in JavaScript?",
+        text:
+            "You can throw any value, but use Error objects. Handle with try/catch/finally. Built-in errors (TypeError, ReferenceError, etc.), custom errors via class extends Error, and Error ‘cause'. Async errors reject Promises.",
+        answer: (
+            <>
+                <p>
+                    <strong>Throwing & catching:</strong> Use <code>throw</code> to signal an error and
+                    <code>try / catch / finally</code> to handle/cleanup. You can throw any value, but prefer
+                    <code>Error</code> subclasses for stack/metadata.
+                </p>
+
+                <Code>{`try {
+  if (!user) throw new Error("Missing user");
+} catch (e) {
+  console.error("Oops:", e.message);
+} finally {
+  console.log("always runs");
+}`}</Code>
+
+                <p>
+                    <strong>Built-in error types:</strong> <code>Error</code>, <code>TypeError</code>, <code>ReferenceError</code>,
+                    <code>SyntaxError</code>, <code>RangeError</code>, <code>URIError</code>, <code>EvalError</code> (rare).
+                    Pick the most specific.
+                </p>
+
+                <Code>{`function takePositive(n){
+  if (typeof n !== "number") throw new TypeError("number required");
+  if (n <= 0) throw new RangeError("must be > 0");
+  return n;
+}`}</Code>
+
+                <p><strong>Custom errors:</strong> Extend <code>Error</code>; set <code>name</code>; use <code>cause</code> to chain.</p>
+                <Code>{`class HttpError extends Error {
+  constructor(status, msg, cause) {
+    super(msg, { cause });          // ES2022 cause chain
+    this.name = "HttpError";
+    this.status = status;
+  }
+}
+
+try {
+  try {
+    JSON.parse("{ bad json }");
+  } catch (e) {
+    throw new HttpError(400, "Invalid JSON", e);
+  }
+} catch (e) {
+  console.log(e.name, e.status); // HttpError 400
+  console.log(e.cause?.message); // Unexpected token ...
+  console.log(e.stack);          // stack trace (engine-specific)
+}`}</Code>
+
+                <p><strong>Catch without a binding:</strong> when you don't need the error object.</p>
+                <Code>{`try {
+  risky();
+} catch {           // no (e) needed
+  recover();
+}`}</Code>
+
+                <p>
+                    <strong>Async & Promises:</strong> In <em>async functions</em>, a thrown error
+                    becomes a <em>rejected Promise</em>. Use <code>try/catch</code> inside the async function
+                    or <code>.catch()</code> on the returned promise.
+                </p>
+
+                <Code>{`async function fetchJson(url){
+  const res = await fetch(url);
+  if (!res.ok) throw new HttpError(res.status, "HTTP " + res.status);
+  return res.json(); // if JSON invalid, this throws (rejects)
+}
+
+try {
+  const data = await fetchJson("/api");
+  console.log(data);
+} catch (e) {
+  console.error("Failed:", e);
+}
+
+// Or: fetchJson("/api").then(use).catch(handle);`}</Code>
+
+                <p><strong>Unhandled rejections:</strong> Missing <code>.catch</code> triggers <code>unhandledrejection</code> (browser/Node) - always handle errors.</p>
+
+                <p><strong>Best practices:</strong> throw <code>Error</code> subclasses (not strings); preserve stack with <code>cause</code>; don't swallow errors silently; rethrow if you can't handle; validate inputs early.</p>
+            </>
+        )
+    },
+    {
+        id: "js-proxy",
+        question: "What is a Proxy in JavaScript?",
+        text:
+            "Proxy wraps a target object and intercepts operations via handler traps (get, set, has, deleteProperty, apply, construct, ownKeys, etc.). Useful for validation, defaults, logging, virtualization.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <code>Proxy</code> lets you <em>intercept</em> and customize fundamental
+                    operations on a target object/function by providing <em>traps</em> in a handler.
+                    You get a new object (<em>the proxy</em>) that you use instead of the original.
+                </p>
+
+                <Code>{`// Basic: default values & validation
+const user = { name: "Ada" };
+
+const p = new Proxy(user, {
+  get(target, prop, receiver) {
+    if (!(prop in target)) return "(missing)";   // default
+    return Reflect.get(target, prop, receiver);  // correct forwarding
+  },
+  set(target, prop, value, receiver) {
+    if (prop === "age" && (!Number.isInteger(value) || value < 0)) {
+      throw new TypeError("age must be a non-negative integer");
     }
+    return Reflect.set(target, prop, value, receiver);
+  }
+});
 
+p.name;   // "Ada"
+p.city;   // "(missing)"
+p.age = 30;         // OK
+// p.age = -1;      // TypeError`}</Code>
 
+                <p>
+                    <strong>Common traps:</strong> <code>get</code>, <code>set</code>, <code>has</code> (<code>in</code>), <code>deleteProperty</code>,
+                    <code>ownKeys</code>, <code>getOwnPropertyDescriptor</code>, <code>defineProperty</code>, <code>apply</code> (call a function),
+                    <code>construct</code> (<code>new</code>), <code>getPrototypeOf</code>, <code>setPrototypeOf</code>, <code>isExtensible</code>, <code>preventExtensions</code>.
+                    Use the <code>Reflect.*</code> API to perform the default behavior.
+                </p>
 
+                <Code>{`// Function proxy: timing/logging
+function slow(x){ for(let i=0;i<1e6;i++); return x * 2; }
 
+const timed = new Proxy(slow, {
+  apply(target, thisArg, args) {
+    const t0 = performance.now();
+    const res = Reflect.apply(target, thisArg, args);
+    console.log("took", (performance.now() - t0).toFixed(1), "ms");
+    return res;
+  }
+});
 
+timed(21); // logs timing, returns 42`}</Code>
 
+                <p><strong>Virtual objects:</strong> You can synthesize properties on the fly.</p>
+                <Code>{`const env = new Proxy({}, {
+  has(_, k) { return k in process.env; },
+  get(_, k){ return process.env[k] ?? "(unset)"; },
+  ownKeys(){ return Object.keys(process.env); }
+});
+"PATH" in env;       // true
+env.PATH;            // value
+Object.keys(env);    // keys from process.env`}</Code>
 
+                <p><strong>Invariants (important):</strong> Traps must respect JS object rules or a <em>TypeError</em> is thrown. Examples:
+                    a non-configurable property must appear in <code>ownKeys</code>; if a property is non-writable & non-configurable,
+                    <code>set</code> cannot report success with a different value; sealed/frozen targets constrain traps.</p>
 
+                <Code>{`const target = Object.freeze({ x: 1 });
+const bad = new Proxy(target, {
+  get(){ return 2; }  // OK (reading differs)
+});
+const bad2 = new Proxy(target, {
+  set(){ return true; } // writing 'x' MUST fail (Reflect.set will fail)
+});`}</Code>
 
+                <p><strong>Best practices:</strong> Always delegate with <code>Reflect.*</code> after your custom logic;
+                    keep traps fast (they run on every access); prefer Proxy for cross-cutting concerns (validation, logging, i18n, access control) over normal objects.</p>
 
+                <p><strong>Gotchas:</strong> <code>proxy !== target</code> (identity differs); some libraries cache method references (be mindful of <code>this</code>);
+                    Proxies can impact performance; JSON/stringify skips functions and behaves like the underlying properties you expose.</p>
+            </>
+        )
+    },
 
+    {
+        id: "js-reflect-api",
+        question: "What is the Reflect API and why use it?",
+        text:
+            "Reflect is a built-in object with static methods that mirror low-level operations (get, set, apply, construct, defineProperty…). It provides consistent return values (usually booleans) and pairs naturally with Proxy traps.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>Reflect</code> is a namespace of static methods that perform
+                    fundamental object operations (<code>get</code>, <code>set</code>, <code>apply</code>, <code>construct</code>,
+                    <code>defineProperty</code>, <code>ownKeys</code>, etc.). It's not a constructor.
+                    Methods return <em>status booleans</em> or values instead of throwing where possible,
+                    making them ideal for implementing default behavior inside <code>Proxy</code> traps.
+                </p>
 
+                <Code>{`// 1) Reading/writing with optional receiver
+const base = {
+  get x(){ return this._x ?? 0; }
+};
+const obj = Object.assign(Object.create(base), { _x: 1 });
 
+// Read (respects prototype & descriptor semantics)
+Reflect.get(obj, "x");           // 1
 
+// Write: returns boolean success status (respects writability, receiver)
+Reflect.set(obj, "y", 10);       // true
+obj.y;                           // 10`}</Code>
+
+                <p><strong>Define / delete properties:</strong> return booleans instead of throwing (useful in strict mode).</p>
+                <Code>{`const o = {};
+Reflect.defineProperty(o, "id", {
+  value: 1, writable: false, enumerable: true, configurable: false
+}); // true
+
+Reflect.deleteProperty(o, "id"); // false (non-configurable) - no throw, just false`}</Code>
+
+                <p><strong>Call & construct:</strong> functional forms of <code>fn.apply</code> and <code>new</code>.</p>
+                <Code>{`function add(a,b){ return a + b; }
+Reflect.apply(add, null, [2,3]); // 5
+
+function User(name){ this.name = name; }
+const u = Reflect.construct(User, ["Ada"]); // like: new User("Ada")`}</Code>
+
+                <p><strong>Prototype & extensibility:</strong></p>
+                <Code>{`const p = { kind: "base" };
+const a = {};
+Reflect.setPrototypeOf(a, p);        // true
+Reflect.getPrototypeOf(a) === p;     // true
+
+Reflect.preventExtensions(a);        // true
+Reflect.isExtensible(a);             // false`}</Code>
+
+                <p><strong>Own keys (strings + symbols):</strong> one-stop for all own property keys (enumerable or not).</p>
+                <Code>{`const S = Symbol("s");
+const k = Reflect.ownKeys({ a:1, [S]:2 }); // ["a", Symbol(s)]`}</Code>
+
+                <p><strong>Why use Reflect:</strong></p>
+                <ul>
+                    <li><strong>With Proxies:</strong> implement traps by delegating to <code>Reflect.*</code> for the default behavior.</li>
+                    <li><strong>Consistent results:</strong> boolean success values instead of exceptions (<code>defineProperty</code>, <code>deleteProperty</code>, <code>set</code>).</li>
+                    <li><strong>Receiver control:</strong> <code>Reflect.get/set</code> let you specify the <em>receiver</em> (the <code>this</code> for accessors).</li>
+                </ul>
+
+                <Code>{`// Proxy example: validate, then forward with Reflect
+const target = { _n: 0, get n(){ return this._n }, set n(v){ this._n = v } };
+const proxy = new Proxy(target, {
+  set(t, prop, value, receiver){
+    if (prop === "n" && !Number.isInteger(value)) return false; // reject
+    return Reflect.set(t, prop, value, receiver);               // forward
+  },
+  get(t, prop, receiver){
+    return Reflect.get(t, prop, receiver); // preserve accessor 'this'
+  }
+});
+proxy.n = 5;   // true
+proxy.n = 3.14;// false`}</Code>
+
+                <p><strong>Gotchas:</strong> Reflect mirrors the language invariants-operations that would violate them still fail (often with <code>false</code> rather than throwing). It doesn't "bypass" security; it's a standardized toolbox for fundamental ops.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-new-operator",
+        question: "What does the `new` operator do?",
+        text:
+            "`new` constructs an object: links it to constructor.prototype, calls the constructor with this bound, and returns the created object (unless the constructor returns another object). Classes must be called with new; arrows aren't constructible.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>new C(...args)</code> performs construction:
+                </p>
+                <ol>
+                    <li>Create a fresh object whose <code>[[Prototype]]</code> is <code>C.prototype</code>.</li>
+                    <li>Call <code>C</code> with <code>this</code> bound to that object (and set <code>new.target</code> to <code>C</code>).</li>
+                    <li>If <code>C</code> returns an <em>object</em>, use it; otherwise return the fresh object.</li>
+                </ol>
+
+                <Code>{`function Person(name){
+  this.name = name;             // step 2: initialize 'this'
+}
+const p = new Person("Ada");    // p.__proto__ === Person.prototype
+p instanceof Person;            // true`}</Code>
+
+                <p><strong>Return override (functions only):</strong> A function constructor can override the instance by returning an object.</p>
+                <Code>{`function Make(){
+  this.kind = "default";
+  return { kind: "custom" };    // returned object wins
+}
+new Make(); // { kind: "custom" }`}</Code>
+
+                <p><strong>Classes:</strong> Must be called with <code>new</code>; returning a different object is not allowed.</p>
+                <Code>{`class A {
+  constructor(){ /* this already created by runtime */ }
+}
+try { A(); } catch (e) { /* TypeError: Class constructor A cannot be invoked without 'new' */ }`}</Code>
+
+                <p><strong>Not all functions are constructible:</strong> Arrow functions and some built-ins lack <code>[[Construct]]</code> (no <code>new</code> support).</p>
+                <Code>{`const F = () => {};
+try { new F(); } catch (e) { /* TypeError */ }`}</Code>
+
+                <p><strong>Prototype link & methods:</strong> Instances share methods via <code>Constructor.prototype</code>.</p>
+                <Code>{`function Counter(){ this.n = 0; }
+Counter.prototype.inc = function(){ return ++this.n; };
+const c1 = new Counter(), c2 = new Counter();
+c1.inc(); // 1
+c2.inc(); // 1 (shared method, separate state)`}</Code>
+
+                <p><strong><code>new.target</code>:</strong> Inside a constructor, tells which constructor was used with <code>new</code> (useful for abstract bases).</p>
+                <Code>{`function Base(){
+  if (new.target === Base) throw new Error("abstract");
+}
+function Sub(){ Base.call(this); }
+try { new Base(); } catch(e) {}
+new Sub(); // OK`}</Code>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li>Forgetting <code>new</code> on a constructor function can write to <code>globalThis</code> in sloppy mode-use <code>class</code> or enforce with <code>new.target</code>.</li>
+                    <li>Changing <code>Constructor.prototype</code> after instances exist won't affect their <code>[[Prototype]]</code> link.</li>
+                    <li>Arrow functions are not constructors; use normal functions/classes for <code>new</code>.</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-delete-operator",
+        question: "What does the `delete` operator do?",
+        text:
+            "`delete obj.prop` removes a property (if configurable) from an object and returns a boolean. It doesn't affect variables or close gaps in arrays; deleting a non-existent key returns true.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>delete</code> removes a property from an object
+                    (including array elements) if that property is <em>configurable</em>, and returns a
+                    <strong>boolean</strong> indicating success.
+                </p>
+
+                <Code>{`const o = { a: 1 };
+delete o.a;        // true  (property removed)
+o.a;               // undefined
+
+// Non-existent properties -> true (nothing to do)
+delete o.b;        // true`}</Code>
+
+                <p>
+                    <strong>Configurable matters:</strong> Non-configurable props can't be deleted.
+                </p>
+                <Code>{`const obj = {};
+Object.defineProperty(obj, "id", {
+  value: 1, configurable: false, writable: true, enumerable: true
+});
+delete obj.id;     // false (strict mode would throw)
+obj.id;            // 1`}</Code>
+
+                <p>
+                    <strong>Arrays:</strong> Deleting an element creates a <em>hole</em> (sparse array) and
+                    <code>length</code> doesn't change. Use <code>splice</code> to remove and reindex.
+                </p>
+                <Code>{`const arr = [10, 20, 30];
+delete arr[1];     // true -> [10, <1 empty item>, 30]
+arr.length;        // 3
+arr.splice(1, 1);  // [10, 30] (preferred removal)`}</Code>
+
+                <p>
+                    <strong>Variables & bindings:</strong> <code>delete</code> does <em>not</em> remove
+                    <code>let</code>/<code>const</code>/<code>var</code> bindings. In modules/strict mode it's a
+                    <em>SyntaxError</em> to delete an unqualified identifier.
+                </p>
+                <Code>{`"use strict";
+let x = 1;
+// delete x; // SyntaxError (can't delete bindings)
+
+// Non-module sloppy scripts:
+// var y = 2; delete y; // false (var creates non-configurable global prop)`}</Code>
+
+                <p>
+                    <strong>Objects vs prototype:</strong> <code>delete</code> only affects own properties of the
+                    target object; it doesn't touch properties on the prototype. Use <code>hasOwn</code> to check ownership.
+                </p>
+                <Code>{`const base = { a: 1 };
+const child = Object.create(base);
+child.a;                // 1 (inherited)
+delete child.a;         // true (no own prop to delete)
+child.a;                // still 1 (inherited remains)
+Object.hasOwn(child, "a"); // false`}</Code>
+
+                <p>
+                    <strong>Return value:</strong> <code>true</code> means "property either removed or didn't exist."
+                    <code>false</code> means "could not delete" (e.g., non-configurable).
+                </p>
+
+                <p>
+                    <strong>Best practice:</strong> Avoid using <code>delete</code> to update arrays; prefer structural
+                    methods (<code>splice</code>, <code>filter</code>). For objects, consider setting to
+                    <code>undefined</code> when you want to keep the key but mark it empty, or <code>delete</code> when
+                    you truly want to remove it from the shape.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-json-stringify-parse",
+        question: "How do JSON.stringify and JSON.parse work (replacer, space, reviver, toJSON)?",
+        text:
+            "JSON.stringify serializes values to JSON; JSON.parse parses JSON. Replacer filters/transforms during stringify; space pretty-prints; reviver transforms during parse; toJSON customizes serialization.",
+        answer: (
+            <>
+                <p>
+                    <strong>Basics:</strong> <code>JSON.stringify(value)</code> → JSON string; <code>JSON.parse(text)</code> → JS value.
+                    JSON supports objects, arrays, numbers, strings, booleans, and <code>null</code>.
+                    It <em>omits</em> functions, <code>undefined</code> in objects, and symbol-keyed props.
+                </p>
+
+                <Code>{`JSON.stringify({ a:1, b: undefined }); // "{"a":1}"
+JSON.stringify([1, undefined, 3]);             // "[1,null,3]" (arrays keep null)
+JSON.parse('{"a":1,"b":null}');                // { a:1, b:null }`}</Code>
+
+                <p><strong>Replacer (filter/transform):</strong> second arg can be an array of allowed keys <em>or</em> a function <code>(key, value) ⇒ newValue</code>.</p>
+                <Code>{`const obj = { a:1, b:2, secret:"x" };
+// As array (whitelist keys)
+JSON.stringify(obj, ["a","b"]); // "{"a":1,"b":2}"
+// As function (transform values)
+JSON.stringify(obj, (k, v) => k === "secret" ? undefined : v); // "{"a":1,"b":2}"`}</Code>
+
+                <p><strong>Pretty printing:</strong> third arg <code>space</code> adds indentation (number of spaces or a string).</p>
+                <Code>{`JSON.stringify({ a:1, b:{ c:2 } }, null, 2);
+/*
+{
+  "a": 1,
+  "b": {
+    "c": 2
+  }
+}
+*/`}</Code>
+
+                <p><strong>Custom serialization via <code>toJSON</code>:</strong> If an object has <code>toJSON()</code>, its return value is serialized instead.</p>
+                <Code>{`const user = {
+  name: "Ada",
+  passwordHash: "SECRET",
+  toJSON(){ return { name: this.name }; } // hide sensitive fields
+};
+JSON.stringify(user); // "{"name":"Ada"}"`}</Code>
+
+                <p><strong>Reviver (post-process on parse):</strong> transform values as they are parsed.</p>
+                <Code>{`const txt = '{"d":"2025-09-14","n": "42"}';
+const val = JSON.parse(txt, (key, value) => {
+  if (key === "d") return new Date(value);
+  if (key === "n") return Number(value);
+  return value;
+});
+val.d instanceof Date; // true
+val.n === 42;          // true`}</Code>
+
+                <p><strong>Limits & gotchas:</strong></p>
+                <ul>
+                    <li>Circular refs throw - use a library or <code>structuredClone</code> for cloning complex graphs.</li>
+                    <li>Non-JSON types (Map/Set, BigInt, Date, RegExp, undefined, functions, symbols) are not preserved (dates become ISO strings if you convert them yourself).</li>
+                    <li>Numeric precision is that of JSON/JS numbers (IEEE-754 doubles); BigInt is not supported.</li>
+                </ul>
+
+                <p><strong>Tip:</strong> For deep cloning that preserves more types (Dates, Maps, Sets, typed arrays) use <code>structuredClone(value)</code> (covered separately).</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-json-stringify-parse",
+        question: "How do JSON.stringify and JSON.parse work (replacer, space, reviver, toJSON)?",
+        text:
+            "JSON.stringify serializes values to JSON; JSON.parse parses JSON. Replacer filters/transforms during stringify; space pretty-prints; reviver transforms during parse; toJSON customizes serialization.",
+        answer: (
+            <>
+                <p>
+                    <strong>Basics:</strong> <code>JSON.stringify(value)</code> → JSON string; <code>JSON.parse(text)</code> → JS value.
+                    JSON supports objects, arrays, numbers, strings, booleans, and <code>null</code>.
+                    It <em>omits</em> functions, <code>undefined</code> in objects, and symbol-keyed props.
+                </p>
+
+                <Code>{`JSON.stringify({ a:1, b: undefined }); // "{"a":1}"
+JSON.stringify([1, undefined, 3]);             // "[1,null,3]" (arrays keep null)
+JSON.parse('{"a":1,"b":null}');                // { a:1, b:null }`}</Code>
+
+                <p><strong>Replacer (filter/transform):</strong> second arg can be an array of allowed keys <em>or</em> a function <code>(key, value) ⇒ newValue</code>.</p>
+                <Code>{`const obj = { a:1, b:2, secret:"x" };
+// As array (whitelist keys)
+JSON.stringify(obj, ["a","b"]); // "{"a":1,"b":2}"
+// As function (transform values)
+JSON.stringify(obj, (k, v) => k === "secret" ? undefined : v); // "{"a":1,"b":2}"`}</Code>
+
+                <p><strong>Pretty printing:</strong> third arg <code>space</code> adds indentation (number of spaces or a string).</p>
+                <Code>{`JSON.stringify({ a:1, b:{ c:2 } }, null, 2);
+/*
+{
+  "a": 1,
+  "b": {
+    "c": 2
+  }
+}
+*/`}</Code>
+
+                <p><strong>Custom serialization via <code>toJSON</code>:</strong> If an object has <code>toJSON()</code>, its return value is serialized instead.</p>
+                <Code>{`const user = {
+  name: "Ada",
+  passwordHash: "SECRET",
+  toJSON(){ return { name: this.name }; } // hide sensitive fields
+};
+JSON.stringify(user); // "{"name":"Ada"}"`}</Code>
+
+                <p><strong>Reviver (post-process on parse):</strong> transform values as they are parsed.</p>
+                <Code>{`const txt = '{"d":"2025-09-14","n": "42"}';
+const val = JSON.parse(txt, (key, value) => {
+  if (key === "d") return new Date(value);
+  if (key === "n") return Number(value);
+  return value;
+});
+val.d instanceof Date; // true
+val.n === 42;          // true`}</Code>
+
+                <p><strong>Limits & gotchas:</strong></p>
+                <ul>
+                    <li>Circular refs throw - use a library or <code>structuredClone</code> for cloning complex graphs.</li>
+                    <li>Non-JSON types (Map/Set, BigInt, Date, RegExp, undefined, functions, symbols) are not preserved (dates become ISO strings if you convert them yourself).</li>
+                    <li>Numeric precision is that of JSON/JS numbers (IEEE-754 doubles); BigInt is not supported.</li>
+                </ul>
+
+                <p><strong>Tip:</strong> For deep cloning that preserves more types (Dates, Maps, Sets, typed arrays) use <code>structuredClone(value)</code> (covered separately).</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-shallow-vs-deep-copy",
+        question: "Shallow vs Deep Copy in JavaScript - what's the difference and how do we do each?",
+        text:
+            "`Shallow copy` only clones the top level; nested objects/arrays remain shared by reference. `Deep copy` clones the whole graph so later edits don't leak through. We'll see common ways to do both and where each is safe.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definitions:</strong> A <em>shallow copy</em> duplicates only the outer container, keeping references
+                    to the same nested objects. A <em>deep copy</em> duplicates the entire reachable structure, so no references
+                    are shared.
+                </p>
+
+                <p><strong>Shallow copy - common patterns:</strong></p>
+                <ul>
+                    <li>Objects: <code>{'{ ...obj }'}</code>, <code>Object.assign({ }, obj)</code></li>
+                    <li>Arrays: <code>[...arr]</code>, <code>arr.slice()</code>, <code>Array.from(arr)</code></li>
+                </ul>
+
+                <Code>{`// Shallow copy pitfall
+const state = {
+  user: { name: "Ash", social: { twitter: "@a2rp" } },
+  tags: ["js", "react"]
+};
+
+const copy = { ...state };      // shallow
+copy.user.name = "Ashish";      // ⚠️ also changes state.user.name
+copy.tags.push("styled");       // ⚠️ also mutates state.tags
+
+console.log(state.user.name);   // "Ashish" (leaked)
+console.log(state.tags);        // ["js","react","styled"] (leaked)`}</Code>
+
+                <p><strong>Deep copy - options:</strong></p>
+                <ul>
+                    <li><code>structuredClone(value)</code> (recommended): deep, handles Dates/Maps/Sets/TypedArrays, supports cycles.</li>
+                    <li>JSON clone: <code>JSON.parse(JSON.stringify(value))</code> - <em>lossy</em> (drops <code>undefined</code>, functions, Symbols; breaks Dates/Maps/Sets; fails on cycles).</li>
+                    <li>Library: e.g., <code>lodash.cloneDeep</code> (broad coverage; adds a dependency).</li>
+                    <li>Custom recursion: precise but easy to get wrong (cycles, special types, perf).</li>
+                </ul>
+
+                <Code>{`// Deep copy with structuredClone (safe for rich types)
+const original = {
+  when: new Date(),
+  meta: new Map([["views", 10]]),
+  set: new Set([1,2,3]),
+  nested: { a: { b: 1 } }
+};
+
+const deep = structuredClone(original);
+deep.nested.a.b = 99;
+
+console.log(original.nested.a.b); // 1 (no leak)
+console.log(deep.when instanceof Date); // true
+console.log(deep.meta.get("views"));    // 10`}</Code>
+
+                <Code>{`// JSON clone (quick but lossy)
+const obj = { d: new Date(), x: undefined, s: Symbol("id") };
+const jsonCloned = JSON.parse(JSON.stringify(obj));
+
+console.log(jsonCloned.d);          // ISO string, not a Date instance
+console.log(jsonCloned.x);          // undefined was dropped => not present
+console.log(Object.getOwnPropertySymbols(jsonCloned).length); // 0`}</Code>
+
+                <p><strong>React tip (immutable updates):</strong> When updating nested state, do a <em>targeted</em> deep copy of just the branch you're changing, not the whole object.</p>
+
+                <Code>{`// Targeted deep update (clone only the path you change)
+const next = {
+  ...state,
+  user: {
+    ...state.user,
+    social: {
+      ...state.user.social,
+      twitter: "@ashishranjan"
+    }
+  }
+};`}</Code>
+
+                <p><strong>When to use what:</strong></p>
+                <ul>
+                    <li>Shallow copy is fine if you won't mutate nested structures (or they're primitives).</li>
+                    <li>Use <code>structuredClone</code> for safe deep copies of complex data or when cycles/typed data are present.</li>
+                    <li>Avoid JSON clone for Dates/Maps/Sets, functions, Symbols, or cyclic graphs.</li>
+                </ul>
+
+                <p><strong>Performance note:</strong> Deep copies scale with the size of the object graph. Prefer narrow,
+                    targeted copies during state updates to keep things fast.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-object-assign-vs-spread",
+        question: "Object.assign vs object spread `{...}` - what's the difference and when should we use each?",
+        text:
+            "Both create shallow copies by taking own *enumerable* properties (including Symbols) from sources. Key differences: mutation (Assign mutates its target), how null/undefined are treated, prototypes, and the fact that getters run and property descriptors aren't preserved.",
+        answer: (
+            <>
+                <p>
+                    <strong>Quick defs:</strong> <code>Object.assign(target, ...sources)</code> copies props into <em>target</em> and returns it (mutating).
+                    Object spread <code>{`{ ...src }`}</code> builds a <em>new plain object</em> and copies props in.
+                    Both are <em>shallow</em> merges (nested objects/arrays remain by reference).
+                </p>
+
+                <p><strong>Same-result merges (new object):</strong></p>
+                <Code>{`const a = { x: 1 }, b = { y: 2 };
+const m1 = Object.assign({}, a, b);
+const m2 = { ...a, ...b };
+m1; // { x: 1, y: 2 }
+m2; // { x: 1, y: 2 }`}</Code>
+
+                <p><strong>Last source wins (resolution order):</strong></p>
+                <Code>{`const a = { x: 1 }, b = { x: 99 };
+({ ...a, ...b }).x;                 // 99
+Object.assign({}, a, b).x;          // 99`}</Code>
+
+                <p><strong>Mutation vs immutability:</strong> <code>assign</code> changes the target; spread creates a new object.</p>
+                <Code>{`const target = { x: 0 };
+const res = Object.assign(target, { x: 1 }, { y: 2 });
+target === res; // true (mutated): { x: 1, y: 2 }
+
+const copy = { ...target, z: 3 };   // new object (target unchanged)`}</Code>
+
+                <p><strong>Getters run; descriptors not preserved:</strong> both read via <code>[[Get]]</code> and then set a plain data property on the result.</p>
+                <Code>{`const src = {
+  get v() { console.log("getter!"); return 42; }
+};
+const a = Object.assign({}, src); // logs "getter!"
+const b = { ...src };             // logs "getter!"
+Object.getOwnPropertyDescriptor(a, "v").get; // undefined (now a data prop)`}</Code>
+
+                <p><strong>Own enumerable only:</strong> inherited or non-enumerable properties are skipped; Symbols are copied if enumerable.</p>
+
+                <p><strong>null/undefined sources:</strong></p>
+                <ul>
+                    <li><code>Object.assign({ }, null, {`a: 1 `})</code> ⇒ <code>{`{ a: 1 }`}</code> (null/undefined sources are ignored)</li>
+                    <li><code>{`{ ...null, ...{ a: 1 } }`}</code> ⇒ <em>TypeError</em> in engines that follow the spec strictly</li>
+                </ul>
+                <Code>{`// Safe defaulting with spread
+const withDefaults = { theme: "dark", ...(opts || {}) }; // guard in case opts is null/undefined`}</Code>
+
+                <p><strong>Prototype considerations:</strong> spread always creates a <em>plain</em> object.
+                    <code>assign</code> lets us copy into a specific target (e.g., from <code>Object.create(proto)</code>).
+                </p>
+                <Code>{`const proto = { kind: "thing" };
+const target = Object.create(proto);
+Object.assign(target, { x: 1 });    // keeps custom prototype on target`}</Code>
+
+                <p><strong>Arrays note:</strong> both treat indices as enumerable props; results are shallow.</p>
+
+                <p><strong>When to use which:</strong></p>
+                <ul>
+                    <li><em>Immutability (React state, config copies):</em> prefer spread for clarity and a new object.</li>
+                    <li><em>Updating an existing instance/target:</em> use <code>Object.assign(target, src)</code>.</li>
+                    <li><em>Need to tolerate null sources:</em> <code>assign</code> skips them; with spread, guard via <code>...(src || { })</code>.</li>
+                </ul>
+            </>
+        )
+    },
+    {
+        id: "js-hasown-vs-in",
+        question: "Object.hasOwn vs hasOwnProperty vs the `in` operator - when to use which?",
+        text:
+            "`Object.hasOwn(obj, key)` (ES2022) checks only *own* properties. `hasOwnProperty` does the same but lives on the prototype, so you must guard against null-prototype objects. The `in` operator checks own *or inherited* properties.",
+        answer: (
+            <>
+                <p>
+                    <strong>Quick defs:</strong>
+                    <ul>
+                        <li><code>Object.hasOwn(obj, key)</code> → <em>true</em> if <code>key</code> is an <em>own</em> property of <code>obj</code>.</li>
+                        <li><code>obj.hasOwnProperty(key)</code> → same semantics, but can be shadowed or missing; safest as <code>Object.prototype.hasOwnProperty.call(obj, key)</code>.</li>
+                        <li><code>key in obj</code> → <em>true</em> if the property exists either on <em>obj</em> or anywhere in its prototype chain.</li>
+                    </ul>
+                </p>
+
+                <Code>{`const proto = { inherited: 1 };
+const obj = Object.create(proto, { own: { value: 2, enumerable: true } });
+
+Object.hasOwn(obj, "own");                // true
+Object.hasOwn(obj, "inherited");          // false
+("inherited" in obj);                     // true (found via prototype)
+("missing" in obj);                       // false`}</Code>
+
+                <p><strong>Why <code>Object.hasOwn</code> is preferred:</strong> It's concise and safe even when the object has a null prototype or a shadowed method.</p>
+                <Code>{`const a = Object.create(null);     // no Object.prototype
+a.x = 1;
+
+// ✅ Works
+Object.hasOwn(a, "x");                    // true
+
+// ⚠️ Fails (method not present)
+typeof a.hasOwnProperty;                  // "undefined"
+
+// ✅ Safe legacy pattern
+Object.prototype.hasOwnProperty.call(a, "x"); // true`}</Code>
+
+                <p><strong>Shadowing pitfall:</strong> If an object defines its own <code>hasOwnProperty</code>, direct calls are unsafe.</p>
+                <Code>{`const tricky = { hasOwnProperty: () => false, x: 1 };
+
+tricky.hasOwnProperty("x");               // false (shadowed!)
+Object.hasOwn(tricky, "x");               // true (correct)
+Object.prototype.hasOwnProperty.call(tricky, "x"); // true (correct)`}</Code>
+
+                <p><strong>Symbols and strings:</strong> All three work with either string or Symbol keys. For <code>in</code>, the RHS can be string or Symbol.</p>
+                <Code>{`const S = Symbol("id");
+const obj2 = { [S]: 123 };
+
+Object.hasOwn(obj2, S);                   // true
+S in obj2;                                // true`}</Code>
+
+                <p><strong>When to use what:</strong></p>
+                <ul>
+                    <li><em>Checking own props only:</em> Use <code>Object.hasOwn(obj, key)</code>.</li>
+                    <li><em>Legacy environments:</em> Use <code>Object.prototype.hasOwnProperty.call(obj, key)</code>.</li>
+                    <li><em>Need to consider prototypes (e.g., feature detection on window):</em> Use <code>key in obj</code>.</li>
+                </ul>
+
+                <p><strong>Notes:</strong> All throw a <code>TypeError</code> if <code>obj</code> is <code>null</code> or <code>undefined</code> (they must be object-coercible). If you aren't sure, guard first.</p>
+                <Code>{`const safeHasOwn = (o, k) => o != null && Object.hasOwn(o, k);
+safeHasOwn(null, "x"); // false, no throw`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-property-descriptors",
+        question: "Property descriptors & Object.defineProperty - what are writable / enumerable / configurable / get / set?",
+        text:
+            "Every object property has a descriptor that controls how it behaves. Data properties use {value, writable} and accessor properties use {get, set}. All have {enumerable, configurable}. Understanding these flags lets us make read-only, hidden, or computed properties-and avoid surprises.",
+        answer: (
+            <>
+                <p><strong>Reading a descriptor:</strong></p>
+                <Code>{`const obj = { x: 1 };
+Object.getOwnPropertyDescriptor(obj, "x");
+// { value: 1, writable: true, enumerable: true, configurable: true }`}</Code>
+
+                <p><strong>Defining data vs accessor properties:</strong></p>
+                <ul>
+                    <li><em>Data</em>: <code>{'{ value, writable, enumerable, configurable }'}</code></li>
+                    <li><em>Accessor</em>: <code>{'{ get, set, enumerable, configurable }'}</code> (no <code>value</code>/<code>writable</code>)</li>
+                </ul>
+
+                <Code>{`const user = {};
+// Data property (read-only, non-enumerable)
+Object.defineProperty(user, "id", {
+  value: 101,
+  writable: false,        // can't reassign value (throws in strict mode)
+  enumerable: false,      // hidden from Object.keys / JSON.stringify / for...in
+  configurable: true
+});
+
+// Accessor property (computed)
+let _name = "Ash";
+Object.defineProperty(user, "name", {
+  get() { return _name.toUpperCase(); },
+  set(v) { _name = String(v).trim(); },
+  enumerable: true,
+  configurable: true
+});`}</Code>
+
+                <p><strong>Enumerable affects listing:</strong> only <em>enumerable own string keys</em> appear in <code>Object.keys</code>, <code>for...in</code> (plus prototypes), and <code>JSON.stringify</code>.</p>
+                <Code>{`Object.keys(user);          // ["name"] - "id" is hidden
+JSON.stringify(user);         // {"name":"ASH"}
+for (const k in user) console.log(k); // "name" (id skipped); +proto keys if any`}</Code>
+
+                <p><strong>Configurable = can reconfigure/delete:</strong></p>
+                <ul>
+                    <li>If <code>configurable: false</code> on a <em>data</em> prop, you can only change <code>writable</code> from <em>true → false</em> once; you cannot flip it back or change enumerable/configurable.</li>
+                    <li>If <code>configurable: false</code> on an <em>accessor</em> prop, you can't change its <code>get</code>/<code>set</code> later.</li>
+                    <li><code>delete obj.key</code> fails if not configurable (throws in strict mode, silently false otherwise).</li>
+                </ul>
+
+                <Code>{`Object.defineProperty(user, "locked", {
+  value: 1, writable: true, enumerable: true, configurable: false
+});
+user.locked = 2;           // OK (writable true)
+Object.defineProperty(user, "locked", { writable: false }); // OK (true → false)
+user.locked = 3;           // ❌ now fails (strict mode throws)
+delete user.locked;        // ❌ can't delete non-configurable`}</Code>
+
+                <p><strong>Accessor gotchas:</strong> Accessors run code on get/set; they're lost if you copy with spread/assign (which convert them into data values).</p>
+                <Code>{`const src = {};
+Object.defineProperty(src, "v", { get(){ return 42; }, enumerable: true });
+
+const a = { ...src };                // ❗ getter ran, "v" became a plain data prop 42
+const b = Object.assign({}, src);    // same
+
+// ✅ Preserve descriptors/accessors:
+const c = Object.defineProperties({}, Object.getOwnPropertyDescriptors(src));`}</Code>
+
+                <p><strong>Create objects with descriptors up-front:</strong></p>
+                <Code>{`const dict = Object.create(null, {
+  a: { value: 1, enumerable: true },
+  b: { get(){ return this.a + 1; }, enumerable: true }
+});`}</Code>
+
+                <p><strong>Reflect variants:</strong> <code>Reflect.defineProperty(obj, key, desc)</code> returns <em>true/false</em> instead of throwing; <code>Reflect.getOwnPropertyDescriptor</code> mirrors <code>Object.*</code>.</p>
+
+                <p><strong>Tips:</strong></p>
+                <ul>
+                    <li>Hide implementation details with <code>enumerable: false</code> (e.g., internal IDs).</li>
+                    <li>Use read-only props (<code>writable: false</code>) for constants and exposed config.</li>
+                    <li>When cloning APIs, use <code>Object.getOwnPropertyDescriptors</code> + <code>Object.defineProperties</code> to preserve getters/setters and flags.</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-prevent-seal-freeze",
+        question: "Object.preventExtensions vs Object.seal vs Object.freeze - what's the difference?",
+        text:
+            "These APIs progressively restrict how an object can change. preventExtensions stops adding new props. seal also blocks deleting/reconfiguring existing props. freeze makes all own data props read-only too. All are shallow and affect only the object itself.",
+        answer: (
+            <>
+                <p><strong>At a glance:</strong></p>
+                <ul>
+                    <li><code>Object.preventExtensions(obj)</code> → can't <em>add</em> new own properties.</li>
+                    <li><code>Object.seal(obj)</code> → preventExtensions + make all own props <code>configurable:false</code> (can't delete/change descriptors).</li>
+                    <li><code>Object.freeze(obj)</code> → seal + for <em>data</em> props set <code>writable:false</code> (read-only values). For <em>accessor</em> props, keeps get/set but makes them non-configurable.</li>
+                </ul>
+
+                <p><strong>Strict vs sloppy mode:</strong> In non-strict code, disallowed writes silently fail; in strict mode they throw.</p>
+
+                <Code>{`"use strict";
+
+const o = { x: 1, y: 2 };
+
+// 1) preventExtensions
+Object.preventExtensions(o);
+o.z = 3;                 // ❌ TypeError in strict; silently ignored otherwise
+Object.isExtensible(o);  // false
+
+// 2) seal
+Object.seal(o);
+// delete o.x;           // ❌ can't delete (configurable:false)
+// Object.defineProperty(o, "x", { enumerable:false }); // ❌ can't reconfigure
+
+// 3) freeze
+Object.freeze(o);
+o.x = 42;                // ❌ now read-only (TypeError in strict)
+Object.isSealed(o);      // true
+Object.isFrozen(o);      // true`}</Code>
+
+                <p><strong>Descriptors after sealing/freezing:</strong></p>
+                <ul>
+                    <li><em>Seal</em>: all own props become <code>configurable:false</code>. Their <code>writable</code> flag (for data props) is unchanged.</li>
+                    <li><em>Freeze</em>: all own props become <code>configurable:false</code>; data props also get <code>writable:false</code>. Accessor props keep their getter/setter functions but become non-configurable.</li>
+                </ul>
+
+                <Code>{`const obj = {};
+Object.defineProperty(obj, "a", { value: 1, writable: true, configurable: true, enumerable: true });
+Object.defineProperty(obj, "b", { get(){ return 2; }, configurable: true, enumerable: true });
+
+Object.freeze(obj);
+Object.getOwnPropertyDescriptor(obj, "a");
+// { value:1, writable:false, configurable:false, enumerable:true }
+Object.getOwnPropertyDescriptor(obj, "b");
+// { get: [Function], set: undefined, configurable:false, enumerable:true }`}</Code>
+
+                <p><strong>Shallow only:</strong> these operations don't recurse. Nested objects remain mutable unless you freeze them too.</p>
+                <Code>{`const conf = Object.freeze({
+  theme: { dark: true }
+});
+
+conf.theme.dark = false; // ✅ still allowed (inner object not frozen)
+Object.isFrozen(conf);        // true
+Object.isFrozen(conf.theme);  // false`}</Code>
+
+                <p><strong>Arrays:</strong> Freezing an array makes indices read-only and locks <code>length</code> (non-writable). You can't push/pop/splice, but nested items (objects) remain mutable.</p>
+                <Code>{`const arr = Object.freeze([ { id: 1 } ]);
+// arr.push(2);          // ❌ TypeError in strict
+arr[0].id = 99;          // ✅ inner object still mutable`}</Code>
+
+                <p><strong>Prototypes are unaffected:</strong> You can't add props to the frozen object itself, but inherited props on its prototype can still exist or change.</p>
+                <Code>{`const proto = { p: 1 };
+const obj2 = Object.freeze(Object.create(proto));
+"p" in obj2;          // true (via prototype)
+obj2.p = 2;           // ❌ sets on obj2 forbidden; writing to proto still possible`}</Code>
+
+                <p><strong>Introspection & Reflect variants:</strong></p>
+                <ul>
+                    <li><code>Object.isExtensible(obj)</code>, <code>Object.isSealed(obj)</code>, <code>Object.isFrozen(obj)</code></li>
+                    <li><code>Reflect.preventExtensions(obj)</code> returns <em>true/false</em> instead of throwing.</li>
+                </ul>
+
+                <Code>{`const x = {};
+Reflect.preventExtensions(x);   // true
+Object.isExtensible(x);         // false`}</Code>
+
+                <p><strong>Irreversible (mostly):</strong> You can't "unfreeze"/"unseal". To "thaw", clone into a fresh object.</p>
+                <Code>{`const thaw = (o) => structuredClone(o); // or a descriptor-preserving clone if needed
+const unfrozen = thaw(Object.freeze({ a: 1 }));`}</Code>
+
+                <p><strong>When to use:</strong></p>
+                <ul>
+                    <li><em>preventExtensions</em>: Lock shape (no new props) but allow updates.</li>
+                    <li><em>seal</em>: API surface fixed (no add/delete/reconfigure), values may still change.</li>
+                    <li><em>freeze</em>: Full immutability for the object's own props (useful for config/constants).</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-prototype-vs-__proto__",
+        question: "Prototype chain: [[Prototype]] vs __proto__ vs Function.prototype - what's the difference?",
+        text:
+            "Every object has an internal [[Prototype]] (either another object or null). Property lookup walks this chain. `__proto__` is a legacy accessor to read/write [[Prototype]]; prefer `Object.getPrototypeOf/setPrototypeOf` or `Object.create`. For constructor functions/classes, `Fn.prototype` is the object assigned as [[Prototype]] of new instances.",
+        answer: (
+            <>
+                <p><strong>Definitions:</strong></p>
+                <ul>
+                    <li><code>[[Prototype]]</code>: the internal link used during property lookup. Read via <code>Object.getPrototypeOf(obj)</code>, set at creation (best) with <code>Object.create(proto)</code>.</li>
+                    <li><code>__proto__</code>: legacy accessor on <code>Object.prototype</code> that gets/sets <code>[[Prototype]]</code>. Avoid in new code.</li>
+                    <li><code>Fn.prototype</code>: when you call <code>new Fn()</code> (or use a <code>class</code>), the created object's <code>[[Prototype]]</code> becomes <code>Fn.prototype</code>.</li>
+                </ul>
+
+                <p><strong>Prototype lookup (how it works):</strong></p>
+                <Code>{`const base = { kind: "base" };
+const obj  = Object.create(base);
+obj.x = 1;
+
+obj.x;             // 1 (own)
+obj.kind;          // "base" (found on prototype)
+"toString" in obj; // true (via Object.prototype)
+Object.getPrototypeOf(obj) === base; // true`}</Code>
+
+                <p><strong>Create with a prototype (preferred):</strong></p>
+                <Code>{`// ✅ Best: set prototype at creation time
+const dict = Object.create(null);    // no Object.prototype
+dict.a = 1;
+Object.getPrototypeOf(dict) === null; // true
+
+// ⚠️ Avoid changing prototype later (slower):
+const o = {};
+Object.setPrototypeOf(o, { p: 1 }); // works but deopts engines`}</Code>
+
+                <p><strong><code>__proto__</code> pitfalls:</strong> It lives on <code>Object.prototype</code>, so null-prototype objects don't have it. Using it in merges can cause prototype pollution.</p>
+                <Code>{`const n = Object.create(null);
+n.__proto__;             // undefined (no accessor here)
+
+// ⚠️ Prototype pollution example (do NOT do this):
+const a = {};
+const payload = JSON.parse('{"__proto__":{"polluted":true}}');
+Object.assign(a, payload);
+({}).polluted; // true in buggy merges`}</Code>
+
+                <p><strong>Constructor functions / classes:</strong></p>
+                <Code>{`function Person(name){ this.name = name; }
+Person.prototype.sayHi = function(){ return "Hi " + this.name; };
+
+const p = new Person("Ash");
+Object.getPrototypeOf(p) === Person.prototype; // true
+p.sayHi(); // "Hi Ash"
+
+// Classes do the same under the hood:
+class Car { drive(){ return "go"; } }
+const c = new Car();
+Object.getPrototypeOf(c) === Car.prototype; // true
+c.drive(); // "go"`}</Code>
+
+                <p><strong>Arrow & bound functions:</strong> Arrow functions and bound functions don't have a usable <code>prototype</code> for <code>new</code>.</p>
+                <Code>{`(() => {}).prototype;      // undefined
+const f = function(){};
+const g = f.bind(null);
+g.prototype;              // undefined (can't be used with new)`}</Code>
+
+                <p><strong><code>instanceof</code> uses the chain:</strong> <code>a instanceof Ctor</code> walks <code>[[Prototype]]</code> chain of <code>a</code> looking for <code>Ctor.prototype</code>.</p>
+                <Code>{`function A() {}
+const a = new A();
+a instanceof A;                        // true
+A.prototype.isPrototypeOf(a);          // true`}</Code>
+
+                <p><strong>Method placement tip:</strong> Put shared methods on the prototype (one function shared by all instances). Instance fields/arrow methods create a new function per instance.</p>
+                <Code>{`class Counter {
+  // shared method (on prototype)
+  inc(){ this.value = (this.value ?? 0) + 1; }
+
+  // ❗ per-instance method (new function per instance)
+  log = () => console.log(this.value);
+}`}</Code>
+
+                <p><strong>Summary:</strong> Use <code>Object.create(proto)</code> to set prototypes cleanly, avoid <code>__proto__</code>, prefer prototype methods for shared behavior, and remember lookup walks the chain until a match or <code>null</code>.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-equality-operators",
+        question: "`==` vs `===` vs `Object.is` - which equality should I use and why?",
+        text:
+            "`===` (strict) compares without coercion and is the default choice. `==` (loose) coerces types; avoid except rare patterns like `value == null` to check null or undefined. `Object.is` is like `===` but treats `NaN` as equal to itself and distinguishes `+0` and `-0`.",
+        answer: (
+            <>
+                <p><strong>Rules in one line:</strong> Prefer <code>===</code>. Use <code>==</code> only when you intentionally want coercion. <code>Object.is</code> is for precise edge cases (<code>NaN</code>, <code>+0</code>/<code>-0</code>).</p>
+
+                <Code>{`// 1) Strict equality (recommended)
+1 === "1";        // false (no coercion)
+true === 1;       // false
+0 === 0;          // true
+
+// 2) Loose equality (coerces types)
+1 == "1";         // true  (string -> number)
+true == 1;        // true
+"" == 0;          // true
+[] == "";         // true
+[] == 0;          // true
+// => Surprising; generally avoid
+
+// Handy exception:
+const v = undefined;
+v == null;        // true (matches null OR undefined)
+
+// 3) Object.is - edge differences from ===
+Object.is(NaN, NaN);   // true   (=== would be false)
+Object.is(+0, -0);     // false  (=== would be true)
+Object.is(1, 1);       // true (same as ===)`}</Code>
+
+                <p><strong>Quick guidance:</strong></p>
+                <ul>
+                    <li>Use <code>===</code> and <code>!==</code> in almost all code.</li>
+                    <li>Use <code>value == null</code> to “null-or-undefined” check in one shot.</li>
+                    <li>Use <code>Object.is</code> when you specifically care about <code>NaN</code> equality or distinguishing <code>+0</code>/<code>-0</code> (e.g., numeric libraries).</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-for-in-vs-for-of",
+        question: "for...in vs for...of vs Object.keys/entries - which one to use?",
+        text:
+            "for...in lists enumerable string keys (including inherited) - usually avoid unless you guard with hasOwn. for...of iterates values from any iterable (Arrays, Strings, Maps, Sets, generators). For plain objects, prefer Object.keys/values/entries (own, enumerable only).",
+        answer: (
+            <>
+                <p><strong>At a glance:</strong></p>
+                <ul>
+                    <li><code>for...in</code> → <em>enumerable string keys</em> on the object <em>and its prototype chain</em>.</li>
+                    <li><code>for...of</code> → <em>values from an iterable</em> (<code>Array</code>, <code>String</code>, <code>Map</code>, <code>Set</code>, generators…).</li>
+                    <li><code>Object.keys/values/entries</code> → <em>own</em> enumerable string keys (no prototypes).</li>
+                </ul>
+
+                <Code>{`// 1) for...of - arrays/iterables (values)
+for (const v of [10, 20, 30]) console.log(v); // 10, 20, 30
+for (const ch of "hi") console.log(ch);       // "h", "i"
+
+const set = new Set([1,2,2,3]);
+for (const v of set) console.log(v);          // 1, 2, 3
+
+const map = new Map([["a",1],["b",2]]);
+for (const [k,v] of map) console.log(k, v);   // a 1 / b 2`}</Code>
+
+                <Code>{`// 2) Object.keys/values/entries - plain objects
+const obj = Object.create({ inherited: 1 }, { x: { value: 10, enumerable: true } });
+Object.keys(obj);     // ["x"]
+Object.values(obj);   // [10]
+Object.entries(obj);  // [["x", 10]]`}</Code>
+
+                <Code>{`// 3) for...in - includes inherited keys (use with care)
+const base = { a: 1 };
+const o = Object.create(base);
+o.b = 2;
+
+for (const k in o) {
+  // Guard if you only want own keys:
+  if (Object.hasOwn(o, k)) {
+    console.log(k);   // "b" (own) ; "a" is skipped by the guard
+  }
+}`}</Code>
+
+                <p><strong>Notes & tips:</strong></p>
+                <ul>
+                    <li><em>Arrays:</em> <code>for...of</code> gives values; <code>for...in</code> would give string indices (and can see added props) → prefer <code>for...of</code> or array methods.</li>
+                    <li><em>Plain objects aren't iterable:</em> <code>for (const v of obj)</code> throws. Use <code>Object.entries(obj)</code> + <code>for...of</code>.</li>
+                    <li><em>Symbols/non-enumerables:</em> <code>Object.keys/entries</code> ignore them. Use <code>Reflect.ownKeys</code> for all own keys (strings + symbols).</li>
+                    <li><em>Order:</em> property order for objects: integer-like keys in ascending order, then other keys by insertion.</li>
+                </ul>
+
+                <Code>{`// Idiomatic object loop:
+for (const [k, v] of Object.entries(obj)) {
+  console.log(k, v);
+}`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-json-parse-stringify",
+        question: "How do JSON.parse and JSON.stringify work? (replacer, reviver, gotchas)",
+        text:
+            "JSON.stringify turns values into JSON text (own enumerable string-keyed props only). JSON.parse turns JSON text back into JS. Use replacer (filter/transform), space (pretty), and reviver (post-process) - but note limits: no functions/undefined/symbols, no cycles, BigInt unsupported.",
+        answer: (
+            <>
+                <p><strong>Basics:</strong></p>
+                <Code>{`const obj = { a: 1, b: 2 };
+const s = JSON.stringify(obj);      // '{"a":1,"b":2}'
+const pretty = JSON.stringify(obj, null, 2);
+/*
+{
+  "a": 1,
+  "b": 2
+}
+*/
+const back = JSON.parse(s);         // { a:1, b:2 }`}</Code>
+
+                <p><strong>Replacer (second arg):</strong> filter or transform during stringify.</p>
+                <Code>{`// Pick specific keys:
+JSON.stringify({ a:1, b:2, c:3 }, ["a", "c"]); // '{"a":1,"c":3}'
+
+// Transform values:
+JSON.stringify({ a:1, b:2 }, (key, value) =>
+  typeof value === "number" ? value * 2 : value
+); // '{"a":2,"b":4}'`}</Code>
+
+                <p><strong>Pretty print (third arg):</strong> number of spaces or a pad string (up to 10 chars).</p>
+                <Code>{`JSON.stringify({ x:1 }, null, 4);   // 4-space indent
+JSON.stringify({ x:1 }, null, "\\t"); // tabs`}</Code>
+
+                <p><strong>Reviver in <code>JSON.parse</code>:</strong> transform values after parsing (e.g., revive dates).</p>
+                <Code>{`const data = '{"when":"2025-09-14T00:00:00.000Z"}';
+const parsed = JSON.parse(data, (k, v) =>
+  typeof v === "string" && /^\\d{4}-\\d{2}-\\d{2}T/.test(v) ? new Date(v) : v
+);
+parsed.when instanceof Date; // true`}</Code>
+
+                <p><strong>toJSON hook:</strong> if an object has <code>toJSON()</code>, its return value is what gets stringified.</p>
+                <Code>{`const user = {
+  name: "Ada",
+  password: "secret",
+  toJSON(){ const { password, ...rest } = this; return rest; }
+};
+JSON.stringify(user); // '{"name":"Ada"}'`}</Code>
+
+                <p><strong>Gotchas / limits:</strong></p>
+                <ul>
+                    <li><em>No cycles:</em> circular objects throw (<code>TypeError: Converting circular structure</code>).</li>
+                    <li><em>Unsupported types:</em> functions, <code>undefined</code>, and symbols are skipped in objects; become <code>null</code> in arrays.</li>
+                    <li><em>Special numbers:</em> <code>NaN</code>, <code>Infinity</code>, <code>-Infinity</code> become <code>null</code>.</li>
+                    <li><em>BigInt:</em> not supported (throws); convert to string if needed.</li>
+                    <li><em>Maps/Sets/Classes:</em> serialize manually (e.g., <code>[...map]</code> or <code>Object.fromEntries(map)</code>) and revive on parse.</li>
+                </ul>
+
+                <Code>{`JSON.stringify({ u: undefined, f(){}, s: Symbol() }); // "{}" (dropped)
+JSON.stringify([1, undefined, () => {}, Symbol()]); // "[1,null,null,null]"
+JSON.stringify({ n: NaN, inf: Infinity }); // '{"n":null,"inf":null}'
+
+const cyc = {}; cyc.self = cyc;
+// JSON.stringify(cyc); // ❌ TypeError
+
+// Map/Set: choose a shape you can revive
+const m = new Map([["a",1]]);
+const json = JSON.stringify({ map: [...m] });     // {"map":[["a",1]]}
+const revived = new Map(JSON.parse(json).map);`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-object-create-vs-constructor",
+        question: "Object.create() vs constructor functions - what's the difference?",
+        text:
+            "Both set the [[Prototype]] link, but Object.create(proto) builds an object without running any constructor, while `new Ctor()` calls the function to initialize `this`. Use `Object.create(null)` for dictionary-like objects.",
+        answer: (
+            <>
+                <p>
+                    <strong>Key idea:</strong> Both patterns establish a prototype, but they differ in how the instance is created and initialized.
+                </p>
+
+                <ul>
+                    <li>
+                        <code>Object.create(proto)</code> → makes a new object with its <em>[[Prototype]]</em> set to <code>proto</code>. No constructor runs.
+                    </li>
+                    <li>
+                        <code>new Ctor(...args)</code> → creates a new object whose <em>[[Prototype]]</em> is <code>Ctor.prototype</code> and then invokes <code>Ctor</code> with <code>this</code> bound to that object.
+                    </li>
+                </ul>
+
+                <Code>{`// Using Object.create: choose any prototype object
+const animal = {
+  speak() { return \`I am \${this.name}\`; }
+};
+const dog = Object.create(animal); // [[Prototype]] -> animal
+dog.name = "Rex";
+dog.speak(); // "I am Rex"
+
+// Dictionary with no prototype (no inherited keys)
+const dict = Object.create(null);
+dict.key = 123;
+Object.getPrototypeOf(dict); // null`}</Code>
+
+                <Code>{`// Using constructor function (classic)
+function Person(name) {
+  this.name = name;          // runs at construction time
+}
+Person.prototype.greet = function () {
+  return \`Hi, I'm \${this.name}\`;
+};
+
+const p = new Person("Ada");
+p.greet(); // "Hi, I'm Ada"
+Object.getPrototypeOf(p) === Person.prototype; // true`}</Code>
+
+                <p><strong>When to use which:</strong></p>
+                <ul>
+                    <li>
+                        <strong><code>Object.create</code>:</strong> simple prototype-only objects, custom prototypes, or pure key→value maps with <code>Object.create(null)</code>.
+                    </li>
+                    <li>
+                        <strong>Constructors/classes:</strong> when you need initialization logic, parameters, or conventional OOP ergonomics (<code>new</code>, methods on <code>prototype</code>).
+                    </li>
+                </ul>
+
+                <p><strong>Gotchas:</strong> <code>Object.create</code> doesn't auto-define props; pass a second descriptor arg if needed. With constructors, forgetting <code>new</code> changes <code>this</code> (use classes or 'use strict').</p>
+
+                <Code>{`// Define properties at creation
+const obj = Object.create(animal, {
+  id: { value: 1, writable: false, enumerable: true }
+});`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-getters-setters",
+        question: "What are getters and setters?",
+        text:
+            "Getters compute a value on property access; setters run code on assignment. Use get/set in object literals or classes to create accessor properties (not data properties).",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <em>Getters</em> are functions that run when you read a property;
+                    <em> setters</em> run when you assign to it. Declared with <code>get</code>/<code>set</code> in objects or classes.
+                </p>
+
+                <Code>{`// Object literal
+const person = {
+  first: "Ada",
+  last: "Lovelace",
+  get fullName() {                 // read: person.fullName
+    return \`\${this.first} \${this.last}\`;
+  },
+  set fullName(v) {                // write: person.fullName = "Grace Hopper"
+    const [f = "", l = ""] = String(v).split(" ");
+    this.first = f; this.last = l;
+  }
+};
+
+person.fullName;            // "Ada Lovelace"
+person.fullName = "Grace Hopper";
+person.first;               // "Grace"`}</Code>
+
+                <Code>{`// Class usage
+class Rectangle {
+  constructor(w, h){ this._w = w; this._h = h; }
+  get area() { return this._w * this._h; }   // computed, read-only from outside
+  set width(v) { this._w = Number(v) || 0; } // validation in setter
+}
+
+const r = new Rectangle(3, 4);
+r.area;        // 12
+r.width = "10";
+r.area;        // 40`}</Code>
+
+                <p><strong>Key points:</strong></p>
+                <ul>
+                    <li>Access like a normal property (<code>obj.prop</code>), not as a function call.</li>
+                    <li>Accessor properties have <code>get</code>/<code>set</code> functions instead of a stored <code>value</code>.</li>
+                    <li>You can define only a getter (read-only) or only a setter (write-only).</li>
+                    <li>Great for validation, computed values, and encapsulation.</li>
+                </ul>
+
+                <Code>{`// Define with descriptors
+const o = {};
+Object.defineProperty(o, "id", {
+  get(){ return Math.random() },    // accessor descriptor (no 'value'/'writable')
+  enumerable: true,
+  configurable: true
+});`}</Code>
+
+                <p><strong>Gotchas:</strong></p>
+                <ul>
+                    <li>Don't mix <code>value/writable</code> with <code>get/set</code> on the same property.</li>
+                    <li>A heavy getter runs every access-avoid expensive work or side effects.</li>
+                    <li>Keep naming consistent (e.g., use a leading underscore for backing fields).</li>
+                </ul>
+            </>
+        )
+    },
+
+    {
+        id: "js-iife",
+        question: "What is an IIFE (Immediately Invoked Function Expression)?",
+        text:
+            "An IIFE is a function that runs immediately after it's created. It creates a private scope to avoid leaking variables into the surrounding/global scope.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> An <em>IIFE</em> is a function expression that you execute
+                    right away. It's often used to create a private scope and avoid global variables.
+                </p>
+
+                <Code>{`// Classic IIFE (function expression wrapped in parentheses, then invoked)
+(function () {
+  const hidden = 42;
+  console.log("running IIFE, hidden =", hidden);
+})();`}</Code>
+
+                <p><strong>Why use it:</strong> isolate temporary variables, avoid polluting globals, and emulate block scope in pre-ES6 code.</p>
+
+                <Code>{`// Passing arguments into an IIFE
+(function (win, doc) {
+  const title = doc.title;
+  win.console.log("Title:", title);
+})(window, document);`}</Code>
+
+                <p><strong>Variants:</strong></p>
+                <Code>{`// Named IIFE (helpful in stack traces)
+(function initModule() {
+  // ...
+})();
+
+// Arrow IIFE
+(() => {
+  const tmp = "arrow iife";
+  console.log(tmp);
+})();
+
+// Async IIFE (handy to use await at top level)
+(async () => {
+  const data = await Promise.resolve("ok");
+  console.log(data);
+})();`}</Code>
+
+                <p><strong>Notes:</strong></p>
+                <ul>
+                    <li>In ES modules, top-level scope is already isolated, so IIFEs are needed less often.</li>
+                    <li>If placing an IIFE after another statement, prefix with a semicolon to avoid ASI issues.</li>
+                </ul>
+
+                <Code>{`// Defensive semicolon before IIFE
+foo();
+// ; ensures the next line starts a new statement
+;(function(){ /* ... */ })();`}</Code>
+            </>
+        )
+    },
+
+    {
+        id: "js-arguments-object",
+        question: "What is the `arguments` object? How is it different from rest parameters?",
+        text:
+            "`arguments` is an array-like object available inside non-arrow functions that holds the passed arguments. It's not a real array and is separate from arrow functions. Prefer rest parameters (`...args`) which give a true array.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> <code>arguments</code> exists inside <em>non-arrow</em> functions and
+                    contains all passed arguments (indexed) plus <code>length</code>. It's <em>array-like</em> (no array methods)
+                    and not available in arrow functions.
+                </p>
+
+                <Code>{`function demo(a, b) {
+  console.log(arguments.length); // how many were passed
+  console.log(arguments[0], arguments[1]); // indexed access
+  // Turn into a real array if needed:
+  const arr = Array.from(arguments); // or [...arguments] if iterable (most engines)
+  return arr;
+}
+demo(1, 2, 3); // [1,2,3]`}</Code>
+
+                <p><strong>Strict vs sloppy mode mapping:</strong> In sloppy mode, changing a named parameter also changes the corresponding <code>arguments[i]</code>. In strict mode, they are <em>decoupled</em>.</p>
+
+                <Code>{`// Sloppy mode (no "use strict")
+function sloppy(x) {
+  x = 99;
+  console.log(arguments[0]); // 99 (mapped)
+}
+sloppy(1);
+
+// Strict mode: no mapping
+"use strict";
+function strict(x) {
+  x = 99;
+  console.log(arguments[0]); // 1 (decoupled)
+}
+strict(1);`}</Code>
+
+                <p><strong>Not in arrows:</strong> Arrow functions don't have their own <code>arguments</code> (they'd close over an outer one if present). Use rest instead.</p>
+
+                <Code>{`const bad = () => arguments[0]; // uses outer 'arguments' (often undefined)
+const good = (...args) => args[0];`}</Code>
+
+                <p><strong>Prefer rest parameters:</strong> <code>...args</code> gives a real array, is clearer, and works in both strict and non-strict modes.</p>
+
+                <Code>{`function sum(...nums) {
+  return nums.reduce((a, b) => a + b, 0);
+}
+sum(1,2,3); // 6`}</Code>
+
+                <p><strong>Notes:</strong> Avoid relying on <code>arguments.callee</code>/<code>.caller</code> (deprecated). For performance/readability, use rest parameters in modern code.</p>
+            </>
+        )
+    },
+
+    {
+        id: "js-fn-decl-vs-expr",
+        question: "Function declaration vs function expression — what's the difference?",
+        text:
+            "Declarations are hoisted (callable before their line). Function expressions create a function value and assign it to a variable; they aren't callable before the assignment. Named function expressions aid debugging/recursion.",
+        answer: (
+            <>
+                <p>
+                    <strong>Function declaration:</strong> <code>function foo() &#123;...&#125;</code> is hoisted with its body,
+                    so it's callable before the line where it appears.
+                </p>
+
+                <Code>{`hoisted();               // ✅ works
+function hoisted() {
+  console.log("I am a declaration");
+}`}</Code>
+
+                <p>
+                    <strong>Function expression:</strong> the function is a value created at runtime and assigned to a variable.
+                    With <code>let/const</code> you hit TDZ before the line; with <code>var</code> the binding exists early but is
+                    <code>undefined</code> until assignment.
+                </p>
+
+                <Code>{`// let/const (TDZ)
+try { expr(); } catch (e) { /* ReferenceError */ }
+const expr = function() { console.log("I am an expression"); };
+
+// var (binding hoisted, value not)
+try { exprVar(); } catch (e) { /* TypeError: exprVar is not a function */ }
+var exprVar = function() { console.log("late value"); };`}</Code>
+
+                <p>
+                    <strong>Named function expressions:</strong> give the expression a name to improve stack traces and allow self-reference.
+                </p>
+
+                <Code>{`const fib = function inner(n) {
+  return n < 2 ? n : inner(n - 1) + inner(n - 2); // uses its own name
+};`}</Code>
+
+                <p>
+                    <strong>When to use:</strong> Declarations for top-level utilities (clear & hoisted).
+                    Expressions for conditional creation, passing as arguments, or attaching to objects.
+                </p>
+
+                <Code>{`// Attaching as a method (expression)
+const math = {
+  add: function(a,b){ return a + b; }, // or add(a,b) { ... } in class/obj literal
+};`}</Code>
+
+                <p>
+                    <strong>Notes:</strong> In ES modules/strict mode, block-scoped function <em>declarations</em> behave consistently (scoped to the block).
+                    Avoid relying on cross-environment quirks of function-in-block in old scripts.
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-web-workers",
+        question: "What are Web Workers and when should you use them?",
+        text:
+            "Web Workers run JS on a background thread separate from the main UI thread. Use them for CPU-heavy work so the page doesn’t freeze. Communicate with postMessage/onmessage; no DOM access.",
+        answer: (
+            <>
+                <p>
+                    <strong>Definition:</strong> A <em>Web Worker</em> lets you run JS off the main thread. It has its own global
+                    scope (<code>self</code>), no DOM access, and communicates with the page via messages.
+                </p>
+
+                <p><strong>When to use:</strong> CPU-heavy tasks (parsing, image processing, crunching data) that would block UI.</p>
+
+                <Code>{`// main.js — create a dedicated worker (ES module worker)
+const worker = new Worker("./worker.js", { type: "module" });
+
+worker.onmessage = (e) => {
+  console.log("Result from worker:", e.data);
+};
+
+worker.postMessage({ nums: [1,2,3,4,5] });
+
+// stop later
+// worker.terminate();`}</Code>
+
+                <Code>{`// worker.js — runs in the worker context (no window/document)
+self.onmessage = (e) => {
+  const { nums } = e.data;
+  const sum = nums.reduce((a, b) => a + b, 0);
+  self.postMessage({ sum });
+  // self.close(); // optionally end the worker
+};`}</Code>
+
+                <p>
+                    <strong>Inline worker (no separate file):</strong> create a Blob URL.
+                </p>
+
+                <Code>{`const code = \`
+self.onmessage = (e) => {
+  let n = e.data;
+  // simple CPU work
+  for (let i = 0; i < 1e7; i++) n++;
+  postMessage(n);
+};
+\`;
+const url = URL.createObjectURL(new Blob([code], { type: "text/javascript" }));
+const w = new Worker(url);
+w.onmessage = (e) => console.log(e.data);
+w.postMessage(1);`}</Code>
+
+                <p>
+                    <strong>Key points:</strong> No DOM access; use <code>postMessage</code> both ways (structured clone). You can
+                    <em>transfer</em> <code>ArrayBuffer</code>s for zero-copy (<code>postMessage(data, [data.buffer])</code>).
+                    Errors: listen with <code>worker.onerror</code>. Terminate with <code>worker.terminate()</code>, or
+                    <code>self.close()</code> inside the worker.
+                </p>
+
+                <p>
+                    <strong>Types (quick):</strong> Dedicated Worker (one page); Shared Worker (multi-tab same origin);
+                    <em>Service Worker</em> is different (network proxy/background, not for CPU work).
+                </p>
+
+                <p>
+                    <strong>Gotchas:</strong> Same-origin restrictions for script URL; no direct DOM APIs (use
+                    <code>OffscreenCanvas</code> for rendering); module workers prefer ES imports (avoid legacy <code>importScripts</code>).
+                </p>
+            </>
+        )
+    },
+
+    {
+        id: "js-storage-vs-cookies",
+        question: "localStorage vs sessionStorage vs cookies — what's the difference?",
+        text:
+            "Web Storage (localStorage/sessionStorage) stores key–value strings on the client and is never sent with HTTP requests. Cookies are small (≈4KB), can have expiry, and are sent with matching requests. Use Web Storage for client-only data; cookies for server-driven/session data.",
+        answer: (
+            <>
+                <p><strong>Quick compare:</strong></p>
+                <ul>
+                    <li><strong>localStorage</strong>: ~5–10MB per origin, persists until cleared (survives tabs/restarts).</li>
+                    <li><strong>sessionStorage</strong>: ~5–10MB, per-tab session (clears when that tab closes).</li>
+                    <li><strong>Cookies</strong>: ~4KB each, optional expiry, <em>sent with every matching HTTP request</em>.</li>
+                </ul>
+
+                <p><strong>APIs (strings only):</strong></p>
+                <Code>{`// localStorage
+localStorage.setItem("theme", "dark");
+localStorage.getItem("theme");        // "dark"
+localStorage.removeItem("theme");
+localStorage.clear();                  // all keys
+
+// sessionStorage (same API)
+sessionStorage.setItem("step", "2");
+
+// Store objects: stringify/parse
+const settings = { lang: "en", compact: true };
+localStorage.setItem("settings", JSON.stringify(settings));
+JSON.parse(localStorage.getItem("settings")); // { lang: "en", compact: true }`}</Code>
+
+                <p><strong>Cookies (client-side basics):</strong></p>
+                <Code>{`// Set a cookie (expires in 7 days, path=/)
+const days = 7;
+document.cookie = \`token=abc123; Max-Age=\${60*60*24*days}; Path=/; SameSite=Lax\`;
+
+// Read cookies (simple)
+document.cookie; // "token=abc123; theme=dark"
+
+// Delete (set Max-Age=0)
+document.cookie = "token=; Max-Age=0; Path=/";`}</Code>
+
+                <p><strong>When to use what:</strong></p>
+                <ul>
+                    <li><strong>localStorage</strong>: user prefs, cached UI state that should survive reloads.</li>
+                    <li><strong>sessionStorage</strong>: wizard steps, per-tab state that shouldn’t leak across tabs.</li>
+                    <li><strong>Cookies</strong>: data the <em>server</em> must see (e.g., session id). Keep them tiny.</li>
+                </ul>
+
+                <p><strong>Security notes (short):</strong> Avoid putting sensitive tokens in Web Storage (vulnerable to XSS). For cookies, set <code>Secure</code> (HTTPS), <code>SameSite</code> (Lax/Strict), and prefer <code>HttpOnly</code> (set by server only; JS can’t read it).</p>
+
+                <p><strong>Gotchas:</strong> All three are same-origin. Storage is synchronous (don’t spam in hot paths). Cookies are included in requests → bandwidth/perf considerations.</p>
+            </>
+        )
+    }
 
 
 
