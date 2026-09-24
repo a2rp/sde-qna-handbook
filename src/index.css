@@ -1,44 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-
-@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap");
 
 *,
 ::before,
-::after {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+::after { box-sizing: border-box; }
 
 html,
-body {
-    width: 100%;
-    height: 100%;
-    font-family: "Poppins", sans-serif;
-}
+body,
+#root { width: 100%; min-height: 100%; }
 
-html {
-    scroll-behavior: smooth !important;
-}
+html { scroll-behavior: smooth; }
 
-body {
-    background-color: #0d1117;
-    color: #f9f9f9;
-    line-height: 1.8;
-    font-size: 13px;
-}
+body { margin: 0; overflow: hidden; background: #070b11; color: #e8f1ff; font-family: "Poppins", ui-sans-serif, system-ui, sans-serif; font-size: 13px; -webkit-font-smoothing: antialiased; }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    /* color: #fff; */
-    font-family: "Antonio", sans-serif;
-}
-
-ul,
-ol {
-    margin-left: 15px;
-}
+button,
+a { font: inherit; }
