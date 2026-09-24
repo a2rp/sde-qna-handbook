@@ -1,4 +1,4 @@
-import{r as l,j as e,d as t}from"./index-Cv0uwqsX.js";import{B as g}from"./BreadcrumbsBar-CZbZuBth.js";const m=t.div`
+import{r as l,j as e,d as t}from"./index-CE_u6OAA.js";import{B as g}from"./BreadcrumbsBar-CM6j7d-B.js";const m=t.div`
   border: 1px solid hsl(0 0% 100% / 0.14);
   border-radius: 12px;
   background: hsl(0 0% 100% / 0.03);

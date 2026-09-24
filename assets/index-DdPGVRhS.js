@@ -1,4 +1,4 @@
-import{j as e,N as a,d as r}from"./index-Cv0uwqsX.js";import{B as i}from"./BreadcrumbsBar-CZbZuBth.js";const s={Wrapper:r.div`
+import{j as e,N as a,d as r}from"./index-CE_u6OAA.js";import{B as i}from"./BreadcrumbsBar-CM6j7d-B.js";const s={Wrapper:r.div`
     padding: 20px 16px 40px;
     display: grid;
     gap: 16px;
