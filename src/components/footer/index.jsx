@@ -1,12 +1,12 @@
 import { createElement } from "react";
-import { FaFacebookF, FaLinkedinIn, FaYoutube } from "react-icons/fa6";
-import { FiBookOpen, FiCoffee, FiGithub, FiGlobe, FiHeart, FiMail, FiMessageCircle } from "react-icons/fi";
+import { FaCodepen, FaFacebookF, FaLinkedinIn, FaYoutube } from "react-icons/fa6";
+import { FiBookOpen, FiCoffee, FiGithub, FiGlobe, FiHeart, FiMail } from "react-icons/fi";
 import { Styled } from "./styled";
 
 const connect = [
     ["Portfolio", "https://www.ashishranjan.net/", FiGlobe],
     ["GitHub", "https://github.com/a2rp", FiGithub],
-    ["CodePen", "https://codepen.io/ash1198", FiMessageCircle],
+    ["CodePen", "https://codepen.io/ash1198", FaCodepen],
     ["LinkedIn", "https://www.linkedin.com/in/aashishranjan", FaLinkedinIn],
     ["Facebook", "https://www.facebook.com/theash.ashish/", FaFacebookF],
     ["YouTube", "https://www.youtube.com/@ashishranjan-ashz?sub_confirmation=1", FaYoutube],

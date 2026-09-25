@@ -4426,7 +4426,7 @@ sum(1,2,3); // 6`}</Code>
 
     {
         id: "js-fn-decl-vs-expr",
-        question: "Function declaration vs function expression — what's the difference?",
+        question: "Function declaration vs function expression - what's the difference?",
         text:
             "Declarations are hoisted (callable before their line). Function expressions create a function value and assign it to a variable; they aren't callable before the assignment. Named function expressions aid debugging/recursion.",
         answer: (
@@ -4495,7 +4495,7 @@ const math = {
 
                 <p><strong>When to use:</strong> CPU-heavy tasks (parsing, image processing, crunching data) that would block UI.</p>
 
-                <Code>{`// main.js — create a dedicated worker (ES module worker)
+                <Code>{`// main.js - create a dedicated worker (ES module worker)
 const worker = new Worker("./worker.js", { type: "module" });
 
 worker.onmessage = (e) => {
@@ -4507,7 +4507,7 @@ worker.postMessage({ nums: [1,2,3,4,5] });
 // stop later
 // worker.terminate();`}</Code>
 
-                <Code>{`// worker.js — runs in the worker context (no window/document)
+                <Code>{`// worker.js - runs in the worker context (no window/document)
 self.onmessage = (e) => {
   const { nums } = e.data;
   const sum = nums.reduce((a, b) => a + b, 0);
@@ -4554,7 +4554,7 @@ w.postMessage(1);`}</Code>
 
     {
         id: "js-storage-vs-cookies",
-        question: "localStorage vs sessionStorage vs cookies — what's the difference?",
+        question: "localStorage vs sessionStorage vs cookies - what's the difference?",
         text:
             "Web Storage (localStorage/sessionStorage) stores key–value strings on the client and is never sent with HTTP requests. Cookies are small (≈4KB), can have expiry, and are sent with matching requests. Use Web Storage for client-only data; cookies for server-driven/session data.",
         answer: (
@@ -4642,9 +4642,9 @@ parent.addEventListener("click", (e) => console.log("parent capture"), { capture
   // handle delete for the clicked item
 });`}</Code>
 
-                <p><strong>Options:</strong> <code>{`{ capture: true, once: true, passive: true }`}</code> (passive hints “won't call preventDefault” — useful for scroll/touch perf).</p>
+                <p><strong>Options:</strong> <code>{`{ capture: true, once: true, passive: true }`}</code> (passive hints “won't call preventDefault” - useful for scroll/touch perf).</p>
 
-                <p><strong>Gotchas:</strong> Not all events bubble (e.g., <code>focus</code>/<code>blur</code> don't; use <code>focusin</code>/<code>focusout</code>). Stopping propagation doesn't cancel defaults—use <code>preventDefault()</code> for that.</p>
+                <p><strong>Gotchas:</strong> Not all events bubble (e.g., <code>focus</code>/<code>blur</code> don't; use <code>focusin</code>/<code>focusout</code>). Stopping propagation doesn't cancel defaults-use <code>preventDefault()</code> for that.</p>
             </>
         )
     },
@@ -4945,7 +4945,7 @@ typeof UNSET; // "undefined"`}</Code>
                 <Code>{`// Defaults (be careful with falsy values)
 const input = "";
 const name1 = input || "Guest";   // "Guest" ("" is falsy)
-const name2 = input ?? "Guest";   // "" (kept) — use ?? to keep valid falsy
+const name2 = input ?? "Guest";   // "" (kept) - use ?? to keep valid falsy
 
 // Guards
 isLoggedIn && showDashboard();    // calls only when isLoggedIn is truthy

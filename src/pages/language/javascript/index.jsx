@@ -77,7 +77,7 @@ const Javascript = () => {
             <Styled.Header>
                 <h1>JavaScript</h1>
                 <p className="lead">
-                    The programming language of the Web — used with HTML &amp; CSS for interactive UI, and with runtimes like Node.js for servers/tools.
+                    The programming language of the Web - used with HTML &amp; CSS for interactive UI, and with runtimes like Node.js for servers/tools.
                 </p>
                 <small className="muted">Last updated: Sep 14, 2025</small>
             </Styled.Header>
@@ -93,7 +93,7 @@ const Javascript = () => {
                     <p>
                         JS conforms to the <strong>ECMAScript</strong> standard. It’s dynamically typed, prototype-based,
                         multi-paradigm (event-driven, functional, imperative) with first-class functions and modules.
-                        The ECMAScript spec leaves I/O to the host — so browser/Node provide APIs like DOM, fetch, fs, etc.
+                        The ECMAScript spec leaves I/O to the host - so browser/Node provide APIs like DOM, fetch, fs, etc.
                     </p>
                     <p>
                         Although the names sound similar, <strong>Java</strong> and <strong>JavaScript</strong> are different languages.
@@ -124,7 +124,7 @@ export const add = (a, b) => a + b; // ESM named export`}</pre>
                         <span>
                             Reference:{" "}
                             <a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank" rel="noreferrer">
-                                Wikipedia — JavaScript
+                                Wikipedia - JavaScript
                             </a>
                         </span>
                     </Styled.Links>
