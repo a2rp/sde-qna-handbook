@@ -10,7 +10,7 @@ body,
 
 html { scroll-behavior: smooth; }
 
-body { margin: 0; overflow: hidden; background: #070b11; color: #e8f1ff; font-family: "Poppins", ui-sans-serif, system-ui, sans-serif; font-size: 13px; -webkit-font-smoothing: antialiased; }
+body { margin: 0; overflow: hidden; background: #0b0b0b; color: #f0f0f0; font-family: "Poppins", ui-sans-serif, system-ui, sans-serif; font-size: 13px; -webkit-font-smoothing: antialiased; }
 
 button,
 a { font: inherit; }

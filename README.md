@@ -1,5 +1,7 @@
 # SDE QnA Handbook
 
+![SDE QnA Handbook preview](screenshot.png)
+
 A practical revision handbook for software development interview theory and programs.
 
 ## Features
@@ -26,7 +28,6 @@ Create a production build with `npm run build`. Deploy to GitHub Pages with `npm
 
 [Open the SDE QnA Handbook](https://a2rp.github.io/sde-qna-handbook/)
 
-![SDE QnA Handbook preview](screenshot.png)
 
 ## Links
 
