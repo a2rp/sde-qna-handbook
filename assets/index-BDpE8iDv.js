@@ -1,5 +1,5 @@
-import{d as n,j as e}from"./index-Du5WWEC1.js";const o=n.div`
-    background-color: #010409;
+import{d as n,j as e}from"./index-Dt_QMUp4.js";const o=n.div`
+    background-color: #040404;
     color: #aaa;
     margin-top: 50px;
     overflow: hidden;
